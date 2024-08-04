@@ -18,7 +18,7 @@ import org.koin.compose.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import presentation.viewmodel.NewsViewModel
 
-val appModule = module {
+val provideHttpClientModule = module {
     single {
         HttpClient {
             install(ContentNegotiation) {
@@ -33,9 +33,32 @@ val appModule = module {
             }
         }
     }
+}
+
+val provideApiServiceModule = module {
     single { KtorApiService(get()) }
+}
+val provideDataSourceModule = module {
     single { NewsDataSource(get()) }
+}
+
+val provideRepositoryModule = module {
     single<NewsRepository> { NewsRepositoryImpl(get()) }
+}
+
+val provideUseCaseModule = module {
     single { GetNewsUseCase(get()) }
+}
+
+val provideViewModelModule = module {
     viewModel { NewsViewModel(get()) }
 }
+
+val appModule = listOf(
+    provideHttpClientModule,
+    provideApiServiceModule,
+    provideDataSourceModule,
+    provideRepositoryModule,
+    provideUseCaseModule,
+    provideViewModelModule
+)
