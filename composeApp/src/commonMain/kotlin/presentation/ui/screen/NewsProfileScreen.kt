@@ -8,16 +8,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import checkNetworkConnection
 import domain.entity.Article
 import domain.entity.News
 import domain.entity.Source
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import presentation.ui.component.AlertDialog
 import presentation.viewmodel.NewsViewModel
 import utils.NetworkResult
 
@@ -30,17 +35,40 @@ import utils.NetworkResult
  */
 @Composable
 fun NewsScreen(viewModel: NewsViewModel = koinViewModel()) {
+    var showErrorDialog by remember { mutableStateOf(false) }
+    val isConnected = checkNetworkConnection().isConnected()
+
     // Collecting the state of news articles from the ViewModel
     val newsState by viewModel.newsState.collectAsState()
 
-    // Fetching news when the composable is launched
-    LaunchedEffect(Unit) {
-        viewModel.loadNews()
+    if (isConnected) {
+        // Fetching news when the composable is launched
+        LaunchedEffect(Unit) {
+            viewModel.loadNews()
+        }
+    } else {
+        println("NewsScreen: isConnected $isConnected")
+
+        showErrorDialog = true
+    }
+
+    if (showErrorDialog) {
+        AlertDialog(
+            title = "No Network Connection",
+            message = "Please check you internet connection.\nPlease try again.",
+            onConfirm = {
+                showErrorDialog = false
+            },
+            onDismiss = {
+                showErrorDialog = false
+            }
+        )
     }
 
     val news: MutableList<Article>
 
     when (newsState) {
+        is NetworkResult.Initial -> {}
         is NetworkResult.Loading -> Text("Loading...")
         is NetworkResult.Success -> {
             news = (newsState as NetworkResult.Success<News>).data.articles as MutableList<Article>

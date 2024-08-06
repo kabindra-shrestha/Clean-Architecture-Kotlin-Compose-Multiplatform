@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import utils.NetworkResult
 
 class NewsViewModel(private val getNewsUseCase: GetNewsUseCase) : ViewModel() {
-    private val _newsState = MutableStateFlow<NetworkResult<News>>(NetworkResult.Loading)
+    private val _newsState = MutableStateFlow<NetworkResult<News>>(NetworkResult.Initial)
     val newsState: StateFlow<NetworkResult<News>> get() = _newsState
 
     fun loadNews() {
