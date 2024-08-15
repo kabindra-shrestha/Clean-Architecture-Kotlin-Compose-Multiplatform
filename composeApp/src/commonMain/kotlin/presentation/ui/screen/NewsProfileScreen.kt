@@ -74,7 +74,7 @@ fun NewsScreen(viewModel: NewsViewModel = koinViewModel()) {
         is NetworkResult.Success -> {
             news = (newsState as NetworkResult.Success<News>).data.articles as MutableList<Article>
 
-            // Text(DeviceDetails().deviceDetails())
+            // "Text(DeviceDetails().deviceDetails())
 
             // Displaying the list of news articles
             LazyColumn {
