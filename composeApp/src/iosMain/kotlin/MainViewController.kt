@@ -1,3 +1,10 @@
 import androidx.compose.ui.window.ComposeUIViewController
+import di.initKoin
 
-fun MainViewController() = ComposeUIViewController { app() }
+fun MainViewController() = ComposeUIViewController(
+    configure = {
+        initKoin()
+    }
+) {
+    app()
+}
