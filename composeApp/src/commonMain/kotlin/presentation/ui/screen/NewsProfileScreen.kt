@@ -1,5 +1,6 @@
 package presentation.ui.screen
 
+import DeviceDetails
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -72,6 +73,8 @@ fun NewsScreen(viewModel: NewsViewModel = koinViewModel()) {
         is NetworkResult.Loading -> Text("Loading...")
         is NetworkResult.Success -> {
             news = (newsState as NetworkResult.Success<News>).data.articles as MutableList<Article>
+
+            // Text(DeviceDetails().deviceDetails())
 
             // Displaying the list of news articles
             LazyColumn {
