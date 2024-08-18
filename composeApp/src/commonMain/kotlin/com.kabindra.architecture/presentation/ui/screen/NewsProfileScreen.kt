@@ -18,7 +18,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.kabindra.architecture.Konnectivity
+import com.kabindra.architecture.utils.Connectivity
 import com.kabindra.architecture.domain.entity.Article
 import com.kabindra.architecture.domain.entity.News
 import com.kabindra.architecture.domain.entity.Source
@@ -39,10 +39,10 @@ import presentation.ui.component.AlertDialog
  */
 @Composable
 fun NewsScreen(viewModel: NewsViewModel = koinViewModel()) {
-    val konnectivity = remember { Konnectivity() }
+    val connectivity = remember { Connectivity() }
 
-    val isConnected by konnectivity.isConnectedState.collectAsState()
-    val connectionStatus by konnectivity.currentNetworkConnectionState.collectAsState()
+    val isConnected by connectivity.isConnectedState.collectAsState()
+    val connectionStatus by connectivity.currentNetworkConnectionState.collectAsState()
     var showErrorDialog by remember { mutableStateOf(false) }
 
     // Collecting the state of news articles from the ViewModel

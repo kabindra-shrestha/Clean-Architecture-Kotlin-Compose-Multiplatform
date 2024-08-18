@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalForeignApi::class)
 
-package com.kabindra.architecture
+package com.kabindra.architecture.utils
 
 import kotlinx.cinterop.COpaquePointer
 import kotlinx.cinterop.ExperimentalForeignApi
@@ -40,7 +40,7 @@ import platform.posix.sockaddr
 import platform.posix.sockaddr_in
 
 @OptIn(ExperimentalForeignApi::class)
-actual fun Konnectivity(): Konnectivity {
+actual fun Connectivity(): Connectivity {
     val stableRef = "some stable ref"
     val reachabilityUtil: ReachabilityUtil = ReachabilityUtilImpl()
 
@@ -57,8 +57,8 @@ actual fun Konnectivity(): Konnectivity {
         SCNetworkReachabilityCreateWithAddress(null, zeroAddress.ptr.reinterpret<sockaddr>())
             ?: throw IllegalStateException("Failed on SCNetworkReachabilityCreateWithAddress")
 
-    val konnectivity =
-        KonnectivityImpl(reachabilityRef.getCurrentNetworkConnection(reachabilityUtil))
+    val connectivity =
+        ConnectivityImpl(reachabilityRef.getCurrentNetworkConnection(reachabilityUtil))
 
     val dispatchQueueAttr = dispatch_queue_attr_make_with_qos_class(null, QOS_CLASS_DEFAULT, 0)
 
@@ -70,7 +70,7 @@ actual fun Konnectivity(): Konnectivity {
         `object` = null,
         queue = NSOperationQueue.mainQueue,
         usingBlock = {
-            konnectivity.onNetworkConnectionChanged(
+            connectivity.onNetworkConnectionChanged(
                 reachabilityRef.getCurrentNetworkConnection(reachabilityUtil)
             )
         }
@@ -112,7 +112,7 @@ actual fun Konnectivity(): Konnectivity {
         throw IllegalStateException("Failed on SCNetworkReachabilitySetDispatchQueue")
     }
 
-    return konnectivity
+    return connectivity
 }
 
 
@@ -155,6 +155,6 @@ private fun SCNetworkReachabilityRef.getReachabilityFlags(util: ReachabilityUtil
         (flags and it) > 0u
     }
         .toTypedArray()
-    NSLog("Konnectivity: SCNetworkReachabilityFlags: ${result.contentDeepToString()}")
+    NSLog("Connectivity: SCNetworkReachabilityFlags: ${result.contentDeepToString()}")
     return result
 }

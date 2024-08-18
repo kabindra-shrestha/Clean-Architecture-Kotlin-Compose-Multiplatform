@@ -1,11 +1,11 @@
-package com.kabindra.architecture
+package com.kabindra.architecture.utils
 
 import android.content.Context
 import androidx.startup.Initializer
 
 internal var appContext: Context? = null
 
-internal class KonnectivityInitializer : Initializer<Context> {
+internal class ConnectivityInitializer : Initializer<Context> {
     override fun create(context: Context): Context =
         context.applicationContext.also { appContext = it }
 

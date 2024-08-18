@@ -1,6 +1,6 @@
-package com.kabindra.architecture
+package com.kabindra.architecture.utils
 
-import com.kabindra.architecture.NetworkConnection.NONE
+import com.kabindra.architecture.utils.NetworkConnection.NONE
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,12 +11,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-/* Konnectivity Implementation
-val konnectivity: Konnectivity = Konnectivity()
+/* Connectivity Implementation
+val connectivity: Connectivity = Connectivity()
 
-val isConnected: Boolean = konnectivity.isConnected
+val isConnected: Boolean = connectivity.isConnected
 
-val networkConnection: NetworkConnection = konnectivity.currentNetworkConnection
+val networkConnection: NetworkConnection = connectivity.currentNetworkConnection
 when (networkConnection) {
     NetworkConnection.NONE -> "Not connected to the internet"
     NetworkConnection.WIFI -> "Connected to wifi"
@@ -24,13 +24,13 @@ when (networkConnection) {
 }
 
 GlobalScope.launch {
-    konnectivity.isConnectedState.collect { isConnected ->
+    connectivity.isConnectedState.collect { isConnected ->
         // insert code
     }
 }
 
 GlobalScope.launch {
-    konnectivity.currentNetworkConnectionState.collect { connection ->
+    connectivity.currentNetworkConnectionState.collect { connection ->
         when (connection) {
             NetworkConnection.NONE -> "Not connected to the internet"
             NetworkConnection.WIFI -> "Connected to wifi"
@@ -39,19 +39,19 @@ GlobalScope.launch {
     }
 }*/
 
-interface Konnectivity {
+interface Connectivity {
     val isConnected: Boolean
     val currentNetworkConnection: NetworkConnection
     val isConnectedState: StateFlow<Boolean>
     val currentNetworkConnectionState: StateFlow<NetworkConnection>
 }
 
-expect fun Konnectivity(): Konnectivity
+expect fun Connectivity(): Connectivity
 
-internal class KonnectivityImpl(
+internal class ConnectivityImpl(
     initialConnection: NetworkConnection = NONE,
     ioDispatcher: CoroutineDispatcher = Dispatchers.Default
-) : Konnectivity {
+) : Connectivity {
 
     private val scope = CoroutineScope(ioDispatcher)
 

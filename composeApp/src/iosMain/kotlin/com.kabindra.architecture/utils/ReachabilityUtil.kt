@@ -1,4 +1,4 @@
-package com.kabindra.architecture
+package com.kabindra.architecture.utils
 
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.alloc

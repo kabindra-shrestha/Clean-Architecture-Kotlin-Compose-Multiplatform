@@ -1,4 +1,4 @@
-package com.kabindra.architecture
+package com.kabindra.architecture.utils
 
 import android.annotation.TargetApi
 import android.content.Context
@@ -8,17 +8,17 @@ import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.Build
 
-actual fun Konnectivity(): Konnectivity {
+actual fun Connectivity(): Connectivity {
     val appContext = appContext!!
     val connectivityManager: ConnectivityManager =
         appContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    val konnectivity = KonnectivityImpl(
+    val connectivity = ConnectivityImpl(
         initialConnection = getCurrentNetworkConnection(connectivityManager)
     )
     val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                konnectivity.onNetworkConnectionChanged(
+                connectivity.onNetworkConnectionChanged(
                     getNetworkConnection(connectivityManager, network)
                 )
             }
@@ -29,11 +29,11 @@ actual fun Konnectivity(): Konnectivity {
             networkCapabilities: NetworkCapabilities
         ) {
             val connection = getNetworkConnection(networkCapabilities)
-            konnectivity.onNetworkConnectionChanged(connection)
+            connectivity.onNetworkConnectionChanged(connection)
         }
 
         override fun onLost(network: Network) {
-            konnectivity.onNetworkConnectionChanged(NetworkConnection.NONE)
+            connectivity.onNetworkConnectionChanged(NetworkConnection.NONE)
         }
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -45,7 +45,7 @@ actual fun Konnectivity(): Konnectivity {
         connectivityManager.registerNetworkCallback(networkRequest, networkCallback)
     }
 
-    return konnectivity
+    return connectivity
 }
 
 private fun getCurrentNetworkConnection(connectivityManager: ConnectivityManager): NetworkConnection =

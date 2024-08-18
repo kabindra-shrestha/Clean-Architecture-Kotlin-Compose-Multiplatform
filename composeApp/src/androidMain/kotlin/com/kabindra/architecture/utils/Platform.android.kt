@@ -1,4 +1,4 @@
-package com.kabindra.architecture
+package com.kabindra.architecture.utils
 
 import android.os.Build
 
