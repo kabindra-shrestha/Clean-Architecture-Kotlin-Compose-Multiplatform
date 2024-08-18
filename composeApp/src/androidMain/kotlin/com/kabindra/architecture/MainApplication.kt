@@ -1,7 +1,7 @@
 package com.kabindra.architecture
 
 import android.app.Application
-import di.initKoin
+import com.kabindra.architecture.di.initKoin
 import org.koin.android.ext.koin.androidContext
 
 class MainApplication : Application() {

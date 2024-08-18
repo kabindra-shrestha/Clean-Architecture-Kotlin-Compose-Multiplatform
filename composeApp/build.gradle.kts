@@ -95,4 +95,7 @@ android {
         debugImplementation(compose.uiTooling)
     }
 }
+dependencies {
+    implementation(libs.androidx.startup.runtime)
+}
 
