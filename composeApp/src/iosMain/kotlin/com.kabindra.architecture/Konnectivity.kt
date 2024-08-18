@@ -15,10 +15,29 @@ import kotlinx.cinterop.staticCFunction
 import platform.Foundation.NSLog
 import platform.Foundation.NSNotificationCenter
 import platform.Foundation.NSOperationQueue
-import platform.SystemConfiguration.*
+import platform.SystemConfiguration.SCNetworkReachabilityCallBack
+import platform.SystemConfiguration.SCNetworkReachabilityContext
+import platform.SystemConfiguration.SCNetworkReachabilityCreateWithAddress
+import platform.SystemConfiguration.SCNetworkReachabilityFlags
+import platform.SystemConfiguration.SCNetworkReachabilityRef
+import platform.SystemConfiguration.SCNetworkReachabilitySetCallback
+import platform.SystemConfiguration.SCNetworkReachabilitySetDispatchQueue
+import platform.SystemConfiguration.kSCNetworkReachabilityFlagsConnectionAutomatic
+import platform.SystemConfiguration.kSCNetworkReachabilityFlagsConnectionOnDemand
+import platform.SystemConfiguration.kSCNetworkReachabilityFlagsConnectionOnTraffic
+import platform.SystemConfiguration.kSCNetworkReachabilityFlagsConnectionRequired
+import platform.SystemConfiguration.kSCNetworkReachabilityFlagsInterventionRequired
+import platform.SystemConfiguration.kSCNetworkReachabilityFlagsIsDirect
+import platform.SystemConfiguration.kSCNetworkReachabilityFlagsIsLocalAddress
+import platform.SystemConfiguration.kSCNetworkReachabilityFlagsIsWWAN
+import platform.SystemConfiguration.kSCNetworkReachabilityFlagsReachable
+import platform.SystemConfiguration.kSCNetworkReachabilityFlagsTransientConnection
 import platform.darwin.dispatch_queue_attr_make_with_qos_class
 import platform.darwin.dispatch_queue_create
-import platform.posix.*
+import platform.posix.AF_INET
+import platform.posix.QOS_CLASS_DEFAULT
+import platform.posix.sockaddr
+import platform.posix.sockaddr_in
 
 @OptIn(ExperimentalForeignApi::class)
 actual fun Konnectivity(): Konnectivity {
@@ -64,12 +83,12 @@ actual fun Konnectivity(): Konnectivity {
     val alignSCNetReachCxt = alignOf<SCNetworkReachabilityContext>()
     val context = nativeHeap.alloc(sizeSCNetReachCxt, alignSCNetReachCxt)
         .reinterpret<SCNetworkReachabilityContext>().apply {
-        version = 0
-        info = selfPtr.asCPointer()
-        retain = null
-        release = null
-        copyDescription = null
-    }
+            version = 0
+            info = selfPtr.asCPointer()
+            retain = null
+            release = null
+            copyDescription = null
+        }
 
     val callback: SCNetworkReachabilityCallBack =
         staticCFunction { _: SCNetworkReachabilityRef?, _: SCNetworkReachabilityFlags, info: COpaquePointer? ->

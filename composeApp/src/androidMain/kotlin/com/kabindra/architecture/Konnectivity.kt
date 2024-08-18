@@ -7,9 +7,6 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.Build
-import com.kabindra.architecture.Konnectivity
-import com.kabindra.architecture.KonnectivityImpl
-import com.kabindra.architecture.NetworkConnection
 
 actual fun Konnectivity(): Konnectivity {
     val appContext = appContext!!
@@ -86,9 +83,11 @@ private fun getNetworkConnection(capabilities: NetworkCapabilities?): NetworkCon
         capabilities == null -> NetworkConnection.NONE
         Build.VERSION.SDK_INT < Build.VERSION_CODES.M
                 && !capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) -> NetworkConnection.NONE
+
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
                 !(capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
                         && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)) -> NetworkConnection.NONE
+
         capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> NetworkConnection.WIFI
         capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> NetworkConnection.CELLULAR
         else -> NetworkConnection.NONE

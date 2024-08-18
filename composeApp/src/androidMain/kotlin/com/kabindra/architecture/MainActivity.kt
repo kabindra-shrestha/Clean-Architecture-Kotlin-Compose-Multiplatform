@@ -10,8 +10,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        NetworkConnectionAndroid.initAppContext(applicationContext)
-
         setContent {
             app()
         }

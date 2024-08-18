@@ -1,3 +1,5 @@
+@file:OptIn(DelicateCoroutinesApi::class, KoinExperimentalAPI::class)
+
 package com.kabindra.architecture.presentation.ui.screen
 
 import androidx.compose.foundation.layout.Column
@@ -17,15 +19,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kabindra.architecture.Konnectivity
-import com.kabindra.architecture.checkNetworkConnection
 import com.kabindra.architecture.domain.entity.Article
 import com.kabindra.architecture.domain.entity.News
 import com.kabindra.architecture.domain.entity.Source
-import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.viewmodel.koinViewModel
-import presentation.ui.component.AlertDialog
 import com.kabindra.architecture.presentation.viewmodel.NewsViewModel
 import com.kabindra.architecture.utils.NetworkResult
+import kotlinx.coroutines.DelicateCoroutinesApi
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
+import presentation.ui.component.AlertDialog
 
 /**
  * Main composable function for displaying the news screen.
@@ -36,9 +39,11 @@ import com.kabindra.architecture.utils.NetworkResult
  */
 @Composable
 fun NewsScreen(viewModel: NewsViewModel = koinViewModel()) {
+    val konnectivity = remember { Konnectivity() }
+
+    val isConnected by konnectivity.isConnectedState.collectAsState()
+    val connectionStatus by konnectivity.currentNetworkConnectionState.collectAsState()
     var showErrorDialog by remember { mutableStateOf(false) }
-    // val isConnected = checkNetworkConnection().isConnected()
-    val isConnected = Konnectivity().isConnected
 
     // Collecting the state of news articles from the ViewModel
     val newsState by viewModel.newsState.collectAsState()
@@ -48,9 +53,9 @@ fun NewsScreen(viewModel: NewsViewModel = koinViewModel()) {
         LaunchedEffect(Unit) {
             viewModel.loadNews()
         }
-    } else {
-        println("NewsScreen: isConnected $isConnected")
 
+        showErrorDialog = false
+    } else {
         showErrorDialog = true
     }
 

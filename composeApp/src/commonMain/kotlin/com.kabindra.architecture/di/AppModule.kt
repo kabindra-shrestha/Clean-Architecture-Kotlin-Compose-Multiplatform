@@ -5,6 +5,7 @@ import com.kabindra.architecture.data.source.remote.KtorApiService
 import com.kabindra.architecture.data.source.remote.NewsDataSource
 import com.kabindra.architecture.domain.repository.remote.NewsRepository
 import com.kabindra.architecture.domain.usecase.remote.GetNewsUseCase
+import com.kabindra.architecture.presentation.viewmodel.NewsViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -22,7 +23,6 @@ import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
-import com.kabindra.architecture.presentation.viewmodel.NewsViewModel
 
 val provideHttpClientModule = module {
     single {

@@ -25,7 +25,11 @@ internal open class ReachabilityUtilImpl : ReachabilityUtil {
         reachabilityRef: SCNetworkReachabilityRef
     ): SCNetworkReachabilityFlags? = memScoped {
         val flags = alloc<SCNetworkReachabilityFlagsVar>()
-        return (if (SCNetworkReachabilityGetFlags(reachabilityRef, flags.ptr)) flags.value else null).also {
+        return (if (SCNetworkReachabilityGetFlags(
+                reachabilityRef,
+                flags.ptr
+            )
+        ) flags.value else null).also {
             NSLog("ReachabilityUtil getFlags - $it")
         }
     }
