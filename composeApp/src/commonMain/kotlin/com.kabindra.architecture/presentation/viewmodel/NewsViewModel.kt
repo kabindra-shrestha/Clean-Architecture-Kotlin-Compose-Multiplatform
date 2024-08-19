@@ -14,6 +14,7 @@ class NewsViewModel(private val getNewsUseCase: GetNewsUseCase) : ViewModel() {
     val newsState: StateFlow<NetworkResult<News>> get() = _newsState
 
     fun loadNews() {
+        _newsState.value = NetworkResult.Loading
         viewModelScope.launch {
             getNewsUseCase.execute().collect { result ->
                 _newsState.value = result
