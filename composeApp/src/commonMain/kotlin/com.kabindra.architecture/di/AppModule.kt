@@ -1,5 +1,6 @@
 package com.kabindra.architecture.di
 
+import androidx.compose.material3.SnackbarHostState
 import com.kabindra.architecture.data.repository.remote.NewsRepositoryImpl
 import com.kabindra.architecture.data.source.remote.KtorApiService
 import com.kabindra.architecture.data.source.remote.NewsDataSource
@@ -23,6 +24,10 @@ import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
+
+val provideAppModule = module {
+    single { SnackbarHostState() }
+}
 
 val provideHttpClientModule = module {
     single {
@@ -57,6 +62,7 @@ val provideHttpClientModule = module {
 val provideApiServiceModule = module {
     singleOf(::KtorApiService)
 }
+
 val provideDataSourceModule = module {
     singleOf(::NewsDataSource)
 }
@@ -74,6 +80,7 @@ val provideViewModelModule = module {
 }
 
 val appModule = listOf(
+    provideAppModule,
     provideHttpClientModule,
     provideApiServiceModule,
     provideDataSourceModule,

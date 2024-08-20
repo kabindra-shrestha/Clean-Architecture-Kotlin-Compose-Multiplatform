@@ -1,4 +1,4 @@
-package presentation.ui.component
+package com.kabindra.architecture.presentation.ui.component
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api

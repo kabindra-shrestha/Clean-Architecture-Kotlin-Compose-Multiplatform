@@ -1,39 +1,43 @@
-@file:OptIn(DelicateCoroutinesApi::class, KoinExperimentalAPI::class)
+@file:OptIn(KoinExperimentalAPI::class)
 
 package com.kabindra.architecture.presentation.ui.screen
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.kabindra.architecture.domain.entity.Article
 import com.kabindra.architecture.domain.entity.News
 import com.kabindra.architecture.domain.entity.Source
+import com.kabindra.architecture.presentation.ui.component.AlertDialog
+import com.kabindra.architecture.presentation.ui.component.CustomProgressDialog
 import com.kabindra.architecture.presentation.viewmodel.NewsViewModel
 import com.kabindra.architecture.utils.Connectivity
 import com.kabindra.architecture.utils.NetworkResult
-import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
-import presentation.ui.component.AlertDialog
 
 /**
  * Main composable function for displaying the news screen.
@@ -82,18 +86,7 @@ fun NewsScreen(viewModel: NewsViewModel = koinViewModel()) {
     when (newsState) {
         is NetworkResult.Initial -> {}
         is NetworkResult.Loading -> {
-            Dialog(
-                onDismissRequest = { /*showDialog = false*/ },
-                DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(
-                        strokeWidth = 5.dp
-                    )
-                }
-            }
+            CustomProgressDialog(isVisible = true)
         }
 
         is NetworkResult.Success -> {
@@ -102,7 +95,10 @@ fun NewsScreen(viewModel: NewsViewModel = koinViewModel()) {
             // "Text(DeviceDetails().deviceDetails())
 
             // Displaying the list of news articles
-            LazyColumn {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxSize().padding(8.dp)
+            ) {
                 items(news.size) { item ->
                     NewsItem(news[item])
                 }
@@ -122,51 +118,66 @@ fun NewsScreen(viewModel: NewsViewModel = koinViewModel()) {
  */
 @Composable
 fun NewsItem(article: Article) {
-    Column(modifier = Modifier.padding(8.dp)) {
-        // Display the title of the article with bold text and larger font size
-        Text(
-            text = article.title!!,
-            style = TextStyle(
-                fontWeight = FontWeight.Bold,
-                fontSize = 22.sp
-            )
-        )
-
-        // Display the author if available with normal weight
-        article.author?.let {
+    val snackBarHostState: SnackbarHostState = koinInject()
+    val scope = rememberCoroutineScope()
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                scope.launch {
+                    snackBarHostState.showSnackbar(
+                        message = "You clicked ${article.title}",
+                        actionLabel = "Dismiss"
+                    )
+                }
+            }
+    ) {
+        Column(modifier = Modifier.padding(8.dp)) {
+            // Display the title of the article with bold text and larger font size
             Text(
-                text = "by $it",
+                text = article.title!!,
                 style = TextStyle(
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Normal
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 22.sp
                 )
             )
-        }
 
-        // Display the publication date with smaller font size
-        Text(
-            text = article.publishedAt!!,
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Light
-            )
-        )
+            // Display the author if available with normal weight
+            article.author?.let {
+                Text(
+                    text = "by $it",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                )
+            }
 
-        // Placeholder for image loading
-        article.urlToImage?.let {
-            // Placeholder image loading implementation
-            // If you don't want to use coil, comment out this part
-        }
-
-        // Display the description if available with normal weight
-        article.description?.let {
+            // Display the publication date with smaller font size
             Text(
-                text = it,
+                text = article.publishedAt!!,
                 style = TextStyle(
                     fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal
+                    fontWeight = FontWeight.Light
                 )
             )
+
+            // Placeholder for image loading
+            article.urlToImage?.let {
+                // Placeholder image loading implementation
+                // If you don't want to use coil, comment out this part
+            }
+
+            // Display the description if available with normal weight
+            article.description?.let {
+                Text(
+                    text = it,
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                )
+            }
         }
     }
 }
