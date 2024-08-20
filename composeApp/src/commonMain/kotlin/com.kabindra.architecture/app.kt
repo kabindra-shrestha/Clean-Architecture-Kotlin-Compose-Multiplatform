@@ -15,9 +15,6 @@ import org.koin.compose.koinInject
 fun app() {
     KoinContext {
         AppTheme {
-            /*val snackBarHostState = remember { SnackbarHostState() }
-            val localCoroutineScope = rememberCoroutineScope()*/
-
             val snackBarHostState: SnackbarHostState = koinInject()
 
             Scaffold(snackbarHost = { SnackbarHost(snackBarHostState) }) {
