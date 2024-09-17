@@ -1,11 +1,15 @@
 package com.kabindra.architecture.domain.entity
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class News(
     val articles: List<Article>?,
     val status: String?,
     val totalResults: Int?
 )
 
+@Serializable
 data class Article(
     val author: String?,
     val content: String?,
@@ -17,6 +21,7 @@ data class Article(
     val urlToImage: String?
 )
 
+@Serializable
 data class Source(
     val id: String?,
     val name: String?

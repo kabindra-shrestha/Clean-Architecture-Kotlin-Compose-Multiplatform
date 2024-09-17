@@ -5,6 +5,8 @@ package com.kabindra.architecture.presentation.ui.screen
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -47,7 +49,11 @@ import org.koin.core.annotation.KoinExperimentalAPI
  * of news articles using a LazyColumn for efficient scrolling.
  */
 @Composable
-fun NewsScreen(viewModel: NewsViewModel = koinViewModel()) {
+fun NewsListScreen(
+    viewModel: NewsViewModel = koinViewModel(),
+    innerPadding: PaddingValues,
+    onNewsClicked: (Article) -> Unit
+) {
     val connectivity = remember { Connectivity() }
 
     val isConnected by connectivity.isConnectedState.collectAsState()
@@ -92,15 +98,21 @@ fun NewsScreen(viewModel: NewsViewModel = koinViewModel()) {
         is NetworkResult.Success -> {
             news = (newsState as NetworkResult.Success<News>).data.articles as MutableList<Article>
 
-            // "Text(DeviceDetails().deviceDetails())
+            // Text(DeviceDetails().deviceDetails())
 
             // Displaying the list of news articles
             LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.fillMaxSize().padding(8.dp)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .consumeWindowInsets(innerPadding)
+                    .padding(innerPadding),
+                contentPadding = PaddingValues(12.dp), // Adds padding around LazyColumn (top, bottom, start, end)
+                verticalArrangement = Arrangement.spacedBy(12.dp), // Adds space between items vertically
             ) {
                 items(news.size) { item ->
-                    NewsItem(news[item])
+                    NewsItem(news[item]) { item ->
+                        onNewsClicked(item)
+                    }
                 }
             }
         }
@@ -117,7 +129,10 @@ fun NewsScreen(viewModel: NewsViewModel = koinViewModel()) {
  * An optional image can be loaded if a URL is provided.
  */
 @Composable
-fun NewsItem(article: Article) {
+fun NewsItem(
+    article: Article,
+    onNewsClicked: (Article) -> Unit
+) {
     val snackBarHostState: SnackbarHostState = koinInject()
     val scope = rememberCoroutineScope()
     Card(
@@ -125,10 +140,11 @@ fun NewsItem(article: Article) {
             .fillMaxWidth()
             .clickable {
                 scope.launch {
-                    snackBarHostState.showSnackbar(
+                    /*snackBarHostState.showSnackbar(
                         message = "You clicked ${article.title}",
                         actionLabel = "Dismiss"
-                    )
+                    )*/
+                    onNewsClicked(article)
                 }
             }
     ) {
@@ -162,12 +178,6 @@ fun NewsItem(article: Article) {
                 )
             )
 
-            // Placeholder for image loading
-            article.urlToImage?.let {
-                // Placeholder image loading implementation
-                // If you don't want to use coil, comment out this part
-            }
-
             // Display the description if available with normal weight
             article.description?.let {
                 Text(
@@ -197,5 +207,5 @@ fun NewsItemPreview() {
             publishedAt = "2024-01-01T00:00:00Z",
             content = "Sample Content"
         )
-    )
+    ) {}
 }

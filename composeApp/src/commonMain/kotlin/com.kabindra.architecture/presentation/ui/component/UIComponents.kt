@@ -1,17 +1,22 @@
 package com.kabindra.architecture.presentation.ui.component
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.Lifecycle
@@ -34,12 +39,24 @@ fun Lifecycle.observeAsSate(): State<Lifecycle.Event> {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBarComponent(title: String = "", iconButton: ImageVector, onClick: () -> Unit) {
+fun TopAppBarComponent(
+    title: String = "", iconButton: ImageVector, navigateUp: () -> Unit,
+    canNavigateBack: Boolean, modifier: Modifier = Modifier
+) {
     TopAppBar(
         title = { Text(text = title) },
+        colors = TopAppBarDefaults.mediumTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        ),
+        modifier = modifier,
         navigationIcon = {
-            IconButton(onClick = { onClick() }) {
-                Icon(iconButton, contentDescription = "")
+            if (canNavigateBack) {
+                IconButton(onClick = navigateUp) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = ""
+                    )
+                }
             }
         }
     )
