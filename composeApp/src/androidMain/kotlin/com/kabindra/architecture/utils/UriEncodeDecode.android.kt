@@ -1,13 +1,11 @@
 package com.kabindra.architecture.utils
 
-import java.net.URLDecoder
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
+import android.net.Uri
 
 actual fun encode(input: String): String {
-    return URLEncoder.encode(input, StandardCharsets.UTF_8.toString())
+    return Uri.encode(input)
 }
 
 actual fun decode(input: String): String {
-    return URLDecoder.decode(input, StandardCharsets.UTF_8.toString())
+    return Uri.decode(input)
 }

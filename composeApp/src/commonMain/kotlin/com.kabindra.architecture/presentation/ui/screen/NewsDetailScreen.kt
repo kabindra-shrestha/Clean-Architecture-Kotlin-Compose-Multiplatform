@@ -1,6 +1,5 @@
 package com.kabindra.architecture.presentation.ui.screen
 
-import Route
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -79,7 +78,7 @@ fun NewsDetail(
                     model = article.urlToImage,
                     // placeholder = painterResource(R.drawable.ic_launcher_background),
                     contentDescription = "stringResource(R.string.app_name)",
-                    contentScale = ContentScale.FillWidth,
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(5.dp))
