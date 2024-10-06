@@ -1,9 +1,9 @@
 package com.kabindra.architecture.data.source.remote
 
-import com.kabindra.architecture.data.model.NewsDto
+import io.ktor.client.statement.HttpResponse
 
 class NewsDataSource(private val apiService: KtorApiService) {
-    suspend fun getNews(): NewsDto {
+    suspend fun getNews(): HttpResponse {
         return apiService.fetchNews()
     }
 }

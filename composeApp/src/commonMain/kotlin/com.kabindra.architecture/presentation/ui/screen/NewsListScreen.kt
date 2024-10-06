@@ -34,7 +34,7 @@ import com.kabindra.architecture.presentation.ui.component.AlertDialog
 import com.kabindra.architecture.presentation.ui.component.CustomProgressDialog
 import com.kabindra.architecture.presentation.viewmodel.NewsViewModel
 import com.kabindra.architecture.utils.Connectivity
-import com.kabindra.architecture.utils.NetworkResult
+import com.kabindra.architecture.utils.Result
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
@@ -90,13 +90,13 @@ fun NewsListScreen(
     val news: MutableList<Article>
 
     when (newsState) {
-        is NetworkResult.Initial -> {}
-        is NetworkResult.Loading -> {
+        is Result.Initial -> {}
+        is Result.Loading -> {
             CustomProgressDialog(isVisible = true)
         }
 
-        is NetworkResult.Success -> {
-            news = (newsState as NetworkResult.Success<News>).data.articles as MutableList<Article>
+        is Result.Success -> {
+            news = (newsState as Result.Success<News>).data.articles as MutableList<Article>
 
             // Text(DeviceDetails().deviceDetails())
 
@@ -117,7 +117,7 @@ fun NewsListScreen(
             }
         }
 
-        is NetworkResult.Error -> Text("Error: ${(newsState as NetworkResult.Error).exception.message}")
+        is Result.Error -> Text("Error: ${(newsState as Result.Error).exception?.message}")
     }
 }
 
