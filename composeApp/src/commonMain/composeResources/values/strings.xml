@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Compose Multiplatform Clean Architecture</string>
+    <string name="dashboard">com.kabindra.clean.architecture.presentation.ui.screen.dashboard.Dashboard</string>
+    <string name="my_ticket">My Ticket</string>
+    <string name="attendance">Attendance</string>
+    <string name="profile">Profile</string>
+    <string name="theme">Theme</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="go_back">Go Back</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="light_mode">Light Mode</string>
+</resources>
