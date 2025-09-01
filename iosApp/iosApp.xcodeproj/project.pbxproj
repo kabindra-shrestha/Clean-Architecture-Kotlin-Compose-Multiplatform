@@ -3,28 +3,90 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
-		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
+		F40100262D800D5A00F0BE18 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F40100252D800D5A00F0BE18 /* Assets.xcassets */; };
+		F401002A2D8011A600F0BE18 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F40100292D8011A600F0BE18 /* SplashScreen.storyboard */; };
+		F4D160A02D940FDD008CBD55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D1609F2D940FDD008CBD55 /* AppDelegate.swift */; };
+		F4D160A22D941021008CBD55 /* NotificationPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D160A12D941021008CBD55 /* NotificationPayload.swift */; };
+		F4FDB05D2D8D284900900E72 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F4FDB05C2D8D284900900E72 /* FirebaseAnalytics */; };
+		F4FDB05F2D8D284900900E72 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = F4FDB05E2D8D284900900E72 /* FirebaseCore */; };
+		F4FDB0612D8D284900900E72 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = F4FDB0602D8D284900900E72 /* FirebaseCrashlytics */; };
+		F4FDB0632D8D284900900E72 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = F4FDB0622D8D284900900E72 /* FirebaseMessaging */; };
+		F4FDB0652D8D309500900E72 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4FDB0642D8D309500900E72 /* GoogleService-Info.plist */; };
+		F4FDB0722D8D464A00900E72 /* NotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F4FDB06B2D8D464900900E72 /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F4FDB0702D8D464A00900E72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F4FDB06A2D8D464900900E72;
+			remoteInfo = NotificationService;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F4FDB0772D8D464A00900E72 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F4FDB0722D8D464A00900E72 /* NotificationService.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
-		7555FF7B242A565900829871 /* KotlinMultiplatformCleanArchitecture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KotlinMultiplatformCleanArchitecture.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7555FF7B242A565900829871 /* Yak HRM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yak HRM.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB3632DC29227652001CCB65 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		F40100252D800D5A00F0BE18 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F40100292D8011A600F0BE18 /* SplashScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SplashScreen.storyboard; sourceTree = "<group>"; };
+		F4D1609F2D940FDD008CBD55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F4D160A12D941021008CBD55 /* NotificationPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPayload.swift; sourceTree = "<group>"; };
+		F4FDB0642D8D309500900E72 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F4FDB06B2D8D464900900E72 /* NotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4FDB07D2D8D47F600900E72 /* iosApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iosApp.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		F4FDB0732D8D464A00900E72 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = F4FDB06A2D8D464900900E72 /* NotificationService */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		F4FDB06C2D8D464A00900E72 /* NotificationService */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (F4FDB0732D8D464A00900E72 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = NotificationService; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		B92378962B6B1156000C7307 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4FDB0632D8D284900900E72 /* FirebaseMessaging in Frameworks */,
+				F4FDB0612D8D284900900E72 /* FirebaseCrashlytics in Frameworks */,
+				F4FDB05F2D8D284900900E72 /* FirebaseCore in Frameworks */,
+				F4FDB05D2D8D284900900E72 /* FirebaseAnalytics in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4FDB0682D8D464900900E72 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -34,14 +96,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		058557D7273AAEEB004C7B11 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
 		42799AB246E5F90AF97AA0EF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -54,6 +108,7 @@
 			children = (
 				AB1DB47929225F7C00F7AF9C /* Configuration */,
 				7555FF7D242A565900829871 /* iosApp */,
+				F4FDB06C2D8D464A00900E72 /* NotificationService */,
 				7555FF7C242A565900829871 /* Products */,
 				42799AB246E5F90AF97AA0EF /* Frameworks */,
 			);
@@ -62,7 +117,8 @@
 		7555FF7C242A565900829871 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7555FF7B242A565900829871 /* KotlinMultiplatformCleanArchitecture.app */,
+				7555FF7B242A565900829871 /* Yak HRM.app */,
+				F4FDB06B2D8D464900900E72 /* NotificationService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,11 +126,15 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
-				058557BA273AAA24004C7B11 /* Assets.xcassets */,
+				F4D160A12D941021008CBD55 /* NotificationPayload.swift */,
+				F4D1609F2D940FDD008CBD55 /* AppDelegate.swift */,
+				F4FDB07D2D8D47F600900E72 /* iosApp.entitlements */,
+				F4FDB0642D8D309500900E72 /* GoogleService-Info.plist */,
+				F40100252D800D5A00F0BE18 /* Assets.xcassets */,
 				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
-				058557D7273AAEEB004C7B11 /* Preview Content */,
+				F40100292D8011A600F0BE18 /* SplashScreen.storyboard */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -98,17 +158,45 @@
 				7555FF77242A565900829871 /* Sources */,
 				B92378962B6B1156000C7307 /* Frameworks */,
 				7555FF79242A565900829871 /* Resources */,
+				F4FDB0772D8D464A00900E72 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F4FDB0712D8D464A00900E72 /* PBXTargetDependency */,
+			);
+			name = iosApp;
+			packageProductDependencies = (
+				F4FDB05C2D8D284900900E72 /* FirebaseAnalytics */,
+				F4FDB05E2D8D284900900E72 /* FirebaseCore */,
+				F4FDB0602D8D284900900E72 /* FirebaseCrashlytics */,
+				F4FDB0622D8D284900900E72 /* FirebaseMessaging */,
+			);
+			productName = iosApp;
+			productReference = 7555FF7B242A565900829871 /* Yak HRM.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F4FDB06A2D8D464900900E72 /* NotificationService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F4FDB0742D8D464A00900E72 /* Build configuration list for PBXNativeTarget "NotificationService" */;
+			buildPhases = (
+				F4FDB0672D8D464900900E72 /* Sources */,
+				F4FDB0682D8D464900900E72 /* Frameworks */,
+				F4FDB0692D8D464900900E72 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = iosApp;
+			fileSystemSynchronizedGroups = (
+				F4FDB06C2D8D464A00900E72 /* NotificationService */,
+			);
+			name = NotificationService;
 			packageProductDependencies = (
 			);
-			productName = iosApp;
-			productReference = 7555FF7B242A565900829871 /* KotlinMultiplatformCleanArchitecture.app */;
-			productType = "com.apple.product-type.application";
+			productName = NotificationService;
+			productReference = F4FDB06B2D8D464900900E72 /* NotificationService.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -117,12 +205,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1540;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = orgName;
 				TargetAttributes = {
 					7555FF7A242A565900829871 = {
 						CreatedOnToolsVersion = 11.3.1;
+					};
+					F4FDB06A2D8D464900900E72 = {
+						CreatedOnToolsVersion = 16.2;
 					};
 				};
 			};
@@ -136,12 +227,14 @@
 			);
 			mainGroup = 7555FF72242A565900829871;
 			packageReferences = (
+				F4FDB05B2D8D284900900E72 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				7555FF7A242A565900829871 /* iosApp */,
+				F4FDB06A2D8D464900900E72 /* NotificationService */,
 			);
 		};
 /* End PBXProject section */
@@ -151,8 +244,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
-				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
+				F401002A2D8011A600F0BE18 /* SplashScreen.storyboard in Resources */,
+				F40100262D800D5A00F0BE18 /* Assets.xcassets in Resources */,
+				F4FDB0652D8D309500900E72 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4FDB0692D8D464900900E72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,12 +285,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4D160A02D940FDD008CBD55 /* AppDelegate.swift in Sources */,
+				F4D160A22D941021008CBD55 /* NotificationPayload.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F4FDB0672D8D464900900E72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F4FDB0712D8D464A00900E72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F4FDB06A2D8D464900900E72 /* NotificationService */;
+			targetProxy = F4FDB0702D8D464A00900E72 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		7555FFA3242A565B00829871 /* Debug */ = {
@@ -197,6 +315,7 @@
 			baseConfigurationReference = AB3632DC29227652001CCB65 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -260,6 +379,7 @@
 			baseConfigurationReference = AB3632DC29227652001CCB65 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -316,8 +436,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = QN8R36E9W9;
 				ENABLE_PREVIEWS = YES;
@@ -331,6 +453,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_ID}${TEAM_ID}";
 				PRODUCT_NAME = "${APP_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -343,8 +466,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = QN8R36E9W9;
 				ENABLE_PREVIEWS = YES;
@@ -358,9 +483,76 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_ID}${TEAM_ID}";
 				PRODUCT_NAME = "${APP_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F4FDB0752D8D464A00900E72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = NotificationService/NotificationService.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = QN8R36E9W9;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 orgName. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kabindra.clean.architecture.NotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F4FDB0762D8D464A00900E72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = NotificationService/NotificationService.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QN8R36E9W9;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 orgName. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kabindra.clean.architecture.NotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -387,7 +579,50 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		F4FDB0742D8D464A00900E72 /* Build configuration list for PBXNativeTarget "NotificationService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4FDB0752D8D464A00900E72 /* Debug */,
+				F4FDB0762D8D464A00900E72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F4FDB05B2D8D284900900E72 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F4FDB05C2D8D284900900E72 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4FDB05B2D8D284900900E72 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		F4FDB05E2D8D284900900E72 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4FDB05B2D8D284900900E72 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		F4FDB0602D8D284900900E72 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4FDB05B2D8D284900900E72 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		F4FDB0622D8D284900900E72 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4FDB05B2D8D284900900E72 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7555FF73242A565900829871 /* Project object */;
 }

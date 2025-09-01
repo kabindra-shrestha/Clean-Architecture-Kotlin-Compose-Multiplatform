@@ -1,4 +1,6 @@
-rootProject.name = "KotlinMultiplatformCleanArchitecture"
+rootProject.name = "ComposeMultiplatformCleanArchitecture"
+include(":composeApp")
+include(":in-app-update")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -10,8 +12,8 @@ pluginManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
-        mavenCentral()
         gradlePluginPortal()
+        mavenCentral()
     }
 }
 
@@ -25,7 +27,7 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
+        mavenLocal()
+        maven("https://jogamp.org/deployment/maven")
     }
 }
-
-include(":composeApp")
