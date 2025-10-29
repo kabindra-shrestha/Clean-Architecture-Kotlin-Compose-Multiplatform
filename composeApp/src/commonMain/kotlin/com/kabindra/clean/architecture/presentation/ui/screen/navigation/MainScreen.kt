@@ -12,12 +12,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
-import com.kabindra.clean.architecture.presentation.ui.screen.drawer.DashboardScreen
-import com.kabindra.clean.architecture.presentation.ui.screen.login.LoginQRScannerScreen
-import com.kabindra.clean.architecture.presentation.ui.screen.login.LoginQRScreen
-import com.kabindra.clean.architecture.presentation.ui.screen.login.LoginVerifyOTPScreen
-import com.kabindra.clean.architecture.presentation.ui.screen.login.MPINSetScreen
-import com.kabindra.clean.architecture.presentation.ui.screen.login.MPINVerifyScreen
+import com.kabindra.clean.architecture.presentation.ui.screen.splash.DashboardScreen
+import com.kabindra.clean.architecture.presentation.ui.screen.splash.LoginScreen
+import com.kabindra.clean.architecture.presentation.ui.screen.splash.LoginVerifyOTPScreen
+import com.kabindra.clean.architecture.presentation.ui.screen.splash.RegisterScreen
 import com.kabindra.clean.architecture.presentation.ui.screen.splash.SplashScreen
 import org.koin.compose.koinInject
 
@@ -44,18 +42,6 @@ fun MainScreen(
                             launchSingleTop = true
                         }
                     },
-                    onNavigateMPINSet = {
-                        navController.navigate(Route.MPINSetRoute) {
-                            popUpTo(Route.SplashRoute) { inclusive = true }
-                            launchSingleTop = true
-                        }
-                    },
-                    onNavigateMPINVerify = {
-                        navController.navigate(Route.MPINVerifyRoute) {
-                            popUpTo(Route.SplashRoute) { inclusive = true }
-                            launchSingleTop = true
-                        }
-                    },
                     onNavigateDashboard = {
                         navController.navigate(Route.DashboardRoute) {
                             popUpTo(Route.SplashRoute) { inclusive = true }
@@ -66,16 +52,33 @@ fun MainScreen(
             }
 
             navigation<Route.LoginMainRoute>(startDestination = Route.LoginRoute) {
-                composable<Route.LoginRoute> {
-                    LoginQRScreen(
+                composable<Route.RegisterRoute> {
+                    /*RegisterScreen(
                         onNavigateLogin = {
                             navController.navigate(Route.LoginMainRoute) {
                                 popUpTo(Route.LoginMainRoute) { inclusive = true }
                                 launchSingleTop = true
                             }
                         },
-                        onNavigateLoginQrScanner = {
-                            navController.navigate(Route.LoginQrScannerRoute)
+                        onBackNavigate = { AppBackHandler(navController) }
+                    )*/
+                    RegisterScreen(
+                        innerPadding = innerPadding,
+                        onNavigateLogin = {
+                            navController.navigate(Route.LoginMainRoute) {
+                                popUpTo(Route.LoginMainRoute) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        }
+                    )
+                }
+                composable<Route.LoginRoute> {
+                    /*LoginScreen(
+                        onNavigateLogin = {
+                            navController.navigate(Route.LoginMainRoute) {
+                                popUpTo(Route.LoginMainRoute) { inclusive = true }
+                                launchSingleTop = true
+                            }
                         },
                         onNavigateLoginVerifyOTP = { username,
                                                      appLoginCode ->
@@ -86,20 +89,14 @@ fun MainScreen(
                                 )
                             )
                         },
-                        onNavigateMPINSet = {
-                            navController.navigate(Route.MPINSetRoute) {
-                                popUpTo(Route.LoginMainRoute) { inclusive = true }
-                                launchSingleTop = true
-                            }
-                        },
-                        onNavigateMPINVerify = {
-                            navController.navigate(Route.MPINVerifyRoute) {
-                                popUpTo(Route.LoginMainRoute) { inclusive = true }
-                                launchSingleTop = true
-                            }
-                        },
                         onNavigateDashboard = {
-                            navController.navigate(Route.DashboardRoute) {
+                            // Navigate To Dashboard
+                        }
+                    )*/
+                    LoginScreen(
+                        innerPadding = innerPadding,
+                        onNavigateLogin = {
+                            navController.navigate(Route.LoginMainRoute) {
                                 popUpTo(Route.LoginMainRoute) { inclusive = true }
                                 launchSingleTop = true
                             }
@@ -107,15 +104,9 @@ fun MainScreen(
                     )
                 }
 
-                composable<Route.LoginQrScannerRoute> {
-                    LoginQRScannerScreen(
-                        onBackNavigate = { AppBackHandler(navController) }
-                    )
-                }
-
                 composable<Route.LoginVerifyOTPRoute> { entry ->
                     val arguments = entry.toRoute<Route.LoginVerifyOTPRoute>()
-                    LoginVerifyOTPScreen(
+                    /*LoginVerifyOTPScreen(
                         innerPadding = innerPadding,
                         onNavigateLogin = {
                             navController.navigate(Route.LoginMainRoute) {
@@ -123,79 +114,37 @@ fun MainScreen(
                                 launchSingleTop = true
                             }
                         },
-                        onNavigateMPINSet = {
-                            navController.navigate(Route.MPINSetRoute) {
-                                popUpTo(Route.LoginMainRoute) { inclusive = true }
-                                launchSingleTop = true
-                            }
-                        },
-                        onNavigateMPINVerify = {
-                            navController.navigate(Route.MPINVerifyRoute) {
-                                popUpTo(Route.LoginMainRoute) { inclusive = true }
-                                launchSingleTop = true
-                            }
-                        },
                         onNavigateDashboard = {
-                            navController.navigate(Route.DashboardRoute) {
-                                popUpTo(Route.LoginMainRoute) { inclusive = true }
-                                launchSingleTop = true
-                            }
+                            // Navigate To Dashboard
                         },
                         onBackNavigate = {
                             AppBackHandler(navController)
                         },
                         usernameArgument = arguments.username,
                         appLoginCodeArgument = arguments.appLoginCode
-                    )
-                }
-
-                composable<Route.MPINSetRoute> {
-                    MPINSetScreen(
+                    )*/
+                    LoginVerifyOTPScreen(
                         innerPadding = innerPadding,
                         onNavigateLogin = {
                             navController.navigate(Route.LoginMainRoute) {
-                                popUpTo(Route.MPINSetRoute) { inclusive = true }
+                                popUpTo(Route.LoginVerifyOTPRoute) { inclusive = true }
                                 launchSingleTop = true
                             }
-                        },
-                        onNavigateDashboard = {
-                            navController.navigate(Route.DashboardRoute) {
-                                popUpTo(Route.MPINSetRoute) { inclusive = true }
-                                launchSingleTop = true
-                            }
-                        },
-                        onBackNavigate = { AppBackHandler(navController) },
-                    )
-                }
-
-                composable<Route.MPINVerifyRoute> {
-                    MPINVerifyScreen(
-                        innerPadding = innerPadding,
-                        onNavigateLogin = {
-                            navController.navigate(Route.LoginMainRoute) {
-                                popUpTo(Route.MPINVerifyRoute) { inclusive = true }
-                                launchSingleTop = true
-                            }
-                        },
-                        onNavigateDashboard = {
-                            navController.navigate(Route.DashboardRoute) {
-                                popUpTo(Route.MPINVerifyRoute) { inclusive = true }
-                                launchSingleTop = true
-                            }
-                        },
-                        onBackNavigate = { AppBackHandler(navController) },
+                        }
                     )
                 }
             }
 
             composable<Route.DashboardRoute> {
                 DashboardScreen(
+                    innerPadding = innerPadding,
                     onNavigateLogin = {
                         navController.navigate(Route.LoginMainRoute) {
                             popUpTo(Route.DashboardRoute) { inclusive = true }
                             launchSingleTop = true
                         }
-                    })
+                    }
+                )
             }
         }
     }

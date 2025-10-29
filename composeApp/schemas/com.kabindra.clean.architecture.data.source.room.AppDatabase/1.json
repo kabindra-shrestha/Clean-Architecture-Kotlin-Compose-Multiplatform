@@ -2,27 +2,8 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "22f3e85cb66b4164f11cd1e92557da9f",
+    "identityHash": "0830342d0e16fcced56945942f62eebf",
     "entities": [
-      {
-        "tableName": "config",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`base_url` TEXT NOT NULL DEFAULT '', PRIMARY KEY(`base_url`))",
-        "fields": [
-          {
-            "fieldPath": "base_url",
-            "columnName": "base_url",
-            "affinity": "TEXT",
-            "notNull": true,
-            "defaultValue": "''"
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": false,
-          "columnNames": [
-            "base_url"
-          ]
-        }
-      },
       {
         "tableName": "apiToken",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`token` TEXT NOT NULL DEFAULT '', `refresh_token` TEXT DEFAULT '', PRIMARY KEY(`token`))",
@@ -118,7 +99,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '22f3e85cb66b4164f11cd1e92557da9f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0830342d0e16fcced56945942f62eebf')"
     ]
   }
 }

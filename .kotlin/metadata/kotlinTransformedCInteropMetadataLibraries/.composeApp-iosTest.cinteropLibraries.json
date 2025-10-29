@@ -1,7 +1,7 @@
 [
   {
-    "moduleId": "androidx.sqlite:sqlite-bundled:2.5.0",
-    "file": "/Users/kabindrashrestha/Own/Clean-Architecture-Kotlin-Compose-Multiplatform/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/androidx.sqlite-sqlite-bundled-2.5.0-nativeMain-cinterop/androidx.sqlite_sqlite-bundled-cinterop-androidXBundledSqlite-BHP1JA.klib",
+    "moduleId": "androidx.sqlite:sqlite-bundled:2.6.1",
+    "file": "/Users/kabindrashrestha/Own/Clean-Architecture-Kotlin-Compose-Multiplatform/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/androidx.sqlite-sqlite-bundled-2.6.1-nativeMain-cinterop/androidx.sqlite_sqlite-bundled-cinterop-androidXBundledSqlite-dCYVRw.klib",
     "sourceSetName": "nativeMain"
   },
   {
@@ -20,18 +20,13 @@
     "sourceSetName": "iosMain"
   },
   {
-    "moduleId": "org.jetbrains.kotlinx:atomicfu:0.23.2",
-    "file": "/Users/kabindrashrestha/Own/Clean-Architecture-Kotlin-Compose-Multiplatform/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/org.jetbrains.kotlinx-atomicfu-0.23.2-nativeMain-cinterop/org.jetbrains.kotlinx_atomicfu-cinterop-interop-yBS35w.klib",
-    "sourceSetName": "nativeMain"
-  },
-  {
-    "moduleId": "org.jetbrains.compose.ui:ui-uikit:1.7.3",
-    "file": "/Users/kabindrashrestha/Own/Clean-Architecture-Kotlin-Compose-Multiplatform/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/org.jetbrains.compose.ui-ui-uikit-1.7.3-uikitMain-cinterop/org.jetbrains.compose.ui_ui-uikit-cinterop-utils-aNVDjg.klib",
+    "moduleId": "org.jetbrains.compose.ui:ui-uikit:1.9.1",
+    "file": "/Users/kabindrashrestha/Own/Clean-Architecture-Kotlin-Compose-Multiplatform/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/org.jetbrains.compose.ui-ui-uikit-1.9.1-uikitMain-cinterop/org.jetbrains.compose.ui_ui-uikit-cinterop-utils-c6AlBg.klib",
     "sourceSetName": "uikitMain"
   },
   {
-    "moduleId": "androidx.sqlite:sqlite-framework:2.5.0",
-    "file": "/Users/kabindrashrestha/Own/Clean-Architecture-Kotlin-Compose-Multiplatform/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/androidx.sqlite-sqlite-framework-2.5.0-nativeMain-cinterop/androidx.sqlite_sqlite-framework-cinterop-sqlite3-kyeICw.klib",
+    "moduleId": "androidx.sqlite:sqlite-framework:2.6.1",
+    "file": "/Users/kabindrashrestha/Own/Clean-Architecture-Kotlin-Compose-Multiplatform/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/androidx.sqlite-sqlite-framework-2.6.1-nativeMain-cinterop/androidx.sqlite_sqlite-framework-cinterop-sqlite3-5Ubkcg.klib",
     "sourceSetName": "nativeMain"
   },
   {
@@ -40,13 +35,23 @@
     "sourceSetName": "iosMain"
   },
   {
-    "moduleId": "io.ktor:ktor-utils:3.0.1",
-    "file": "/Users/kabindrashrestha/Own/Clean-Architecture-Kotlin-Compose-Multiplatform/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/io.ktor-ktor-utils-3.0.1-iosMain-cinterop/io.ktor_ktor-utils-cinterop-threadUtils-kGNXpQ.klib",
+    "moduleId": "io.ktor:ktor-utils:3.3.1",
+    "file": "/Users/kabindrashrestha/Own/Clean-Architecture-Kotlin-Compose-Multiplatform/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/io.ktor-ktor-utils-3.3.1-iosMain-cinterop/io.ktor_ktor-utils-cinterop-threadUtils-J6P8ZA.klib",
     "sourceSetName": "iosMain"
   },
   {
-    "moduleId": "io.ktor:ktor-io:3.0.1",
-    "file": "/Users/kabindrashrestha/Own/Clean-Architecture-Kotlin-Compose-Multiplatform/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/io.ktor-ktor-io-3.0.1-iosMain-cinterop/io.ktor_ktor-io-cinterop-mutex-G8iuZg.klib",
+    "moduleId": "io.ktor:ktor-io:3.3.1",
+    "file": "/Users/kabindrashrestha/Own/Clean-Architecture-Kotlin-Compose-Multiplatform/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/io.ktor-ktor-io-3.3.1-iosMain-cinterop/io.ktor_ktor-io-cinterop-mutex-oGd__A.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": "io.ktor:ktor-network:3.3.1",
+    "file": "/Users/kabindrashrestha/Own/Clean-Architecture-Kotlin-Compose-Multiplatform/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/io.ktor-ktor-network-3.3.1-iosMain-cinterop/io.ktor_ktor-network-cinterop-network-6DyjvA.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": "io.ktor:ktor-network:3.3.1",
+    "file": "/Users/kabindrashrestha/Own/Clean-Architecture-Kotlin-Compose-Multiplatform/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/io.ktor-ktor-network-3.3.1-iosMain-cinterop/io.ktor_ktor-network-cinterop-un-6DyjvA.klib",
     "sourceSetName": "iosMain"
   }
 ]

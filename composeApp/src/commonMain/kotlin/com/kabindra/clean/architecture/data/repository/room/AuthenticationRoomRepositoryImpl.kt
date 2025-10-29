@@ -48,7 +48,6 @@ class AuthenticationRoomRepositoryImpl(
                         unsubscribeFromTopics(topics)
                     }
                 }
-                appDatabase.configDao.deleteAll()
                 appDatabase.apiTokenDao.deleteAll()
                 appDatabase.userDao.deleteAll()
 

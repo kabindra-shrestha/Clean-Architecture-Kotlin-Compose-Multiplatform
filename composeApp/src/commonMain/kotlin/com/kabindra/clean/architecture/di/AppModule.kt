@@ -2,69 +2,30 @@ package com.kabindra.clean.architecture.di
 
 import androidx.compose.material3.SnackbarHostState
 import com.kabindra.clean.architecture.data.model.RefreshTokenDTO
-import com.kabindra.clean.architecture.data.repository.remote.AttendanceRepositoryImpl
-import com.kabindra.clean.architecture.data.repository.remote.DashboardRepositoryImpl
-import com.kabindra.clean.architecture.data.repository.remote.DocumentRepositoryImpl
-import com.kabindra.clean.architecture.data.repository.remote.LeaveRepositoryImpl
 import com.kabindra.clean.architecture.data.repository.remote.LoginRepositoryImpl
 import com.kabindra.clean.architecture.data.repository.remote.LogoutRepositoryImpl
-import com.kabindra.clean.architecture.data.repository.remote.MPINRepositoryImpl
-import com.kabindra.clean.architecture.data.repository.remote.NotificationRepositoryImpl
-import com.kabindra.clean.architecture.data.repository.remote.ProfileRepositoryImpl
 import com.kabindra.clean.architecture.data.repository.remote.RefreshTokenRepositoryImpl
-import com.kabindra.clean.architecture.data.repository.remote.TicketRepositoryImpl
-import com.kabindra.clean.architecture.data.repository.remote.TimeRepositoryImpl
 import com.kabindra.clean.architecture.data.repository.room.AuthenticationRoomRepositoryImpl
-import com.kabindra.clean.architecture.data.repository.room.ConfigRoomRepositoryImpl
 import com.kabindra.clean.architecture.data.repository.room.UserRoomRepositoryImpl
 import com.kabindra.clean.architecture.data.source.remote.ApiDataSource
 import com.kabindra.clean.architecture.data.source.remote.ApiEndpoints
 import com.kabindra.clean.architecture.data.source.remote.ApiService
 import com.kabindra.clean.architecture.data.source.room.AppDatabase
-import com.kabindra.clean.architecture.domain.repository.remote.AttendanceRepository
-import com.kabindra.clean.architecture.domain.repository.remote.DashboardRepository
-import com.kabindra.clean.architecture.domain.repository.remote.DocumentRepository
-import com.kabindra.clean.architecture.domain.repository.remote.LeaveRepository
 import com.kabindra.clean.architecture.domain.repository.remote.LoginRepository
 import com.kabindra.clean.architecture.domain.repository.remote.LogoutRepository
-import com.kabindra.clean.architecture.domain.repository.remote.MPINRepository
-import com.kabindra.clean.architecture.domain.repository.remote.NotificationRepository
-import com.kabindra.clean.architecture.domain.repository.remote.ProfileRepository
 import com.kabindra.clean.architecture.domain.repository.remote.RefreshTokenRepository
-import com.kabindra.clean.architecture.domain.repository.remote.TicketRepository
-import com.kabindra.clean.architecture.domain.repository.remote.TimeRepository
 import com.kabindra.clean.architecture.domain.repository.room.AuthenticationRoomRepository
-import com.kabindra.clean.architecture.domain.repository.room.ConfigRoomRepository
 import com.kabindra.clean.architecture.domain.repository.room.UserRoomRepository
-import com.kabindra.clean.architecture.domain.usecase.remote.AttendanceUseCase
-import com.kabindra.clean.architecture.domain.usecase.remote.DashboardUseCase
-import com.kabindra.clean.architecture.domain.usecase.remote.DocumentUseCase
-import com.kabindra.clean.architecture.domain.usecase.remote.LeaveUseCase
 import com.kabindra.clean.architecture.domain.usecase.remote.LoginUseCase
 import com.kabindra.clean.architecture.domain.usecase.remote.LogoutUseCase
-import com.kabindra.clean.architecture.domain.usecase.remote.MPINUseCase
-import com.kabindra.clean.architecture.domain.usecase.remote.NotificationUseCase
-import com.kabindra.clean.architecture.domain.usecase.remote.ProfileUseCase
 import com.kabindra.clean.architecture.domain.usecase.remote.RefreshTokenUseCase
-import com.kabindra.clean.architecture.domain.usecase.remote.TicketUseCase
-import com.kabindra.clean.architecture.domain.usecase.remote.TimeUseCase
 import com.kabindra.clean.architecture.domain.usecase.room.AuthenticationRoomUseCase
-import com.kabindra.clean.architecture.domain.usecase.room.ConfigRoomUseCase
 import com.kabindra.clean.architecture.domain.usecase.room.UserRoomUseCase
-import com.kabindra.clean.architecture.presentation.viewmodel.remote.AttendanceViewModel
-import com.kabindra.clean.architecture.presentation.viewmodel.remote.DashboardViewModel
-import com.kabindra.clean.architecture.presentation.viewmodel.remote.DocumentViewModel
-import com.kabindra.clean.architecture.presentation.viewmodel.remote.LeaveViewModel
 import com.kabindra.clean.architecture.presentation.viewmodel.remote.LoginViewModel
 import com.kabindra.clean.architecture.presentation.viewmodel.remote.LogoutViewModel
-import com.kabindra.clean.architecture.presentation.viewmodel.remote.MPINViewModel
-import com.kabindra.clean.architecture.presentation.viewmodel.remote.NotificationViewModel
-import com.kabindra.clean.architecture.presentation.viewmodel.remote.ProfileViewModel
 import com.kabindra.clean.architecture.presentation.viewmodel.remote.RefreshTokenViewModel
-import com.kabindra.clean.architecture.presentation.viewmodel.remote.TicketViewModel
-import com.kabindra.clean.architecture.presentation.viewmodel.remote.TimeViewModel
+import com.kabindra.clean.architecture.presentation.viewmodel.remote.SplashViewModel
 import com.kabindra.clean.architecture.presentation.viewmodel.room.AuthenticationRoomViewModel
-import com.kabindra.clean.architecture.presentation.viewmodel.room.ConfigRoomViewModel
 import com.kabindra.clean.architecture.presentation.viewmodel.room.UserRoomViewModel
 import com.kabindra.clean.architecture.utils.constants.Header.Companion.HEADER_USER_DEVICE
 import com.kabindra.clean.architecture.utils.constants.Header.Companion.HEADER_USER_DEVICE_APP_VERSION
@@ -116,7 +77,6 @@ val provideAppModule = module {
 val provideHttpClientModule = module {
     fun provideHttpClient(
         appDatabase: AppDatabase,
-        baseUrlProvider: BaseUrlProvider,
         tokenProvider: TokenProvider
     ): HttpClient {
         return HttpClient {
@@ -144,8 +104,7 @@ val provideHttpClientModule = module {
             }
             install(DefaultRequest) {
                 runBlocking {
-                    val baseUrl = baseUrlProvider.getBaseUrl()
-                    url(baseUrl)
+                    url("baseUrl")
 
                     contentType(ContentType.Application.Json)
 
@@ -240,7 +199,6 @@ val provideHttpClientModule = module {
         }
     }
 
-    singleOf(::BaseUrlProvider)
     singleOf(::TokenProvider)
     singleOf(::provideHttpClient)
 }
@@ -256,19 +214,8 @@ val provideDataSourceModule = module {
 val provideRepositoryModule = module {
     singleOf(::LoginRepositoryImpl).bind<LoginRepository>()
     singleOf(::LogoutRepositoryImpl).bind<LogoutRepository>()
-    singleOf(::MPINRepositoryImpl).bind<MPINRepository>()
     singleOf(::RefreshTokenRepositoryImpl).bind<RefreshTokenRepository>()
-    singleOf(::DashboardRepositoryImpl).bind<DashboardRepository>()
-    singleOf(::ProfileRepositoryImpl).bind<ProfileRepository>()
-    singleOf(::AttendanceRepositoryImpl).bind<AttendanceRepository>()
-    singleOf(::TimeRepositoryImpl).bind<TimeRepository>()
-    singleOf(::LeaveRepositoryImpl).bind<LeaveRepository>()
-    singleOf(::DocumentRepositoryImpl).bind<DocumentRepository>()
-    singleOf(::TicketRepositoryImpl).bind<TicketRepository>()
-    singleOf(::NotificationRepositoryImpl).bind<NotificationRepository>()
-    singleOf(::LogoutRepositoryImpl).bind<LogoutRepository>()
 
-    singleOf(::ConfigRoomRepositoryImpl).bind<ConfigRoomRepository>()
     singleOf(::AuthenticationRoomRepositoryImpl).bind<AuthenticationRoomRepository>()
     singleOf(::UserRoomRepositoryImpl).bind<UserRoomRepository>()
 }
@@ -276,19 +223,8 @@ val provideRepositoryModule = module {
 val provideUseCaseModule = module {
     singleOf(::LoginUseCase)
     singleOf(::LogoutUseCase)
-    singleOf(::MPINUseCase)
     singleOf(::RefreshTokenUseCase)
-    singleOf(::DashboardUseCase)
-    singleOf(::ProfileUseCase)
-    singleOf(::AttendanceUseCase)
-    singleOf(::TimeUseCase)
-    singleOf(::LeaveUseCase)
-    singleOf(::DocumentUseCase)
-    singleOf(::TicketUseCase)
-    singleOf(::NotificationUseCase)
-    singleOf(::LogoutUseCase)
 
-    singleOf(::ConfigRoomUseCase)
     singleOf(::AuthenticationRoomUseCase)
     singleOf(::UserRoomUseCase)
 }
@@ -296,19 +232,9 @@ val provideUseCaseModule = module {
 val provideViewModelModule = module {
     viewModelOf(::LoginViewModel)
     viewModelOf(::LogoutViewModel)
-    viewModelOf(::MPINViewModel)
     viewModelOf(::RefreshTokenViewModel)
-    viewModelOf(::DashboardViewModel)
-    viewModelOf(::ProfileViewModel)
-    viewModelOf(::AttendanceViewModel)
-    viewModelOf(::TimeViewModel)
-    viewModelOf(::LeaveViewModel)
-    viewModelOf(::DocumentViewModel)
-    viewModelOf(::TicketViewModel)
-    viewModelOf(::NotificationViewModel)
-    viewModelOf(::LogoutViewModel)
+    viewModelOf(::SplashViewModel)
 
-    viewModelOf(::ConfigRoomViewModel)
     viewModelOf(::AuthenticationRoomViewModel)
     viewModelOf(::UserRoomViewModel)
 }

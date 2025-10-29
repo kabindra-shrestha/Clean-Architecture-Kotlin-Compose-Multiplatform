@@ -1,36 +1,32 @@
 [versions]
-android-compileSdk = "35"
-android-minSdk = "24"
-android-targetSdk = "35"
-agp = "8.9.1"
-kotlin = "2.1.20"
-compose = "1.7.8"
-compose-plugin = "1.7.3"
-androidx-activityCompose = "1.10.1"
-androidx-lifecycle = "2.8.4"
-androidx-navigation = "2.8.0-alpha10"
+android-compileSdk = "36"
+android-minSdk = "26"
+android-targetSdk = "36"
+agp = "8.13.0"
+kotlin = "2.2.21"
+compose = "1.9.4"
+compose-plugin = "1.9.1"
+androidx-activityCompose = "1.11.0"
+androidx-lifecycle = "2.9.5"
+androidx-navigation = "2.9.1"
 androidx-startupRuntime = "1.2.0"
 androidx-coreSplashscreen = "1.0.1"
 appUpdate = "2.1.0"
-androidx-browser = "1.8.0"
-kotlinx-serializationCore = "1.8.0"
-kotlinx-datetime = "0.6.1"
+androidx-browser = "1.9.0"
+kotlinx-serializationCore = "1.9.0"
+kotlinx-datetime = "0.7.1"
 ksp = "2.1.20-2.0.0"
-ktor = "3.0.1"
-koin = "4.0.0"
-koin-multiplatform = "4.0.0"
-coil = "3.0.4"
-room = "2.7.0"
-sqlite = "2.5.0"
-googleServices = "4.4.2"
+ktor = "3.3.1"
+koin = "4.1.1"
+koin-multiplatform = "4.1.1"
+coil = "3.3.0"
+room = "2.8.3"
+sqlite = "2.6.1"
+googleServices = "4.4.4"
 firebase = "2.1.0"
-firebase-crashlytics = "3.0.3"
-compottie = "2.0.0-rc01"
-sdp_ssp_version = "1.0.4"
-qrKit = "3.0.6"
-nepaliDatePicker = "2.3.0"
-kmpDateTimePicker = "1.0.7"
-filekitDialogsCompose = "0.10.0-beta01"
+firebase-crashlytics = "3.0.6"
+compottie = "2.0.2"
+sdp_ssp_version = "1.0.7"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -79,10 +75,6 @@ compottie-dot = { module = "io.github.alexzhirkevich:compottie-dot", version.ref
 compottie-network = { module = "io.github.alexzhirkevich:compottie-network", version.ref = "compottie" }
 compottie-resources = { module = "io.github.alexzhirkevich:compottie-resources", version.ref = "compottie" }
 sdp-ssp = { module = "network.chaintech:sdp-ssp-compose-multiplatform", version.ref = "sdp_ssp_version" }
-qr-kit = { module = "network.chaintech:qr-kit", version.ref = "qrKit" }
-nepali-date-picker = { module = "io.github.shivathapaa:nepali-date-picker", version.ref = "nepaliDatePicker" }
-kmp-date-time-picker = { module = "network.chaintech:kmp-date-time-picker", version.ref = "kmpDateTimePicker" }
-filekit-dialogs-compose = { module = "io.github.vinceglb:filekit-dialogs-compose", version.ref = "filekitDialogsCompose" }
 
 [bundles]
 koin = ["koin-core", "koin-compose", "koin-compose-viewmodel"]
