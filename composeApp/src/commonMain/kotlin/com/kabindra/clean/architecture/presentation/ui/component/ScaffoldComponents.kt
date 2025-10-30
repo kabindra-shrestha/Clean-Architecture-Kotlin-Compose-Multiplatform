@@ -86,7 +86,7 @@ fun TopAppBarWithBackComponent(
 @Composable
 fun BottomNavigationBarComponent(
     modifier: Modifier = Modifier,
-    selectedRoute: String = Route.HomeMainRoute::class.qualifiedName!!,
+    selectedRoute: String = Route.LoginMainRoute::class.qualifiedName!!,
     onClick: (selectedSlug: String) -> Unit
 ) {
     NavigationBar {

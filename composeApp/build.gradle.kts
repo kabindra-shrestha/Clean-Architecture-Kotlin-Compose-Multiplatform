@@ -74,12 +74,6 @@ kotlin {
             // Third party libraries
             implementation(libs.bundles.compottie)
             implementation(libs.sdp.ssp)
-            implementation(libs.qr.kit)
-            implementation(libs.nepali.date.picker)
-            implementation(libs.kmp.date.time.picker)
-
-            //FileKit
-            implementation(libs.filekit.dialogs.compose)
 
         }
         iosMain.dependencies {

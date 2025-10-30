@@ -20,26 +20,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kabindra.clean.architecture.data.request.LoginRefreshUserDetailsDataRequest
-import com.kabindra.clean.architecture.domain.entity.LoginRefreshUserDetails
 import com.kabindra.clean.architecture.domain.entity.User
 import com.kabindra.clean.architecture.presentation.ui.component.AppIcon
 import com.kabindra.clean.architecture.presentation.ui.component.LoadingIndicator
 import com.kabindra.clean.architecture.presentation.ui.component.TextComponent
-import com.kabindra.clean.architecture.presentation.ui.screen.login.checkMPinFeatures
-import com.kabindra.clean.architecture.presentation.viewmodel.remote.LoginViewModel
-import com.kabindra.clean.architecture.presentation.viewmodel.room.AuthenticationRoomViewModel
-import com.kabindra.clean.architecture.presentation.viewmodel.room.UserRoomViewModel
+import com.kabindra.clean.architecture.presentation.viewmodel.remote.SplashEvent
+import com.kabindra.clean.architecture.presentation.viewmodel.remote.SplashViewModel
 import com.kabindra.clean.architecture.utils.Connectivity
 import com.kabindra.clean.architecture.utils.constants.ErrorType.Companion.ERROR_TITLE_VERSION_CHECK
 import com.kabindra.clean.architecture.utils.constants.ErrorType.Companion.ERROR_VERSION_CHECK
-import com.kabindra.clean.architecture.utils.constants.ResponseType
 import com.kabindra.clean.architecture.utils.enums.subscribeToTopics
 import com.kabindra.clean.architecture.utils.enums.unsubscribeFromTopics
 import com.kabindra.clean.architecture.utils.error.GlobalErrorDialog
 import com.kabindra.clean.architecture.utils.getPlatform
 import com.kabindra.clean.architecture.utils.getToken
-import com.kabindra.clean.architecture.utils.ktor.Result
 import com.kabindra.clean.architecture.utils.success.GlobalSuccessDialog
 import com.kabindra.inappupdate.UpdateAvailableDialog
 import com.kabindra.inappupdate.UpdateDownloadDialog
@@ -56,31 +52,16 @@ private var firebaseToken = ""
 
 @Composable
 fun SplashScreen(
-    authenticationRoomViewModel: AuthenticationRoomViewModel = koinViewModel(),
-    loginViewModel: LoginViewModel = koinViewModel(),
-    userRoomViewModel: UserRoomViewModel = koinViewModel(),
+    splashViewModel: SplashViewModel = koinViewModel(),
     innerPadding: PaddingValues,
     onNavigateLogin: () -> Unit,
-    onNavigateMPINSet: () -> Unit,
-    onNavigateMPINVerify: () -> Unit,
     onNavigateDashboard: () -> Unit
 ) {
 
     val connectivity = remember { Connectivity() }
     val isConnected by connectivity.isConnectedState.collectAsState()
-    val authenticationLoggedApiState by authenticationRoomViewModel.authenticationLoggedApiState.collectAsState()
-    val loginRefreshUserDetailsState by loginViewModel.loginRefreshUserDetailsState.collectAsState()
-    val userState by userRoomViewModel.userState.collectAsState()
-    var showLoading by remember { mutableStateOf(false) }
-    var showSuccess by remember { mutableStateOf(false) }
-    var showError by remember { mutableStateOf(false) }
-    var successMessage by remember { mutableStateOf("") }
-    var errorStatusCode by remember { mutableStateOf(-1) }
-    var errorTitle by remember { mutableStateOf("") }
-    var errorMessage by remember { mutableStateOf("") }
-    var errorType by remember { mutableStateOf<ResponseType>(ResponseType.None) }
+    val splashState by splashViewModel.splashState.collectAsStateWithLifecycle()
     var isForcedUpdate by remember { mutableStateOf(false) }
-    var isLoggedApi = false
     var userInfo: User? = null
     var userData by remember { mutableStateOf(userInfo) }
 
@@ -96,42 +77,37 @@ fun SplashScreen(
     DisposableEffect(Unit) {
         onDispose {
             // Reset the relevant states
-            authenticationRoomViewModel.resetStates()
-            loginViewModel.resetStates()
-
-            showLoading = false
-            showSuccess = false
-            showError = false
+            splashViewModel.resetStates()
         }
     }
 
+    println("isConnected: $isConnected")
     if (!isConnected) {
         GlobalErrorDialog(
             isVisible = true,
-            statusCode = errorStatusCode,
+            statusCode = -1,
             title = "No Network Connection",
             message = "Please check you internet connection.\nPlease try again.",
             onDismiss = {
-                showError = false
-                errorStatusCode = -1
-                errorTitle = ""
-                errorMessage = ""
+                splashViewModel.resetStates()
             },
         )
         return
     }
 
-    CoroutineScope(Dispatchers.IO).launch {
-        try {
-            val token = getToken()
-            if (token != null) {
-                println("Firebase Token: SplashScreen $token")
-                firebaseToken = token
-            } else {
-                println("Firebase Token fetch failed")
+    LaunchedEffect(Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val token = getToken()
+                if (token != null) {
+                    println("Firebase Token: SplashScreen $token")
+                    firebaseToken = token
+                } else {
+                    println("Firebase Token fetch failed")
+                }
+            } catch (e: Exception) {
+                println("Firebase Error fetching token: ${e.message}")
             }
-        } catch (e: Exception) {
-            println("Firebase Error fetching token: ${e.message}")
         }
     }
 
@@ -150,7 +126,7 @@ fun SplashScreen(
             },
             onUpdateNotAvailable = {
                 // Proceed app
-                authenticationRoomViewModel.getIsLogged()
+                splashViewModel.onEvent(SplashEvent.GetIsLogged)
             },
             onCancelled = {
                 if (isForcedUpdate) {
@@ -158,7 +134,7 @@ fun SplashScreen(
                     exitApp()
                 } else {
                     // Proceed app
-                    authenticationRoomViewModel.getIsLogged()
+                    splashViewModel.onEvent(SplashEvent.GetIsLogged)
                 }
             },
             onFailed = {
@@ -167,7 +143,7 @@ fun SplashScreen(
                     exitApp()
                 } else {
                     // Proceed app
-                    authenticationRoomViewModel.getIsLogged()
+                    splashViewModel.onEvent(SplashEvent.GetIsLogged)
                 }
             },
             onDownloadProgress = { bytesDownloaded: Long, totalBytes: Long -> },
@@ -186,18 +162,27 @@ fun SplashScreen(
 
     Box(modifier = Modifier.fillMaxSize()) {
         AppIcon(
-            modifier = Modifier.width(200.dp).height(200.dp).align(Alignment.Center)
+            modifier = Modifier
+                .width(200.dp)
+                .height(200.dp)
+                .align(Alignment.Center)
         )
 
-        if (showLoading) {
+        if (splashState.isLoading) {
             LoadingIndicator(
-                modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp)
-                    .align(Alignment.Center).offset(y = 150.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, end = 20.dp)
+                    .align(Alignment.Center)
+                    .offset(y = 150.dp)
             )
         }
 
         TextComponent(
-            modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter).offset(y = (-75).dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .offset(y = (-75).dp),
             text = "Version: ${getPlatform().appVersion}",
             textAlign = TextAlign.Center
         )
@@ -207,160 +192,58 @@ fun SplashScreen(
         )*/
     }
 
-    LaunchedEffect(authenticationLoggedApiState) {
-        when (authenticationLoggedApiState) {
-            is Result.Initial -> Unit
-
-            is Result.Loading -> {
-                showLoading = true
-                showSuccess = false
-                showError = false
-            }
-
-            is Result.Success -> {
-                /*showLoading = false*/
-                showSuccess = false
-                showError = false
-
-                isLoggedApi =
-                    (authenticationLoggedApiState as Result.Success<Boolean>).data
-
-                if (isLoggedApi) {
-                    user(userRoomViewModel)
-                } else {
-                    onNavigateLogin()
-                }
-            }
-
-            is Result.Error -> {
-                showLoading = false
-                showSuccess = false
-                showError = true
-                errorStatusCode =
-                    (authenticationLoggedApiState as Result.Error).error.statusCode
-                errorTitle = ""
-                errorMessage = (authenticationLoggedApiState as Result.Error).error.message
-                errorType = ResponseType.None
-            }
-        }
+    if (splashState.isLogged == true) {
+        splashViewModel.onEvent(SplashEvent.GetUser)
+    } else {
+        onNavigateLogin()
     }
 
-    LaunchedEffect(userState) {
-        when (userState) {
-            is Result.Initial -> Unit
-
-            is Result.Loading -> {
-                showLoading = false
-                showSuccess = false
-                showError = false
-            }
-
-            is Result.Success -> {
-                showLoading = false
-                showSuccess = false
-                showError = false
-
-                val user: User =
-                    (userState as Result.Success<User>).data
-
-                userInfo = user
-                userData = userInfo
-                userData?.firebase_topics?.takeIf { it.isNotEmpty() }?.let { topics ->
-                    unsubscribeFromTopics(topics)
-                }
-                loginRefreshUserDetails(
-                    loginViewModel,
-                    firebaseToken
-                )
-            }
-
-            is Result.Error -> {
-                showLoading = false
-                showSuccess = false
-                showError = true
-                errorStatusCode = (userState as Result.Error).error.statusCode
-                errorTitle = ""
-                errorMessage = (userState as Result.Error).error.message
-                errorType = ResponseType.None
-            }
+    LaunchedEffect(splashState.user) {
+        splashState.user?.firebase_topics?.takeIf { it.isNotEmpty() }?.let { topics ->
+            unsubscribeFromTopics(topics)
         }
+
+        splashViewModel.onEvent(
+            SplashEvent.GetLoginRefreshUserDetails(
+                LoginRefreshUserDetailsDataRequest(firebaseToken)
+            )
+        )
     }
 
-    LaunchedEffect(loginRefreshUserDetailsState) {
-        when (loginRefreshUserDetailsState) {
-            is Result.Initial -> Unit
-
-            is Result.Loading -> {
-                showLoading = true
-                showSuccess = false
-                showError = false
+    LaunchedEffect(splashState.loginRefreshUserDetails) {
+        splashState.loginRefreshUserDetails?.response?.user_details?.firebase_topics.takeIf { !it.isNullOrEmpty() }
+            ?.let { topics ->
+                subscribeToTopics(topics)
             }
 
-            is Result.Success -> {
-                showLoading = false
-                showSuccess = false
-                showError = false
+        val features = splashState.loginRefreshUserDetails?.response?.features
+        val uses = splashState.loginRefreshUserDetails?.response?.featuresUsed
 
-                val refreshUserDetails: LoginRefreshUserDetails =
-                    (loginRefreshUserDetailsState as Result.Success<LoginRefreshUserDetails>).data
-
-                refreshUserDetails.response?.user_details?.firebase_topics.takeIf { !it.isNullOrEmpty() }
-                    ?.let { topics ->
-                        subscribeToTopics(topics)
-                    }
-
-                val features = refreshUserDetails.response?.features
-                val uses = refreshUserDetails.response?.featuresUsed
-
-                if (features == null || uses == null) {
-                    onNavigateDashboard()
-                    return@LaunchedEffect
-                }
-
-                checkMPinFeatures(
-                    features,
-                    uses,
-                    onNavigateMPINSet = { onNavigateMPINSet() },
-                    onNavigateMPINVerify = { onNavigateMPINVerify() },
-                    onNavigateDashboard = { onNavigateDashboard() }
-                )
-            }
-
-            is Result.Error -> {
-                showLoading = false
-                showSuccess = false
-                showError = true
-                errorStatusCode =
-                    (loginRefreshUserDetailsState as Result.Error).error.statusCode
-                errorTitle = ""
-                errorMessage = (loginRefreshUserDetailsState as Result.Error).error.message
-                errorType = ResponseType.None
-            }
+        if (features == null || uses == null) {
+            onNavigateDashboard()
+            return@LaunchedEffect
         }
+
+        // Go To Home Screen
     }
 
-    if (showSuccess) {
+    if (splashState.isSuccess) {
         GlobalSuccessDialog(
-            isVisible = showSuccess,
+            isVisible = true,
             isAction = true,
-            message = successMessage,
+            message = splashState.successMessage,
             onDismiss = { })
     }
 
-    if (showError) {
+    if (splashState.isError) {
         GlobalErrorDialog(
-            isVisible = showError,
+            isVisible = true,
             isAction = true,
-            statusCode = errorStatusCode,
-            title = errorTitle,
-            message = errorMessage,
+            statusCode = splashState.errorStatusCode,
+            title = splashState.errorTitle,
+            message = splashState.errorMessage,
             onDismiss = {
-                showError = false
-                errorStatusCode = -1
-                errorTitle = ""
-                errorMessage = ""
-
-                authenticationRoomViewModel.getIsLogged()
+                splashViewModel.onEvent(SplashEvent.GetIsLogged)
             },
             onNavigateLogin = { onNavigateLogin() })
     }
@@ -382,7 +265,7 @@ fun SplashScreen(
                 updateAvailableAction = false
                 updateDownloadMessage = ""
 
-                completeUpdate("", "https://apps.apple.com/np/app/via-tv/id1580283833")
+                completeUpdate("", "")
             },
             onLater = {
                 showUpdateAvailable = false
@@ -391,7 +274,7 @@ fun SplashScreen(
 
                 isForcedUpdate = false
 
-                authenticationRoomViewModel.getIsLogged()
+                splashViewModel.onEvent(SplashEvent.GetIsLogged)
             }
         )
     }
@@ -411,21 +294,8 @@ fun SplashScreen(
                 updateDownloadAction = false
                 updateDownloadMessage = ""
 
-                completeUpdate("", "https://apps.apple.com/np/app/via-tv/id1580283833")
+                completeUpdate("", "")
             }
         )
     }
-}
-
-private fun loginRefreshUserDetails(
-    loginViewModel: LoginViewModel,
-    fcmToken: String
-) {
-    loginViewModel.getLoginRefreshUserDetails(LoginRefreshUserDetailsDataRequest(fcmToken))
-}
-
-private fun user(
-    userRoomViewModel: UserRoomViewModel,
-) {
-    userRoomViewModel.getUser()
 }

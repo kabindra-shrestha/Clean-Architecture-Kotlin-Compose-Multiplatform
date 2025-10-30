@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "478626789782",
+    "project_id": "compose-clean-architecture",
+    "storage_bucket": "compose-clean-architecture.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:478626789782:android:e62906bce7a7564a5d45b7",
+        "android_client_info": {
+          "package_name": "com.kabindra.clean.architecture"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfwWR7LG5zP29AidZkub-R_B2-N1wwcsE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

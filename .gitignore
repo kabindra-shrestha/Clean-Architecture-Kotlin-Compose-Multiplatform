@@ -1,33 +1,111 @@
-# Gradle files
+# Kotlin/Java specific
+*.iml
+*.class
+*.log
+*.jar
+*.war
+*.ear
+*.db
+*.sqlite
+*.kotlin
+
+# IDEA/IntelliJ files
+.idea/
+*.iws
+*.ipr
+*.iml
+out/
+
+# Android specific
+*.apk
+*.ap_
+*.dex
+*.apk
+*.ap_
+*.class
+*.cxx/
+*.so
+*.dSYM/
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+.gradle/
+*.lock
+build/
+captures/
+externalNativeBuild/
+.gradle
+.gradle/cache/
+.gradle/config/
+.gradle/data/
+.gradle/daemon/
+.gradle/init-scripts/
+.gradle/vcs-working-dir/
+.gradle/wrapper/dists/
+.gradle/wrapper/
+local.properties
+
+# iOS/macOS specific
+*.xcuserstate
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/contents.xcworkspacedata
+*.xcworkspace/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.bcr
+*.xcassets
+build/
+Pods/
+DerivedData/
+
+# Desktop JVM specific
 .gradle/
 build/
 
-# Local configuration file (sdk path, etc)
-local.properties
+# KMM common generated files
+/build/
+bin/
+*.kotlin_module
+*.kotlin_metadata
+*.kotlin_cache
 
-# Log/OS Files
-*.log
+# Kotlin Multiplatform
+.idea
+*.idea
+*.metadata
+.gradle/
+#gradle.properties
 
-# Android Studio generated files and folders
-captures/
-.externalNativeBuild/
-.cxx/
-*.apk
-output.json
-
-# IntelliJ
-*.iml
+# JetBrains IDEs settings
 .idea/
-misc.xml
-deploymentTargetDropDown.xml
-render.experimental.xml
+*.iml
 
-# Keystore files
-*.jks
-*.keystore
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
 
-# Google Services (e.g. APIs or Firebase)
-google-services.json
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
 
-# Android Profiling
-*.hprof
+# Thumbnails
+._*
+
+# Android/IntelliJ logs
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
+
+# iOS/Derived data
+DerivedData/
+
+# Other OS-specific or editor-specific
+Thumbs.db
+Desktop.ini

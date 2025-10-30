@@ -12,8 +12,8 @@ kotlin {
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
         namespace = "com.kabindra.inappupdate"
-        compileSdk = 35
-        minSdk = 24
+        compileSdk = 36
+        minSdk = 26
 
         withHostTestBuilder {
         }
