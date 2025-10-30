@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
-		F40100262D800D5A00F0BE18 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F40100252D800D5A00F0BE18 /* Assets.xcassets */; };
+		EA82440D2EB3CB0C00C02BE7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA82440C2EB3CB0C00C02BE7 /* Assets.xcassets */; };
 		F401002A2D8011A600F0BE18 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F40100292D8011A600F0BE18 /* SplashScreen.storyboard */; };
 		F4D160A02D940FDD008CBD55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D1609F2D940FDD008CBD55 /* AppDelegate.swift */; };
 		F4D160A22D941021008CBD55 /* NotificationPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D160A12D941021008CBD55 /* NotificationPayload.swift */; };
@@ -47,11 +47,11 @@
 
 /* Begin PBXFileReference section */
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
-		7555FF7B242A565900829871 /* Yak HRM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yak HRM.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7555FF7B242A565900829871 /* Compose Multiplatform Clean Architecture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Compose Multiplatform Clean Architecture.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB3632DC29227652001CCB65 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		F40100252D800D5A00F0BE18 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EA82440C2EB3CB0C00C02BE7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F40100292D8011A600F0BE18 /* SplashScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SplashScreen.storyboard; sourceTree = "<group>"; };
 		F4D1609F2D940FDD008CBD55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4D160A12D941021008CBD55 /* NotificationPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPayload.swift; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 		7555FF7C242A565900829871 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7555FF7B242A565900829871 /* Yak HRM.app */,
+				7555FF7B242A565900829871 /* Compose Multiplatform Clean Architecture.app */,
 				F4FDB06B2D8D464900900E72 /* NotificationService.appex */,
 			);
 			name = Products;
@@ -130,11 +130,11 @@
 				F4D1609F2D940FDD008CBD55 /* AppDelegate.swift */,
 				F4FDB07D2D8D47F600900E72 /* iosApp.entitlements */,
 				F4FDB0642D8D309500900E72 /* GoogleService-Info.plist */,
-				F40100252D800D5A00F0BE18 /* Assets.xcassets */,
 				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				F40100292D8011A600F0BE18 /* SplashScreen.storyboard */,
+				EA82440C2EB3CB0C00C02BE7 /* Assets.xcassets */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -173,7 +173,7 @@
 				F4FDB0622D8D284900900E72 /* FirebaseMessaging */,
 			);
 			productName = iosApp;
-			productReference = 7555FF7B242A565900829871 /* Yak HRM.app */;
+			productReference = 7555FF7B242A565900829871 /* Compose Multiplatform Clean Architecture.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F4FDB06A2D8D464900900E72 /* NotificationService */ = {
@@ -245,7 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F401002A2D8011A600F0BE18 /* SplashScreen.storyboard in Resources */,
-				F40100262D800D5A00F0BE18 /* Assets.xcassets in Resources */,
+				EA82440D2EB3CB0C00C02BE7 /* Assets.xcassets in Resources */,
 				F4FDB0652D8D309500900E72 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,6 +365,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
+				JAVA_HOME = "/Applications/Android Studio.app/Contents/jbr/Contents/Home";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -423,6 +424,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
+				JAVA_HOME = "/Applications/Android Studio.app/Contents/jbr/Contents/Home";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -436,12 +438,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = QN8R36E9W9;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = R6Y23BL2XS;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -466,12 +469,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = QN8R36E9W9;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = R6Y23BL2XS;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -501,7 +505,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = QN8R36E9W9;
+				DEVELOPMENT_TEAM = R6Y23BL2XS;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -534,7 +538,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QN8R36E9W9;
+				DEVELOPMENT_TEAM = R6Y23BL2XS;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
