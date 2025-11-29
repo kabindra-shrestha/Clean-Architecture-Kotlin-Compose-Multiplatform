@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.kabindra.inappupdate.ui.theme.AppTheme
+import com.kabindra.inappupdate.ui.theme.createDimensions
 
 @Composable
 fun ButtonNormal(
@@ -15,7 +15,7 @@ fun ButtonNormal(
 ) {
     Button(
         modifier = modifier
-            .requiredWidth(AppTheme.dimens.minButtonWidth),
+            .requiredWidth(createDimensions().minButtonWidth),
         enabled = enabled,
         onClick = onClick
     ) {

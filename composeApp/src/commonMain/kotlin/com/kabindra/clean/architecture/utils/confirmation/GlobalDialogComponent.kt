@@ -19,8 +19,8 @@ fun GlobalDialogComponent(
             /*Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(AppTheme.dimens.paddingSmall),
-                shape = RoundedCornerShape(16.dp),
+                    .padding(createDimensions().paddingSmall),
+                shape = RoundedCornerShape(16.sdp),
             ) {
                 content()
             }*/

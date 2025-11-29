@@ -1,7 +1,6 @@
 package com.kabindra.clean.architecture.data.source.room.converter
 
 import androidx.room.TypeConverter
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 object FirebaseTopicsConverters {

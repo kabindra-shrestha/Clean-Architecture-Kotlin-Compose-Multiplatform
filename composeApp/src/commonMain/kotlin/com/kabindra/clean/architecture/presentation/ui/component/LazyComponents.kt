@@ -24,9 +24,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
+import network.chaintech.sdpcomposemultiplatform.sdp
 
 // Enums for List and Grid Types
 enum class LazyListType { LIST, GRID }
@@ -43,8 +43,8 @@ sealed class ListItemContent {
 @Composable
 fun <T> BaseLazy(
     modifier: Modifier = Modifier.fillMaxSize(),
-    contentPadding: PaddingValues = PaddingValues(8.dp),
-    arrangement: Arrangement.HorizontalOrVertical = Arrangement.spacedBy(12.dp),
+    contentPadding: PaddingValues = PaddingValues(8.sdp),
+    arrangement: Arrangement.HorizontalOrVertical = Arrangement.spacedBy(12.sdp),
     items: List<T>,
     listType: LazyListType = LazyListType.LIST,
     scrollDirection: LazyScrollDirection = LazyScrollDirection.VERTICAL,
@@ -60,7 +60,7 @@ fun <T> BaseLazy(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(16.sdp),
             contentAlignment = Alignment.Center
         ) {
             LoadingIndicator(

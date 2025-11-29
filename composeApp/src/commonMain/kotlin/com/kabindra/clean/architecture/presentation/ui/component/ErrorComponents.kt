@@ -9,16 +9,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.Res
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
+import network.chaintech.sdpcomposemultiplatform.sdp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ShowEmpty(
-    modifier: Modifier = Modifier.width(250.dp).height(250.dp)
+    modifier: Modifier = Modifier.width(250.sdp).height(250.sdp)
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),

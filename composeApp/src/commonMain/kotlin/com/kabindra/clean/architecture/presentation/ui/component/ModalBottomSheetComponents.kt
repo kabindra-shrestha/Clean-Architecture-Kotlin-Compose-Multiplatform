@@ -23,8 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import com.kabindra.clean.architecture.presentation.ui.theme.AppTheme
+
+import com.kabindra.clean.architecture.presentation.ui.theme.createDimensions
+import network.chaintech.sdpcomposemultiplatform.sdp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,7 +60,7 @@ fun ModalBottomSheetComponent(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = modifier
                             .fillMaxWidth()
-                            .padding(horizontal = AppTheme.dimens.paddingSmall)
+                            .padding(horizontal = createDimensions().paddingSmall)
                     ) {
                         TextComponent(
                             text = title,
@@ -71,7 +72,7 @@ fun ModalBottomSheetComponent(
                         IconButton(onClick = { onDismiss() }) {
                             ImageHandlerVector(
                                 modifier = Modifier
-                                    .size(20.dp)
+                                    .size(20.sdp)
                                     .aspectRatio(1f),
                                 image = icon,
                                 contentDescription = text

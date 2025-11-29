@@ -34,10 +34,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
 import com.kabindra.clean.architecture.presentation.ui.theme.overlay
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import network.chaintech.sdpcomposemultiplatform.sdp
 
 @Composable
 fun <T> ExpandableFabComponent(
@@ -76,8 +76,8 @@ fun <T> ExpandableFabComponent(
             exit = fadeOut() + slideOutVertically(targetOffsetY = { it }) + shrinkVertically()
         ) {
             Column(
-                modifier = Modifier.padding(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                modifier = Modifier.padding(8.sdp),
+                verticalArrangement = Arrangement.spacedBy(8.sdp)
             ) {
                 items.forEach { item ->
                     ExpandableFabRow(
@@ -103,7 +103,7 @@ fun <T> ExpandableFabComponent(
         )
 
         FloatingActionButton(
-            modifier = Modifier.padding(bottom = 47.dp),
+            modifier = Modifier.padding(bottom = 47.sdp),
             shape = shape,
             onClick = { expand = !expand }
         ) {
@@ -124,11 +124,11 @@ private fun <T> ExpandableFabRow(
     onFabClick: () -> Unit
 ) {
     ExtendedFloatingActionButton(
-        modifier = Modifier.width(200.dp),
+        modifier = Modifier.width(200.sdp),
         text = { Text(text = itemTitle(item)) },
         icon = {
             ImageHandlerVector(
-                modifier = Modifier.size(32.dp).padding(2.dp),
+                modifier = Modifier.size(32.sdp).padding(2.sdp),
                 image = itemIcon(item),
                 contentDescription = itemTitle(item)
             )

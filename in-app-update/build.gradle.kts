@@ -63,6 +63,8 @@ kotlin {
 
                 implementation(libs.bundles.compottie)
                 implementation(libs.bundles.coil)
+
+                implementation(libs.sdp.ssp)
             }
         }
 

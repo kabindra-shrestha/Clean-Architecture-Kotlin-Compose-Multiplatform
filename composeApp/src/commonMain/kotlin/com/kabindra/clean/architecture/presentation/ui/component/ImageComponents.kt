@@ -22,19 +22,19 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.kabindra.clean.architecture.presentation.ui.theme.transparent
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.Res
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.splash_icon
 import io.github.alexzhirkevich.compottie.LottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
+import network.chaintech.sdpcomposemultiplatform.sdp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun ImageHandlerURL(
-    modifier: Modifier = Modifier.width(250.dp).height(250.dp),
+    modifier: Modifier = Modifier.width(250.sdp).height(250.sdp),
     image: String = "",
     contentDescription: String = "",
     contentScale: ContentScale = ContentScale.Fit,
@@ -76,7 +76,7 @@ fun ImageHandlerURL(
 
 @Composable
 fun ImageHandlerRes(
-    modifier: Modifier = Modifier.width(250.dp).height(250.dp),
+    modifier: Modifier = Modifier.width(250.sdp).height(250.sdp),
     image: DrawableResource = Res.drawable.splash_icon,
     contentDescription: String = "",
     circular: Boolean = false,
@@ -98,7 +98,7 @@ fun ImageHandlerRes(
 
 @Composable
 fun ImageHandlerVector(
-    modifier: Modifier = Modifier.width(250.dp).height(250.dp),
+    modifier: Modifier = Modifier.width(250.sdp).height(250.sdp),
     image: ImageVector?,
     contentDescription: String = "",
     tint: Color? = null,
@@ -129,7 +129,7 @@ fun ImageHandlerVector(
 
 @Composable
 fun ImageHandlerLottie(
-    modifier: Modifier = Modifier.width(250.dp).height(250.dp),
+    modifier: Modifier = Modifier.width(250.sdp).height(250.sdp),
     image: LottieComposition?,
     contentDescription: String = "",
     circular: Boolean = false,

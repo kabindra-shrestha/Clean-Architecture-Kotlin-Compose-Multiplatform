@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
+import network.chaintech.sdpcomposemultiplatform.sdp
 
 data class OhTeePeeCellConfiguration(
     val shape: Shape,
@@ -18,14 +18,12 @@ data class OhTeePeeCellConfiguration(
     val placeHolderTextStyle: TextStyle,
 ) {
     companion object {
-        val BORDER_WIDTH = 1.dp
-
         @Composable
         fun withDefaults(
             shape: Shape = MaterialTheme.shapes.medium,
             backgroundColor: Color = LocalContentColor.current,
             borderColor: Color = LocalContentColor.current,
-            borderWidth: Dp = BORDER_WIDTH,
+            borderWidth: Dp = 1.sdp,
             textStyle: TextStyle = TextStyle(),
             placeHolderTextStyle: TextStyle = textStyle,
         ) = OhTeePeeCellConfiguration(

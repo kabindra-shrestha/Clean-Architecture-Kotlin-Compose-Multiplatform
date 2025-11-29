@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
@@ -107,26 +108,19 @@ fun AppTheme(
         else -> lightScheme
     }
 
-    /*  MaterialTheme(
+    val dimensions = createDimensions()
+
+    CompositionLocalProvider(
+        LocalDimensions provides dimensions
+    ) {
+        MaterialTheme(
             colorScheme = colorScheme,
-            typography = AppTypography,
+            typography = ManRopeTypography(),
             content = content
-        )*/
-
-    MaterialTheme(
-        typography = ManRopeTypography(),
-        colorScheme = colorScheme,
-        content = content
-    )
+        )
+    }
 }
 
-private val LocalAppDimens = staticCompositionLocalOf {
-    normalDimensions
+private val LocalDimensions = staticCompositionLocalOf<Dimensions> {
+    error("No dimensions provided")
 }
-
-object AppTheme {
-    val dimens: Dimensions
-        @Composable
-        get() = LocalAppDimens.current
-}
-

@@ -36,13 +36,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.OhTeePeeInput
 import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.configuration.OhTeePeeCellConfiguration
 import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.configuration.OhTeePeeConfigurations
 import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.configuration.OhTeePeeErrorAnimationConfig
-import com.kabindra.clean.architecture.presentation.ui.theme.AppTheme
+
+import com.kabindra.clean.architecture.presentation.ui.theme.createDimensions
 import com.kabindra.clean.architecture.presentation.ui.theme.inputFieldActive
 import com.kabindra.clean.architecture.presentation.ui.theme.inputFieldDefault
 import com.kabindra.clean.architecture.presentation.ui.theme.inputFieldError
@@ -51,6 +51,7 @@ import com.kabindra.clean.architecture.presentation.ui.theme.inputFieldLabelErro
 import com.kabindra.clean.architecture.presentation.ui.theme.inputFieldTextDefault
 import com.kabindra.clean.architecture.presentation.ui.theme.inputFieldTextError
 import com.kabindra.clean.architecture.presentation.ui.theme.transparent
+import network.chaintech.sdpcomposemultiplatform.sdp
 
 @Composable
 fun InputField(
@@ -73,7 +74,7 @@ fun InputField(
         {
             ImageHandlerVector(
                 modifier = Modifier
-                    .size(20.dp)
+                    .size(20.sdp)
                     .aspectRatio(1f / 1f),
                 image = it,
                 contentDescription = ""
@@ -85,7 +86,7 @@ fun InputField(
         {
             ImageHandlerVector(
                 modifier = Modifier
-                    .size(20.dp)
+                    .size(20.sdp)
                     .aspectRatio(1f / 1f),
                 image = it,
                 contentDescription = "",
@@ -154,7 +155,7 @@ fun PasswordField(
         {
             ImageHandlerVector(
                 modifier = Modifier
-                    .size(20.dp)
+                    .size(20.sdp)
                     .aspectRatio(1f / 1f),
                 image = it,
                 contentDescription = ""
@@ -165,7 +166,7 @@ fun PasswordField(
     val trailingIcons = @Composable {
         ImageHandlerVector(
             modifier = Modifier
-                .size(20.dp)
+                .size(20.sdp)
                 .aspectRatio(1f / 1f),
             image = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
             contentDescription = "",
@@ -235,7 +236,7 @@ fun OTPField(
             fontWeight = FontWeight.Bold,
         ),
         borderColor = borderColor,
-        borderWidth = 1.dp,
+        borderWidth = 1.sdp,
     )
 
     OhTeePeeInput(
@@ -254,14 +255,14 @@ fun OTPField(
             ),
             activeCellConfig = defaultConfig.copy(
                 borderColor = inputFieldActive,
-                borderWidth = 2.dp
+                borderWidth = 2.sdp
             ),
             errorCellConfig = defaultConfig.copy(
                 borderColor = inputFieldError
             ),
             cellModifier = Modifier
-                .padding(AppTheme.dimens.paddingExtraSmall)
-                .size(48.dp),
+                .padding(createDimensions().paddingExtraSmall)
+                .size(48.sdp),
             errorAnimationConfig = OhTeePeeErrorAnimationConfig.Shake(
                 repeat = 15,
                 translationXRange = 5f,
@@ -269,7 +270,7 @@ fun OTPField(
             clearInputOnError = false
         ),
         autoFocusByDefault = autoFocusByDefault,
-        modifier = modifier.padding(top = AppTheme.dimens.paddingNormal)
+        modifier = modifier.padding(top = createDimensions().paddingNormal)
     )
     if (!isError && errorText.isNotEmpty()) {
         TextError(modifier = modifier, text = errorText, maxLines = 2)
@@ -297,7 +298,7 @@ fun <T> DropdownField(
         {
             ImageHandlerVector(
                 modifier = Modifier
-                    .size(20.dp)
+                    .size(20.sdp)
                     .aspectRatio(1f / 1f),
                 image = it,
                 contentDescription = ""
@@ -308,7 +309,7 @@ fun <T> DropdownField(
     val trailingIcons: (@Composable () -> Unit) = {
         ImageHandlerVector(
             modifier = Modifier
-                .size(20.dp)
+                .size(20.sdp)
                 .aspectRatio(1f / 1f),
             image = if (expanded) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
             contentDescription = "",

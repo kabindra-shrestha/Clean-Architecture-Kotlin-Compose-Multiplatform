@@ -20,17 +20,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.kabindra.inappupdate.ui.component.ButtonNormal
 import com.kabindra.inappupdate.ui.component.ImageHandlerLottie
 import com.kabindra.inappupdate.ui.component.TextMedium
-import com.kabindra.inappupdate.ui.theme.AppTheme
+import com.kabindra.inappupdate.ui.theme.createDimensions
 import composemultiplatformcleanarchitecture.in_app_update.generated.resources.Res
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import kotlinx.coroutines.delay
+import network.chaintech.sdpcomposemultiplatform.sdp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 @Composable
@@ -68,38 +68,39 @@ fun UpdateDownloadDialog(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(AppTheme.dimens.paddingSmall),
-                shape = RoundedCornerShape(16.dp),
+                    .padding(createDimensions().paddingSmall),
+                shape = RoundedCornerShape(16.sdp),
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(AppTheme.dimens.paddingSmall)
+                        .padding(createDimensions().paddingSmall)
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
                     ImageHandlerLottie(
-                        modifier = Modifier.width(100.dp).height(100.dp),
+                        modifier = Modifier.width(100.sdp).height(100.sdp),
                         image = composition,
                         contentDescription = ""
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(8.sdp))
                     TextMedium(
                         text = message,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(16.sdp))
                     if (isAction) {
                         Row(
                             modifier = Modifier
-                                .padding(AppTheme.dimens.paddingSmall)
+                                .padding(createDimensions().paddingSmall)
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
                             ButtonNormal(
-                                modifier = Modifier.align(Alignment.CenterVertically).width(100.dp),
+                                modifier = Modifier.align(Alignment.CenterVertically)
+                                    .width(100.sdp),
                                 text = "Install",
                                 onClick = {
                                     openDialog.value = false
@@ -139,45 +140,46 @@ fun UpdateAvailableDialog(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(AppTheme.dimens.paddingSmall),
-                shape = RoundedCornerShape(16.dp),
+                    .padding(createDimensions().paddingSmall),
+                shape = RoundedCornerShape(16.sdp),
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(AppTheme.dimens.paddingSmall)
+                        .padding(createDimensions().paddingSmall)
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
                     ImageHandlerLottie(
-                        modifier = Modifier.width(100.dp).height(100.dp),
+                        modifier = Modifier.width(100.sdp).height(100.sdp),
                         image = composition,
                         contentDescription = ""
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(8.sdp))
                     TextMedium(
                         modifier = Modifier.fillMaxWidth(),
                         text = title,
                         textAlign = TextAlign.Center,
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(4.sdp))
                     TextMedium(
                         modifier = Modifier.fillMaxWidth(),
                         text = message,
                         textAlign = TextAlign.Center,
                         maxLines = 2
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(16.sdp))
                     if (isAction) {
                         Row(
                             modifier = Modifier
-                                .padding(AppTheme.dimens.paddingSmall)
+                                .padding(createDimensions().paddingSmall)
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
                             ButtonNormal(
-                                modifier = Modifier.align(Alignment.CenterVertically).width(100.dp),
+                                modifier = Modifier.align(Alignment.CenterVertically)
+                                    .width(100.sdp),
                                 text = "Update",
                                 onClick = {
                                     openDialog.value = false
@@ -188,7 +190,7 @@ fun UpdateAvailableDialog(
                             if (!isForceUpdate) {
                                 ButtonNormal(
                                     modifier = Modifier.align(Alignment.CenterVertically)
-                                        .width(100.dp),
+                                        .width(100.sdp),
                                     text = "Later",
                                     onClick = {
                                         openDialog.value = false

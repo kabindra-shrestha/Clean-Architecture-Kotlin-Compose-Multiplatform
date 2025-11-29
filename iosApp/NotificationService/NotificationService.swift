@@ -9,51 +9,51 @@
 import UserNotifications
 
 class NotificationService: UNNotificationServiceExtension {
-    
+
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
-    
+
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
-        
+
         if let bestAttemptContent = bestAttemptContent {
             // Modify the notification content here...
-            
-            let userInfo : NotificationPayload? = ((request.content.userInfo as NSDictionary) as? Dictionary<String, Any>)?.object()
-            
+
+            let userInfo: NotificationPayload? = ((request.content.userInfo as NSDictionary) as? Dictionary<String, Any>)?.object()
+
             if userInfo == nil {
                 contentHandler(bestAttemptContent)
                 return
             }
-            
-            guard let url =  URL(string: userInfo?.fcmOptions?.image ?? "") else {
+
+            guard let url = URL(string: userInfo?.fcmOptions?.image ?? "") else {
                 contentHandler(bestAttemptContent)
                 return
             }
-            
+
             guard let data = try? Data(contentsOf: url) else {
                 contentHandler(bestAttemptContent)
                 return
             }
-            
+
             let identifier = "file.\(url.pathExtension)"
-            
+
             guard let attachment = UNNotificationAttachment.saveImageToDisk(fileIdentifier: identifier, data: data as NSData, options: nil) else {
                 contentHandler(bestAttemptContent)
                 return
             }
-            
-            bestAttemptContent.attachments = [ attachment ]
+
+            bestAttemptContent.attachments = [attachment]
             contentHandler(bestAttemptContent)
         }
-        
+
     }
-    
+
     override func serviceExtensionTimeWillExpire() {
         // Called just before the extension will be terminated by the system.
         // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
-        if let contentHandler = contentHandler, let bestAttemptContent =  bestAttemptContent {
+        if let contentHandler = contentHandler, let bestAttemptContent = bestAttemptContent {
             contentHandler(bestAttemptContent)
         }
     }
@@ -61,12 +61,12 @@ class NotificationService: UNNotificationServiceExtension {
 
 @available(iOSApplicationExtension 10.0, *)
 extension UNNotificationAttachment {
-    
-    static func saveImageToDisk(fileIdentifier: String, data: NSData, options: [NSObject : AnyObject]?) -> UNNotificationAttachment? {
+
+    static func saveImageToDisk(fileIdentifier: String, data: NSData, options: [NSObject: AnyObject]?) -> UNNotificationAttachment? {
         let fileManager = FileManager.default
         let folderName = ProcessInfo.processInfo.globallyUniqueString
         let folderURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(folderName, isDirectory: true)
-        
+
         do {
             try fileManager.createDirectory(at: folderURL!, withIntermediateDirectories: true, attributes: nil)
             let fileURL = folderURL?.appendingPathComponent(fileIdentifier)
@@ -76,7 +76,7 @@ extension UNNotificationAttachment {
         } catch let error {
             debugPrint("error \(error)")
         }
-        
+
         return nil
     }
 }

@@ -18,11 +18,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.kabindra.clean.architecture.presentation.ui.screen.navigation.Route
 import com.kabindra.clean.architecture.utils.enums.MenuType
+import network.chaintech.sdpcomposemultiplatform.sdp
 
 @Composable
 fun Lifecycle.observeAsSate(): State<Lifecycle.Event> {
@@ -62,7 +62,7 @@ fun TopAppBarComponent(
 
 @Composable
 fun TopAppBarWithBackComponent(
-    modifier: Modifier = Modifier.height(54.dp),
+    modifier: Modifier = Modifier.height(54.sdp),
     title: String = "",
     onBackNavigate: () -> Unit
 ) {
@@ -97,7 +97,7 @@ fun BottomNavigationBarComponent(
                     icon = {
                         label.icon?.let {
                             ImageHandlerVector(
-                                modifier = Modifier.size(32.dp).padding(1.dp),
+                                modifier = Modifier.size(32.sdp).padding(1.sdp),
                                 image = it,
                                 contentDescription = label.title
                             )

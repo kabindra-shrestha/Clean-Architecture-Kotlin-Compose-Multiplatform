@@ -66,24 +66,24 @@ fun TimerExample() {
         )
 
         // Timer state control buttons
-        Spacer(modifier = androidx.compose.ui.Modifier.height(16.dp))
+        Spacer(modifier = androidx.compose.ui.Modifier.height(16.sdp))
 
         // Start button
         ButtonNormal(text = "Start", onClick = { timerState.start() })
 
-        Spacer(modifier = androidx.compose.ui.Modifier.height(8.dp))
+        Spacer(modifier = androidx.compose.ui.Modifier.height(8.sdp))
 
         // Pause button
         ButtonNormal(text = "Pause", onClick = { timerState.pause() })
 
-        Spacer(modifier = androidx.compose.ui.Modifier.height(8.dp))
+        Spacer(modifier = androidx.compose.ui.Modifier.height(8.sdp))
 
         // Reset button
         ButtonNormal(text = "Reset", onClick = { timerState.reset() })
 
         // Display message when timer reaches 0
         if (timerState.currentTime == 0) {
-            Spacer(modifier = androidx.compose.ui.Modifier.height(16.dp))
+            Spacer(modifier = androidx.compose.ui.Modifier.height(16.sdp))
             TextMedium(
                 text = "Time's up!",
                 style = androidx.compose.material3.MaterialTheme.typography.headlineMedium

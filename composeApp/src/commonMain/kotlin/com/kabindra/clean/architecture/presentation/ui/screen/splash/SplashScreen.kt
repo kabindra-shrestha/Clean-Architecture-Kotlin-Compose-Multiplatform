@@ -19,7 +19,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kabindra.clean.architecture.data.request.LoginRefreshUserDetailsDataRequest
 import com.kabindra.clean.architecture.domain.entity.User
@@ -46,6 +45,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
+import network.chaintech.sdpcomposemultiplatform.sdp
 import org.koin.compose.viewmodel.koinViewModel
 
 private var firebaseToken = ""
@@ -163,8 +163,8 @@ fun SplashScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         AppIcon(
             modifier = Modifier
-                .width(200.dp)
-                .height(200.dp)
+                .width(200.sdp)
+                .height(200.sdp)
                 .align(Alignment.Center)
         )
 
@@ -172,9 +172,9 @@ fun SplashScreen(
             LoadingIndicator(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 20.dp, end = 20.dp)
+                    .padding(start = 20.sdp, end = 20.sdp)
                     .align(Alignment.Center)
-                    .offset(y = 150.dp)
+                    .offset(y = 150.sdp)
             )
         }
 
@@ -182,7 +182,7 @@ fun SplashScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .offset(y = (-75).dp),
+                .offset(y = (-75).sdp),
             text = "Version: ${getPlatform().appVersion}",
             textAlign = TextAlign.Center
         )

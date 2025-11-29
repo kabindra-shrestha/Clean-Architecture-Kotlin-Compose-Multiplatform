@@ -33,8 +33,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import com.kabindra.clean.architecture.presentation.ui.theme.AppTheme
+import com.kabindra.clean.architecture.presentation.ui.theme.createDimensions
+import network.chaintech.sdpcomposemultiplatform.sdp
 
 @Composable
 fun ButtonComponent(
@@ -46,16 +46,16 @@ fun ButtonComponent(
     content: @Composable () -> Unit
 ) {
     val buttonShape = RoundedCornerShape(
-        topStart = 10.dp,
-        topEnd = 10.dp,
-        bottomEnd = 10.dp,
-        bottomStart = 10.dp
+        topStart = 10.sdp,
+        topEnd = 10.sdp,
+        bottomEnd = 10.sdp,
+        bottomStart = 10.sdp
     )
 
     if (isOutlined) {
         OutlinedButton(
             modifier = modifier,
-            // .requiredWidth(AppTheme.dimens.minButtonWidth)
+            // .requiredWidth(createDimensions().minButtonWidth)
             // .then(modifier),
             enabled = enabled,
             colors = buttonColors,
@@ -67,7 +67,7 @@ fun ButtonComponent(
     } else {
         Button(
             modifier = modifier,
-            // .requiredWidth(AppTheme.dimens.minButtonWidth)
+            // .requiredWidth(createDimensions().minButtonWidth)
             // .then(modifier),
             enabled = enabled,
             colors = buttonColors,
@@ -117,7 +117,7 @@ fun ButtonIcon(
     ) {
         ImageHandlerVector(
             modifier = Modifier
-                .size(20.dp)
+                .size(20.sdp)
                 .aspectRatio(1f / 1f),
             image = iconVector,
             contentDescription = "Icon Button"
@@ -145,14 +145,14 @@ fun ButtonIconAndText(
     ) {
         ImageHandlerVector(
             modifier = Modifier
-                .size(20.dp)
+                .size(20.sdp)
                 .aspectRatio(1f / 1f),
             image = iconVector,
             contentDescription = iconContentDescription
         )
-        Spacer(modifier = Modifier.width(2.dp))
+        Spacer(modifier = Modifier.width(2.sdp))
         TextButtonAction(
-            modifier = Modifier.padding(start = AppTheme.dimens.paddingSmall),
+            modifier = Modifier.padding(start = createDimensions().paddingSmall),
             text = text
         )
     }
@@ -169,7 +169,7 @@ fun ButtonTopIconAndText(
 ) {
     Column(
         modifier = modifier
-            .clip(RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(12.sdp))
             .clickable(
                 interactionSource = MutableInteractionSource(),
                 indication = ripple(bounded = true),
@@ -184,11 +184,11 @@ fun ButtonTopIconAndText(
             image = iconVector,
             contentDescription = iconContentDescription
         )
-        Spacer(modifier = Modifier.height(2.dp))
+        Spacer(modifier = Modifier.height(2.sdp))
         TextComponent(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(AppTheme.dimens.paddingTooSmall),
+                .padding(createDimensions().paddingTooSmall),
             text = text,
             textAlign = TextAlign.Center,
             maxLines = 2
@@ -216,14 +216,14 @@ fun ButtonTextAndIcon(
     ) {
         ImageHandlerVector(
             modifier = Modifier
-                .size(20.dp)
+                .size(20.sdp)
                 .aspectRatio(1f / 1f),
             image = iconVector,
             contentDescription = iconContentDescription
         )
-        Spacer(modifier = Modifier.width(2.dp))
+        Spacer(modifier = Modifier.width(2.sdp))
         TextButtonAction(
-            modifier = Modifier.padding(start = AppTheme.dimens.paddingSmall),
+            modifier = Modifier.padding(start = createDimensions().paddingSmall),
             text = text
         )
 
@@ -232,10 +232,10 @@ fun ButtonTextAndIcon(
 
 @Composable
 fun ButtonBack(
-    modifier: Modifier = Modifier.width(50.dp).height(50.dp),
+    modifier: Modifier = Modifier.width(50.sdp).height(50.sdp),
     onClick: () -> Unit = {}
 ) {
-    IconButton(modifier = modifier.padding(10.dp), onClick = { onClick() }) {
+    IconButton(modifier = modifier.padding(10.sdp), onClick = { onClick() }) {
         ImageHandlerVector(
             image = Icons.Default.ArrowCircleLeft,
             contentDescription = "Back Button"
@@ -250,7 +250,7 @@ fun ButtonClose(
 ) {
     FilledTonalIconButton(
         modifier = modifier
-            .size(24.dp),
+            .size(24.sdp),
         onClick = { onClick() },
         shape = IconButtonDefaults.filledShape
     ) {
@@ -273,7 +273,7 @@ fun ButtonAction(
     IconButton(onClick = onClick) {
         ImageHandlerVector(
             modifier = modifier
-                .size(24.dp)
+                .size(24.sdp)
                 .aspectRatio(1f / 1f),
             image = iconVector,
             tint = tint,

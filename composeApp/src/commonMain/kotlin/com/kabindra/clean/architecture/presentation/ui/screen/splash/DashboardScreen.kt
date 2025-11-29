@@ -20,7 +20,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
 import com.kabindra.clean.architecture.utils.Connectivity
 import com.kabindra.clean.architecture.utils.error.GlobalErrorDialog
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.Res
@@ -34,6 +33,7 @@ import composemultiplatformcleanarchitecture.composeapp.generated.resources.six
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.ten
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.three
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.two
+import network.chaintech.sdpcomposemultiplatform.sdp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
@@ -103,15 +103,15 @@ fun HorizontalMultiBrowseCarouselExample() {
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(top = 16.dp, bottom = 16.dp),
-        preferredItemWidth = 186.dp,
-        itemSpacing = 8.dp,
-        contentPadding = PaddingValues(horizontal = 16.dp)
+            .padding(top = 16.sdp, bottom = 16.sdp),
+        preferredItemWidth = 186.sdp,
+        itemSpacing = 8.sdp,
+        contentPadding = PaddingValues(horizontal = 16.sdp)
     ) { i ->
         val item = items[i]
         Image(
             modifier = Modifier
-                .height(205.dp)
+                .height(205.sdp)
                 .maskClip(MaterialTheme.shapes.extraLarge),
             painter = painterResource(resource = item.imageResId),
             contentDescription = item.contentDescription,
@@ -126,19 +126,19 @@ fun HorizontalUncontainedCarouselExample() {
     val items = remember { carouselItems }
 
     HorizontalUncontainedCarousel(
-        state = rememberCarouselState { carouselItems.count() },
+        state = rememberCarouselState { items.count() },
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(top = 16.dp, bottom = 16.dp),
-        itemWidth = 186.dp,
-        itemSpacing = 8.dp,
-        contentPadding = PaddingValues(horizontal = 16.dp)
+            .padding(top = 16.sdp, bottom = 16.sdp),
+        itemWidth = 186.sdp,
+        itemSpacing = 8.sdp,
+        contentPadding = PaddingValues(horizontal = 16.sdp)
     ) { i ->
-        val item = carouselItems[i]
+        val item = items[i]
         Image(
             modifier = Modifier
-                .height(205.dp)
+                .height(205.sdp)
                 .maskClip(MaterialTheme.shapes.extraLarge),
             painter = painterResource(resource = item.imageResId),
             contentDescription = item.contentDescription,

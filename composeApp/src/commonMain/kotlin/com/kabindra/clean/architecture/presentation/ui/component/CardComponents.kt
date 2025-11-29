@@ -15,9 +15,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.kabindra.clean.architecture.presentation.ui.theme.cardBorder
 import com.kabindra.clean.architecture.presentation.ui.theme.transparent
+import network.chaintech.sdpcomposemultiplatform.sdp
 
 enum class BorderSide {
     LEFT, TOP, RIGHT, BOTTOM
@@ -27,7 +27,7 @@ enum class BorderSide {
 fun CardBorderInside(
     modifier: Modifier = Modifier,
     borderColor: Color = cardBorder,
-    borderWidth: Dp = 2.dp,
+    borderWidth: Dp = 2.sdp,
     containerColor: Color = transparent,
     sides: List<BorderSide> = listOf(
         BorderSide.LEFT,
@@ -41,9 +41,9 @@ fun CardBorderInside(
     val halfStroke = borderWidthPx / 2
 
     OutlinedCard(
-        modifier = modifier.clip(RoundedCornerShape(8.dp)),
-        shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        modifier = modifier.clip(RoundedCornerShape(8.sdp)),
+        shape = RoundedCornerShape(8.sdp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.sdp)
     ) {
         Box(
             modifier = Modifier.drawBorder(borderColor, borderWidthPx, halfStroke, sides)

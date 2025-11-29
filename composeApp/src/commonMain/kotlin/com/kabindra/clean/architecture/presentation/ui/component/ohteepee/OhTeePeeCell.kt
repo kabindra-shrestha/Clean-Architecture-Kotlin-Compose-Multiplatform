@@ -40,12 +40,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.configuration.OhTeePeeConfigurations
 import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.utils.conditional
-import com.kabindra.clean.architecture.presentation.ui.theme.AppTheme
 
-private val MIN_HEIGHT_CELL_SIZE = 48.dp
+import com.kabindra.clean.architecture.presentation.ui.theme.createDimensions
+import network.chaintech.sdpcomposemultiplatform.sdp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,6 +62,8 @@ internal fun OhTeePeeCell(
     onNext: () -> Unit,
     onDone: () -> Unit,
 ) {
+    val MIN_HEIGHT_CELL_SIZE = 48.sdp
+
     var isFocused by remember { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
     val cellConfiguration by remember(
@@ -131,10 +132,10 @@ internal fun OhTeePeeCell(
             .then(borderModifier)
             .shadow(
                 configurations.elevation,
-                shape = if (configurations.enableBottomLine) RoundedCornerShape(0.dp) else cellConfiguration.shape
+                shape = if (configurations.enableBottomLine) RoundedCornerShape(0.sdp) else cellConfiguration.shape
             ),
         // tonalElevation = configurations.elevation,
-        shape = if (configurations.enableBottomLine) RoundedCornerShape(0.dp) else cellConfiguration.shape,
+        shape = if (configurations.enableBottomLine) RoundedCornerShape(0.sdp) else cellConfiguration.shape,
     ) {
         BasicTextField(
             value = textFieldValue,
@@ -164,7 +165,7 @@ internal fun OhTeePeeCell(
                 }
                 .onFocusEvent { isFocused = it.isFocused }
                 .background(cellConfiguration.backgroundColor)
-                .padding(AppTheme.dimens.paddingNormal), // Adjust padding as needed,
+                .padding(createDimensions().paddingNormal), // Adjust padding as needed,
             keyboardOptions = KeyboardOptions(
                 autoCorrectEnabled = false,
                 keyboardType = keyboardType,
@@ -185,7 +186,7 @@ internal fun OhTeePeeCell(
                 singleLine = true,
                 enabled = enabled,
                 interactionSource = interactionSource,
-                contentPadding = PaddingValues(0.dp),
+                contentPadding = PaddingValues(0.sdp),
                 placeholder = {
                     CellPlaceHolder(
                         placeHolder = placeHolder,

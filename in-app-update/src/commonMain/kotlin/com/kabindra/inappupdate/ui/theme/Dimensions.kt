@@ -1,7 +1,8 @@
 package com.kabindra.inappupdate.ui.theme
 
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
+import network.chaintech.sdpcomposemultiplatform.sdp
 
 interface Dimensions {
     val paddingTooSmall: Dp
@@ -13,19 +14,15 @@ interface Dimensions {
     val minButtonWidth: Dp
 }
 
-val normalDimensions: Dimensions = object : Dimensions {
-    override val paddingTooSmall: Dp
-        get() = 2.dp
-    override val paddingExtraSmall: Dp
-        get() = 4.dp
-    override val paddingSmall: Dp
-        get() = 8.dp
-    override val paddingNormal: Dp
-        get() = 16.dp
-    override val paddingLarge: Dp
-        get() = 24.dp
-    override val paddingExtraLarge: Dp
-        get() = 32.dp
-    override val minButtonWidth: Dp
-        get() = 120.dp
+@Composable
+fun createDimensions(): Dimensions {
+    return object : Dimensions {
+        override val paddingTooSmall: Dp = 2.sdp
+        override val paddingExtraSmall: Dp = 4.sdp
+        override val paddingSmall: Dp = 8.sdp
+        override val paddingNormal: Dp = 16.sdp
+        override val paddingLarge: Dp = 24.sdp
+        override val paddingExtraLarge: Dp = 32.sdp
+        override val minButtonWidth: Dp = 120.sdp
+    }
 }

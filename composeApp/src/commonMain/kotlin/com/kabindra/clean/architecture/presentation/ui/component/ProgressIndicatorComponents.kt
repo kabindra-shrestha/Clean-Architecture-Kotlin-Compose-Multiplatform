@@ -11,9 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import network.chaintech.sdpcomposemultiplatform.sdp
 
 @Composable
 fun LoadingIndicator(
@@ -58,16 +58,16 @@ fun LoadingDialog(
         ) {
             CardBorderInside(
                 modifier = Modifier
-                    .size(200.dp),
+                    .size(200.sdp),
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     CircularProgressIndicator(
-                        modifier = Modifier.size(60.dp)
+                        modifier = Modifier.size(60.sdp)
                     )
                     if (message.isNotEmpty()) {
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(16.sdp))
                         TextComponent(
                             text = message,
                             textAlign = TextAlign.Center

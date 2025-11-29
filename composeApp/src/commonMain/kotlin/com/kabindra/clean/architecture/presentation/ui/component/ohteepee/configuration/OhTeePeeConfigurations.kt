@@ -7,10 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.utils.EMPTY
-import com.kabindra.clean.architecture.presentation.ui.theme.AppTheme
+
+import com.kabindra.clean.architecture.presentation.ui.theme.createDimensions
 import com.kabindra.clean.architecture.presentation.ui.theme.transparent
+import network.chaintech.sdpcomposemultiplatform.sdp
 
 
 private const val DEFAULT_PLACE_HOLDER = " "
@@ -76,9 +77,9 @@ data class OhTeePeeConfigurations(
                 borderColor = LocalContentColor.current,
             ),
             cellModifier: Modifier = Modifier
-                .padding(AppTheme.dimens.paddingTooSmall)
-                .size(48.dp),
-            elevation: Dp = 0.dp,
+                .padding(createDimensions().paddingTooSmall)
+                .size(48.sdp),
+            elevation: Dp = 0.sdp,
             cursorColor: Color = transparent,
             clearInputOnError: Boolean = true,
             enableBottomLine: Boolean = false,
