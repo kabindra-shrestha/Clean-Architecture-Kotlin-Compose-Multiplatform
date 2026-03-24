@@ -23,8 +23,6 @@ import androidx.compose.ui.window.Dialog
 import com.kabindra.clean.architecture.presentation.ui.component.ButtonText
 import com.kabindra.clean.architecture.presentation.ui.component.ImageHandlerLottie
 import com.kabindra.clean.architecture.presentation.ui.component.TextComponent
-
-import com.kabindra.clean.architecture.presentation.ui.theme.createDimensions
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.Res
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
@@ -53,12 +51,12 @@ fun GlobalConfirmationDialog(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(createDimensions().paddingSmall),
+                    .padding(2.sdp),
                 shape = RoundedCornerShape(16.sdp),
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(createDimensions().paddingSmall)
+                        .padding(2.sdp)
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
@@ -79,7 +77,7 @@ fun GlobalConfirmationDialog(
                     if (isAction) {
                         Row(
                             modifier = Modifier
-                                .padding(createDimensions().paddingSmall)
+                                .padding(2.sdp)
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceEvenly

@@ -68,12 +68,12 @@ fun UpdateDownloadDialog(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(createDimensions().paddingSmall),
+                    .padding(2.sdp),
                 shape = RoundedCornerShape(16.sdp),
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(createDimensions().paddingSmall)
+                        .padding(2.sdp)
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
@@ -93,7 +93,7 @@ fun UpdateDownloadDialog(
                     if (isAction) {
                         Row(
                             modifier = Modifier
-                                .padding(createDimensions().paddingSmall)
+                                .padding(2.sdp)
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceEvenly
@@ -140,12 +140,12 @@ fun UpdateAvailableDialog(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(createDimensions().paddingSmall),
+                    .padding(2.sdp),
                 shape = RoundedCornerShape(16.sdp),
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(createDimensions().paddingSmall)
+                        .padding(2.sdp)
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
@@ -172,7 +172,7 @@ fun UpdateAvailableDialog(
                     if (isAction) {
                         Row(
                             modifier = Modifier
-                                .padding(createDimensions().paddingSmall)
+                                .padding(2.sdp)
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceEvenly

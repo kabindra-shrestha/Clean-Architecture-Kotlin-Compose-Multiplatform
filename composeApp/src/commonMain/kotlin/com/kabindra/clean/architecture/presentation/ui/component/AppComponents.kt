@@ -6,13 +6,16 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key.Companion.R
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.Res
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.splash_icon
 import network.chaintech.sdpcomposemultiplatform.sdp
 
 @Composable
 fun AppIcon(
-    modifier: Modifier = Modifier.width(250.sdp).height(250.sdp)
+    modifier: Modifier = Modifier
+        .width(250.sdp)
+        .height(250.sdp)
 ) {
     ImageHandlerRes(
         modifier = modifier,
@@ -23,7 +26,9 @@ fun AppIcon(
 
 @Composable
 fun AppIconFilled(
-    modifier: Modifier = Modifier.width(163.sdp).height(63.sdp)
+    modifier: Modifier = Modifier
+        .width(163.sdp)
+        .height(63.sdp)
 ) {
     ImageHandlerRes(
         modifier = modifier,
@@ -34,7 +39,9 @@ fun AppIconFilled(
 
 @Composable
 fun AppBrandIcon(
-    modifier: Modifier = Modifier.wrapContentWidth().wrapContentHeight()
+    modifier: Modifier = Modifier
+        .wrapContentWidth()
+        .wrapContentHeight()
 ) {
     ImageHandlerRes(
         modifier = modifier,

@@ -172,7 +172,10 @@ fun SplashScreen(
             LoadingIndicator(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 20.sdp, end = 20.sdp)
+                    .padding(
+                        start = 20.sdp,
+                        end = 20.sdp
+                    )
                     .align(Alignment.Center)
                     .offset(y = 150.sdp)
             )
@@ -182,7 +185,7 @@ fun SplashScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .offset(y = (-75).sdp),
+                .offset(y = -75.sdp),
             text = "Version: ${getPlatform().appVersion}",
             textAlign = TextAlign.Center
         )
@@ -195,7 +198,8 @@ fun SplashScreen(
     if (splashState.isLogged == true) {
         splashViewModel.onEvent(SplashEvent.GetUser)
     } else {
-        onNavigateLogin()
+        // onNavigateLogin()
+        onNavigateDashboard()
     }
 
     LaunchedEffect(splashState.user) {

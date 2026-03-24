@@ -19,8 +19,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,6 +51,7 @@ fun <T> BaseLazy(
     userScrollEnabled: Boolean = true,
     spanCount: Int = 2,
     isLoading: Boolean = false,
+    useExpressiveLoadingIndicator: Boolean = true,
     loadMoreThreshold: Int = 5,
     currentPage: Int = 1,
     totalPages: Int = 1,
@@ -65,7 +66,8 @@ fun <T> BaseLazy(
         ) {
             LoadingIndicator(
                 modifier = Modifier.align(Alignment.Center),
-                isCircular = true
+                isCircular = true,
+                useExpressive = useExpressiveLoadingIndicator
             )
         }
     },
@@ -111,10 +113,9 @@ fun <T> LazyList(
     loadingContent: @Composable () -> Unit,
     onScrollStateChanged: (Boolean) -> Unit
 ) {
-    var currentPage = currentPageNew
+    val currentPage = remember(currentPageNew) { mutableIntStateOf(currentPageNew) }
     val totalPages = totalPagesNew
 
-    rememberCoroutineScope()
     val listState = rememberLazyListState()
 
     val isCollapsed = remember { derivedStateOf { listState.firstVisibleItemScrollOffset > 0 } }
@@ -130,7 +131,9 @@ fun <T> LazyList(
             val lastVisibleItemIndex =
                 listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
             // Check if we have scrolled near the end of the list and more items should be loaded
-            lastVisibleItemIndex >= (totalItemsCount - loadMoreThreshold) && !isLoading
+            totalItemsCount > 0 &&
+                    lastVisibleItemIndex >= (totalItemsCount - loadMoreThreshold) &&
+                    !isLoading
         }
     }
 
@@ -140,9 +143,9 @@ fun <T> LazyList(
             .distinctUntilChanged()
             .filter { it }  // Ensure that we load more items only when needed
             .collect {
-                if (!isLoading && currentPage < totalPages) {
-                    currentPage += 1
-                    onLoadMore(currentPage)
+                if (!isLoading && currentPage.intValue < totalPages) {
+                    currentPage.intValue += 1
+                    onLoadMore(currentPage.intValue)
                 }
             }
     }
@@ -185,10 +188,9 @@ fun <T> LazyGrid(
     loadingContent: @Composable () -> Unit,
     onScrollStateChanged: (Boolean) -> Unit
 ) {
-    var currentPage = currentPageNew
+    val currentPage = remember(currentPageNew) { mutableIntStateOf(currentPageNew) }
     val totalPages = totalPagesNew
 
-    rememberCoroutineScope()
     val gridState = rememberLazyGridState()
 
     val isCollapsed = remember { derivedStateOf { gridState.firstVisibleItemScrollOffset > 0 } }
@@ -204,7 +206,9 @@ fun <T> LazyGrid(
             val lastVisibleItemIndex =
                 gridState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
             // Check if we have scrolled near the end of the list and more items should be loaded
-            lastVisibleItemIndex >= (totalItemsCount - loadMoreThreshold) && !isLoading
+            totalItemsCount > 0 &&
+                    lastVisibleItemIndex >= (totalItemsCount - loadMoreThreshold) &&
+                    !isLoading
         }
     }
 
@@ -214,9 +218,9 @@ fun <T> LazyGrid(
             .distinctUntilChanged()
             .filter { it }  // Ensure that we load more items only when needed
             .collect {
-                if (!isLoading && currentPage < totalPages) {
-                    currentPage += 1
-                    onLoadMore(currentPage)
+                if (!isLoading && currentPage.intValue < totalPages) {
+                    currentPage.intValue += 1
+                    onLoadMore(currentPage.intValue)
                 }
             }
     }

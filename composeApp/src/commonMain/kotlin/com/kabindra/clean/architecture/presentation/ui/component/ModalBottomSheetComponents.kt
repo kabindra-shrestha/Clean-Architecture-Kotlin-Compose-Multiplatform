@@ -5,7 +5,6 @@ package com.kabindra.clean.architecture.presentation.ui.component
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -14,7 +13,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -23,8 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-
-import com.kabindra.clean.architecture.presentation.ui.theme.createDimensions
 import network.chaintech.sdpcomposemultiplatform.sdp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,6 +32,7 @@ fun ModalBottomSheetComponent(
     icon: ImageVector = Icons.Default.Close,
     isVisible: Boolean,
     isExpanded: Boolean = false,
+    useExpressive: Boolean = true,
     onDismiss: () -> Unit,
     content: @Composable () -> Unit,
 ) {
@@ -52,7 +49,8 @@ fun ModalBottomSheetComponent(
             sheetState = sheetState,
             content = {
                 Column(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .verticalScroll(rememberScrollState())
                 ) {
                     Row(
@@ -60,7 +58,7 @@ fun ModalBottomSheetComponent(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = modifier
                             .fillMaxWidth()
-                            .padding(horizontal = createDimensions().paddingSmall)
+                            .padding(horizontal = 2.sdp)
                     ) {
                         TextComponent(
                             text = title,
@@ -69,13 +67,18 @@ fun ModalBottomSheetComponent(
                             type = TextType.Title,
                             size = TextSize.Large
                         )
-                        IconButton(onClick = { onDismiss() }) {
-                            ImageHandlerVector(
-                                modifier = Modifier
-                                    .size(20.sdp)
-                                    .aspectRatio(1f),
-                                image = icon,
-                                contentDescription = text
+                        if (useExpressive && icon == Icons.Default.Close) {
+                            ButtonClose(
+                                modifier = Modifier.size(28.sdp),
+                                useExpressiveShapes = true,
+                                onClick = { onDismiss() }
+                            )
+                        } else {
+                            ButtonAction(
+                                modifier = Modifier.size(28.sdp),
+                                iconVector = icon,
+                                useExpressiveShapes = true,
+                                onClick = { onDismiss() }
                             )
                         }
                     }

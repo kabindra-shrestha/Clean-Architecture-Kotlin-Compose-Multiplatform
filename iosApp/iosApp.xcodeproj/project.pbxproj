@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
-		EA82440D2EB3CB0C00C02BE7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA82440C2EB3CB0C00C02BE7 /* Assets.xcassets */; };
 		F401002A2D8011A600F0BE18 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F40100292D8011A600F0BE18 /* SplashScreen.storyboard */; };
 		F4D160A02D940FDD008CBD55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D1609F2D940FDD008CBD55 /* AppDelegate.swift */; };
 		F4D160A22D941021008CBD55 /* NotificationPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D160A12D941021008CBD55 /* NotificationPayload.swift */; };
+		F4E82BDE2F72737B00BBDA33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4E82BDD2F72737B00BBDA33 /* Assets.xcassets */; };
 		F4FDB05D2D8D284900900E72 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F4FDB05C2D8D284900900E72 /* FirebaseAnalytics */; };
 		F4FDB05F2D8D284900900E72 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = F4FDB05E2D8D284900900E72 /* FirebaseCore */; };
 		F4FDB0612D8D284900900E72 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = F4FDB0602D8D284900900E72 /* FirebaseCrashlytics */; };
@@ -51,10 +51,10 @@
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB3632DC29227652001CCB65 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		EA82440C2EB3CB0C00C02BE7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F40100292D8011A600F0BE18 /* SplashScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SplashScreen.storyboard; sourceTree = "<group>"; };
 		F4D1609F2D940FDD008CBD55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4D160A12D941021008CBD55 /* NotificationPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPayload.swift; sourceTree = "<group>"; };
+		F4E82BDD2F72737B00BBDA33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F4FDB0642D8D309500900E72 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4FDB06B2D8D464900900E72 /* NotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4FDB07D2D8D47F600900E72 /* iosApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iosApp.entitlements; sourceTree = "<group>"; };
@@ -134,7 +134,7 @@
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				F40100292D8011A600F0BE18 /* SplashScreen.storyboard */,
-				EA82440C2EB3CB0C00C02BE7 /* Assets.xcassets */,
+				F4E82BDD2F72737B00BBDA33 /* Assets.xcassets */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -245,7 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F401002A2D8011A600F0BE18 /* SplashScreen.storyboard in Resources */,
-				EA82440D2EB3CB0C00C02BE7 /* Assets.xcassets in Resources */,
+				F4E82BDE2F72737B00BBDA33 /* Assets.xcassets in Resources */,
 				F4FDB0652D8D309500900E72 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

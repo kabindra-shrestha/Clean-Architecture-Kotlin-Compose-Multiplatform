@@ -27,13 +27,13 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
-import com.kabindra.clean.architecture.presentation.ui.theme.createDimensions
 import network.chaintech.sdpcomposemultiplatform.sdp
 
 @Composable
@@ -41,40 +41,62 @@ fun ButtonComponent(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     isOutlined: Boolean = false,
+    useExpressiveShapes: Boolean = true,
     buttonColors: ButtonColors = ButtonDefaults.buttonColors(),
     onClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
-    val buttonShape = RoundedCornerShape(
+    val defaultButtonShape = RoundedCornerShape(
         topStart = 10.sdp,
         topEnd = 10.sdp,
         bottomEnd = 10.sdp,
-        bottomStart = 10.sdp
+        bottomStart = 10.sdp,
     )
+    val expressiveButtonShapes = ButtonDefaults.shape
 
     if (isOutlined) {
-        OutlinedButton(
-            modifier = modifier,
-            // .requiredWidth(createDimensions().minButtonWidth)
-            // .then(modifier),
-            enabled = enabled,
-            colors = buttonColors,
-            shape = buttonShape,
-            onClick = { onClick() }
-        ) {
-            content()
+        if (useExpressiveShapes) {
+            OutlinedButton(
+                modifier = modifier,
+                enabled = enabled,
+                colors = buttonColors,
+                shape = expressiveButtonShapes,
+                onClick = { onClick() }
+            ) {
+                content()
+            }
+        } else {
+            OutlinedButton(
+                modifier = modifier,
+                enabled = enabled,
+                colors = buttonColors,
+                shape = defaultButtonShape,
+                onClick = { onClick() }
+            ) {
+                content()
+            }
         }
     } else {
-        Button(
-            modifier = modifier,
-            // .requiredWidth(createDimensions().minButtonWidth)
-            // .then(modifier),
-            enabled = enabled,
-            colors = buttonColors,
-            shape = buttonShape,
-            onClick = { onClick() }
-        ) {
-            content()
+        if (useExpressiveShapes) {
+            Button(
+                modifier = modifier,
+                enabled = enabled,
+                colors = buttonColors,
+                shape = expressiveButtonShapes,
+                onClick = { onClick() }
+            ) {
+                content()
+            }
+        } else {
+            Button(
+                modifier = modifier,
+                enabled = enabled,
+                colors = buttonColors,
+                shape = defaultButtonShape,
+                onClick = { onClick() }
+            ) {
+                content()
+            }
         }
     }
 }
@@ -85,6 +107,7 @@ fun ButtonText(
     text: String,
     enabled: Boolean = true,
     isOutlined: Boolean = false,
+    useExpressiveShapes: Boolean = true,
     buttonColors: ButtonColors = ButtonDefaults.buttonColors(),
     onClick: () -> Unit
 ) {
@@ -92,6 +115,7 @@ fun ButtonText(
         modifier = modifier,
         enabled = enabled,
         isOutlined = isOutlined,
+        useExpressiveShapes = useExpressiveShapes,
         buttonColors = buttonColors,
         onClick = { onClick() }
     ) {
@@ -105,6 +129,7 @@ fun ButtonIcon(
     iconVector: ImageVector = Icons.Outlined.PlayArrow,
     enabled: Boolean = true,
     isOutlined: Boolean = false,
+    useExpressiveShapes: Boolean = true,
     buttonColors: ButtonColors = ButtonDefaults.buttonColors(),
     onClick: () -> Unit
 ) {
@@ -112,6 +137,7 @@ fun ButtonIcon(
         modifier = modifier,
         enabled = enabled,
         isOutlined = isOutlined,
+        useExpressiveShapes = useExpressiveShapes,
         buttonColors = buttonColors,
         onClick = { onClick() }
     ) {
@@ -133,6 +159,7 @@ fun ButtonIconAndText(
     text: String = "",
     enabled: Boolean = true,
     isOutlined: Boolean = false,
+    useExpressiveShapes: Boolean = true,
     buttonColors: ButtonColors = ButtonDefaults.buttonColors(),
     onClick: () -> Unit
 ) {
@@ -140,6 +167,7 @@ fun ButtonIconAndText(
         modifier = modifier,
         enabled = enabled,
         isOutlined = isOutlined,
+        useExpressiveShapes = useExpressiveShapes,
         buttonColors = buttonColors,
         onClick = { onClick() }
     ) {
@@ -151,8 +179,8 @@ fun ButtonIconAndText(
             contentDescription = iconContentDescription
         )
         Spacer(modifier = Modifier.width(2.sdp))
-        TextButtonAction(
-            modifier = Modifier.padding(start = createDimensions().paddingSmall),
+        TextComponent(
+            modifier = Modifier.padding(start = 2.sdp),
             text = text
         )
     }
@@ -171,7 +199,7 @@ fun ButtonTopIconAndText(
         modifier = modifier
             .clip(RoundedCornerShape(12.sdp))
             .clickable(
-                interactionSource = MutableInteractionSource(),
+                interactionSource = remember { MutableInteractionSource() },
                 indication = ripple(bounded = true),
                 onClick = {
                     onClick()
@@ -188,7 +216,7 @@ fun ButtonTopIconAndText(
         TextComponent(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(createDimensions().paddingTooSmall),
+                .padding(2.sdp),
             text = text,
             textAlign = TextAlign.Center,
             maxLines = 2
@@ -204,6 +232,7 @@ fun ButtonTextAndIcon(
     text: String = "",
     enabled: Boolean = true,
     isOutlined: Boolean = false,
+    useExpressiveShapes: Boolean = true,
     buttonColors: ButtonColors = ButtonDefaults.buttonColors(),
     onClick: () -> Unit
 ) {
@@ -211,6 +240,7 @@ fun ButtonTextAndIcon(
         modifier = modifier,
         enabled = enabled,
         isOutlined = isOutlined,
+        useExpressiveShapes = useExpressiveShapes,
         buttonColors = buttonColors,
         onClick = { onClick() }
     ) {
@@ -222,8 +252,8 @@ fun ButtonTextAndIcon(
             contentDescription = iconContentDescription
         )
         Spacer(modifier = Modifier.width(2.sdp))
-        TextButtonAction(
-            modifier = Modifier.padding(start = createDimensions().paddingSmall),
+        TextComponent(
+            modifier = Modifier.padding(start = 2.sdp),
             text = text
         )
 
@@ -232,32 +262,65 @@ fun ButtonTextAndIcon(
 
 @Composable
 fun ButtonBack(
-    modifier: Modifier = Modifier.width(50.sdp).height(50.sdp),
+    modifier: Modifier = Modifier
+        .width(50.sdp)
+        .height(50.sdp),
+    useExpressiveShapes: Boolean = true,
     onClick: () -> Unit = {}
 ) {
-    IconButton(modifier = modifier.padding(10.sdp), onClick = { onClick() }) {
-        ImageHandlerVector(
-            image = Icons.Default.ArrowCircleLeft,
-            contentDescription = "Back Button"
-        )
+    if (useExpressiveShapes) {
+        IconButton(
+            modifier = modifier.padding(10.sdp),
+            shape = IconButtonDefaults.standardShape,
+            onClick = { onClick() }
+        ) {
+            ImageHandlerVector(
+                image = Icons.Default.ArrowCircleLeft,
+                contentDescription = "Back Button"
+            )
+        }
+    } else {
+        IconButton(
+            modifier = modifier.padding(10.sdp),
+            onClick = { onClick() }) {
+            ImageHandlerVector(
+                image = Icons.Default.ArrowCircleLeft,
+                contentDescription = "Back Button"
+            )
+        }
     }
 }
 
 @Composable
 fun ButtonClose(
     modifier: Modifier = Modifier,
+    useExpressiveShapes: Boolean = true,
     onClick: () -> Unit
 ) {
-    FilledTonalIconButton(
-        modifier = modifier
-            .size(24.sdp),
-        onClick = { onClick() },
-        shape = IconButtonDefaults.filledShape
-    ) {
-        ImageHandlerVector(
-            image = Icons.Default.Close,
-            contentDescription = "Edit Button"
-        )
+    if (useExpressiveShapes) {
+        FilledTonalIconButton(
+            modifier = modifier
+                .size(24.sdp),
+            shape = IconButtonDefaults.standardShape,
+            onClick = { onClick() },
+        ) {
+            ImageHandlerVector(
+                image = Icons.Default.Close,
+                contentDescription = "Edit Button"
+            )
+        }
+    } else {
+        FilledTonalIconButton(
+            modifier = modifier
+                .size(24.sdp),
+            onClick = { onClick() },
+            shape = IconButtonDefaults.filledShape
+        ) {
+            ImageHandlerVector(
+                image = Icons.Default.Close,
+                contentDescription = "Edit Button"
+            )
+        }
     }
 }
 
@@ -268,16 +331,33 @@ fun ButtonAction(
     iconContentDescription: String = "",
     text: String = "",
     tint: Color = Color(0xFFFF9500),
+    useExpressiveShapes: Boolean = true,
     onClick: () -> Unit
 ) {
-    IconButton(onClick = onClick) {
-        ImageHandlerVector(
-            modifier = modifier
-                .size(24.sdp)
-                .aspectRatio(1f / 1f),
-            image = iconVector,
-            tint = tint,
-            contentDescription = iconContentDescription
-        )
+    if (useExpressiveShapes) {
+        IconButton(
+            shape = IconButtonDefaults.standardShape,
+            onClick = onClick
+        ) {
+            ImageHandlerVector(
+                modifier = modifier
+                    .size(24.sdp)
+                    .aspectRatio(1f / 1f),
+                image = iconVector,
+                tint = tint,
+                contentDescription = iconContentDescription
+            )
+        }
+    } else {
+        IconButton(onClick = onClick) {
+            ImageHandlerVector(
+                modifier = modifier
+                    .size(24.sdp)
+                    .aspectRatio(1f / 1f),
+                image = iconVector,
+                tint = tint,
+                contentDescription = iconContentDescription
+            )
+        }
     }
 }

@@ -34,7 +34,9 @@ import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun ImageHandlerURL(
-    modifier: Modifier = Modifier.width(250.sdp).height(250.sdp),
+    modifier: Modifier = Modifier
+        .width(250.sdp)
+        .height(250.sdp),
     image: String = "",
     contentDescription: String = "",
     contentScale: ContentScale = ContentScale.Fit,
@@ -51,7 +53,9 @@ fun ImageHandlerURL(
         modifier = modifier
             .then(
                 if (circular)
-                    modifier.clip(CircleShape).background(backgroundColor)
+                    modifier
+                        .clip(CircleShape)
+                        .background(backgroundColor)
                 else
                     modifier
             )
@@ -76,7 +80,9 @@ fun ImageHandlerURL(
 
 @Composable
 fun ImageHandlerRes(
-    modifier: Modifier = Modifier.width(250.sdp).height(250.sdp),
+    modifier: Modifier = Modifier
+        .width(250.sdp)
+        .height(250.sdp),
     image: DrawableResource = Res.drawable.splash_icon,
     contentDescription: String = "",
     circular: Boolean = false,
@@ -86,7 +92,9 @@ fun ImageHandlerRes(
         modifier = modifier
             .then(
                 if (circular)
-                    modifier.clip(CircleShape).background(backgroundColor)
+                    modifier
+                        .clip(CircleShape)
+                        .background(backgroundColor)
                 else
                     modifier
             ),
@@ -98,7 +106,9 @@ fun ImageHandlerRes(
 
 @Composable
 fun ImageHandlerVector(
-    modifier: Modifier = Modifier.width(250.sdp).height(250.sdp),
+    modifier: Modifier = Modifier
+        .width(250.sdp)
+        .height(250.sdp),
     image: ImageVector?,
     contentDescription: String = "",
     tint: Color? = null,
@@ -111,7 +121,9 @@ fun ImageHandlerVector(
         modifier = modifier
             .then(
                 if (circular)
-                    modifier.clip(CircleShape).background(backgroundColor)
+                    modifier
+                        .clip(CircleShape)
+                        .background(backgroundColor)
                 else
                     modifier
             )
@@ -129,7 +141,9 @@ fun ImageHandlerVector(
 
 @Composable
 fun ImageHandlerLottie(
-    modifier: Modifier = Modifier.width(250.sdp).height(250.sdp),
+    modifier: Modifier = Modifier
+        .width(250.sdp)
+        .height(250.sdp),
     image: LottieComposition?,
     contentDescription: String = "",
     circular: Boolean = false,
@@ -139,7 +153,9 @@ fun ImageHandlerLottie(
         modifier = modifier
             .then(
                 if (circular)
-                    modifier.clip(CircleShape).background(backgroundColor)
+                    modifier
+                        .clip(CircleShape)
+                        .background(backgroundColor)
                 else
                     modifier
             ),

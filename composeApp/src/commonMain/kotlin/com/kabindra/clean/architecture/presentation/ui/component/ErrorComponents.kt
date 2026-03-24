@@ -13,12 +13,12 @@ import composemultiplatformcleanarchitecture.composeapp.generated.resources.Res
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import network.chaintech.sdpcomposemultiplatform.sdp
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ShowEmpty(
-    modifier: Modifier = Modifier.width(250.sdp).height(250.sdp)
+    modifier: Modifier = Modifier
+        .width(250.sdp)
+        .height(250.sdp)
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
