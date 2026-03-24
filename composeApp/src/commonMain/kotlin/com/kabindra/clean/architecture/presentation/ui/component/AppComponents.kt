@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.key.Key.Companion.R
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.Res
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.splash_icon
 import network.chaintech.sdpcomposemultiplatform.sdp

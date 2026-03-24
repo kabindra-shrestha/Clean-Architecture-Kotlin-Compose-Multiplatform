@@ -20,7 +20,7 @@ class NotificationService: UNNotificationServiceExtension {
         if let bestAttemptContent = bestAttemptContent {
             // Modify the notification content here...
 
-            let userInfo: NotificationPayload? = ((request.content.userInfo as NSDictionary) as? Dictionary<String, Any>)?.object()
+            let userInfo: NotificationPayload? = ((request.content.userInfo as NSDictionary) as? [String: Any])?.object()
 
             if userInfo == nil {
                 contentHandler(bestAttemptContent)

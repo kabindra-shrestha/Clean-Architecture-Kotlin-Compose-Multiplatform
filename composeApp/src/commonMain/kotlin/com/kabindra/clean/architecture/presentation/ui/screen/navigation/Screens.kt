@@ -1,10 +1,7 @@
 package com.kabindra.clean.architecture.presentation.ui.screen.navigation
 
 import androidx.navigation3.runtime.NavKey
-import androidx.savedstate.serialization.SavedStateConfiguration
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
 
 enum class Screens(val title: String) {
     Splash(title = "Splash"),

@@ -6,19 +6,18 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.Res
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.manrope_bold
-import composemultiplatformcleanarchitecture.composeapp.generated.resources.manrope_extraBold
-import composemultiplatformcleanarchitecture.composeapp.generated.resources.manrope_extraLight
+import composemultiplatformcleanarchitecture.composeapp.generated.resources.manrope_extra_bold
+import composemultiplatformcleanarchitecture.composeapp.generated.resources.manrope_extra_light
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.manrope_light
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.manrope_medium
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.manrope_regular
-import composemultiplatformcleanarchitecture.composeapp.generated.resources.manrope_semiBold
+import composemultiplatformcleanarchitecture.composeapp.generated.resources.manrope_semi_bold
 import network.chaintech.sdpcomposemultiplatform.ssp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.Font
 
 @Composable
 fun AppTypography() = Typography().run {
-
     val fontFamily = ManRopeFontFamily()
 
     copy(
@@ -50,8 +49,8 @@ fun ManRopeFontFamily() = FontFamily(
     Font(Res.font.manrope_light, weight = FontWeight.Light),
     Font(Res.font.manrope_regular, weight = FontWeight.Normal),
     Font(Res.font.manrope_medium, weight = FontWeight.Medium),
-    Font(Res.font.manrope_semiBold, weight = FontWeight.SemiBold),
+    Font(Res.font.manrope_semi_bold, weight = FontWeight.SemiBold),
     Font(Res.font.manrope_bold, weight = FontWeight.Bold),
-    Font(Res.font.manrope_extraBold, weight = FontWeight.ExtraBold),
-    Font(Res.font.manrope_extraLight, weight = FontWeight.ExtraLight)
+    Font(Res.font.manrope_extra_bold, weight = FontWeight.ExtraBold),
+    Font(Res.font.manrope_extra_light, weight = FontWeight.ExtraLight)
 )

@@ -24,7 +24,6 @@ import androidx.compose.ui.window.Dialog
 import com.kabindra.inappupdate.ui.component.ButtonNormal
 import com.kabindra.inappupdate.ui.component.ImageHandlerLottie
 import com.kabindra.inappupdate.ui.component.TextMedium
-import com.kabindra.inappupdate.ui.theme.createDimensions
 import composemultiplatformcleanarchitecture.in_app_update.generated.resources.Res
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
