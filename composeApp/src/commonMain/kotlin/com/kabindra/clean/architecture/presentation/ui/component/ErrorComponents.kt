@@ -17,8 +17,8 @@ import network.chaintech.sdpcomposemultiplatform.sdp
 @Composable
 fun ShowEmpty(
     modifier: Modifier = Modifier
-        .width(250.sdp)
-        .height(250.sdp)
+        .width(150.sdp)
+        .height(150.sdp)
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),

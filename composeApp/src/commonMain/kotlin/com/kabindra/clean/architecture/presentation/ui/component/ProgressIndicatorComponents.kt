@@ -70,7 +70,7 @@ fun ExpressiveCircularProgressIndicator(
     color: Color = MaterialTheme.colorScheme.primary,
     trackColor: Color = MaterialTheme.colorScheme.surfaceVariant,
     progress: Float? = null,
-    strokeWidth: Dp = 4.sdp,
+    strokeWidth: Dp = 2.sdp,
 ) {
     val strokeWidthPx = with(LocalDensity.current) { strokeWidth.toPx() }
     val stroke = remember(strokeWidthPx) { Stroke(width = strokeWidthPx, cap = StrokeCap.Round) }
@@ -102,7 +102,7 @@ fun ExpressiveLinearProgressIndicator(
     color: Color = MaterialTheme.colorScheme.primary,
     trackColor: Color = MaterialTheme.colorScheme.surfaceVariant,
     progress: Float? = null,
-    strokeWidth: Dp = 4.sdp,
+    strokeWidth: Dp = 2.sdp,
 ) {
     val strokeWidthPx = with(LocalDensity.current) { strokeWidth.toPx() }
     val stroke = remember(strokeWidthPx) { Stroke(width = strokeWidthPx, cap = StrokeCap.Round) }
@@ -139,35 +139,35 @@ fun LoadingDialog(
             DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
         ) {
             CardComponent(
-                modifier = Modifier.size(200.sdp),
+                modifier = Modifier.size(120.sdp),
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .size(200.sdp),
+                        .size(120.sdp),
                 ) {
-                    Spacer(modifier = Modifier.height(16.sdp))
+                    Spacer(modifier = Modifier.height(10.sdp))
 
                     if (useExpressive) {
                         ExpressiveCircularProgressIndicator(
-                            modifier = Modifier.size(60.sdp),
+                            modifier = Modifier.size(36.sdp),
                         )
                     } else {
                         CircularProgressIndicator(
-                            modifier = Modifier.size(60.sdp),
+                            modifier = Modifier.size(36.sdp),
                         )
                     }
 
                     if (message.isNotEmpty()) {
-                        Spacer(modifier = Modifier.height(16.sdp))
+                        Spacer(modifier = Modifier.height(10.sdp))
                         TextComponent(
                             text = message,
                             textAlign = TextAlign.Center,
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(16.sdp))
+                    Spacer(modifier = Modifier.height(10.sdp))
                 }
             }
         }

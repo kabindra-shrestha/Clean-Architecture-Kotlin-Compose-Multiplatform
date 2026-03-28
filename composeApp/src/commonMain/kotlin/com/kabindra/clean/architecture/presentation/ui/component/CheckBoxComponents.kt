@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import network.chaintech.sdpcomposemultiplatform.sdp
 
-
 @Composable
 fun CheckboxCustom(
     modifier: Modifier = Modifier,
@@ -25,7 +24,7 @@ fun CheckboxCustom(
     label: String = ""
 ) {
     val strokeWidthPx =
-        with(LocalDensity.current) { 2.sdp.toPx() }
+        with(LocalDensity.current) { 1.sdp.toPx() }
     val checkmarkStroke = remember(strokeWidthPx) {
         Stroke(width = strokeWidthPx, cap = StrokeCap.Round, join = StrokeJoin.Round)
     }

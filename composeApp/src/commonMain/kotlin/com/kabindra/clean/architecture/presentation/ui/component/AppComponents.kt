@@ -13,8 +13,8 @@ import network.chaintech.sdpcomposemultiplatform.sdp
 @Composable
 fun AppIcon(
     modifier: Modifier = Modifier
-        .width(250.sdp)
-        .height(250.sdp)
+        .width(150.sdp)
+        .height(150.sdp)
 ) {
     ImageHandlerRes(
         modifier = modifier,
@@ -26,8 +26,8 @@ fun AppIcon(
 @Composable
 fun AppIconFilled(
     modifier: Modifier = Modifier
-        .width(163.sdp)
-        .height(63.sdp)
+        .width(98.sdp)
+        .height(38.sdp)
 ) {
     ImageHandlerRes(
         modifier = modifier,

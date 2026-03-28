@@ -163,8 +163,8 @@ fun SplashScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         AppIcon(
             modifier = Modifier
-                .width(200.sdp)
-                .height(200.sdp)
+                .width(120.sdp)
+                .height(120.sdp)
                 .align(Alignment.Center)
         )
 
@@ -173,11 +173,11 @@ fun SplashScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        start = 20.sdp,
-                        end = 20.sdp
+                        start = 12.sdp,
+                        end = 12.sdp
                     )
                     .align(Alignment.Center)
-                    .offset(y = 150.sdp)
+                    .offset(y = 90.sdp)
             )
         }
 
@@ -185,7 +185,7 @@ fun SplashScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .offset(y = -75.sdp),
+                .offset(y = (-45).sdp),
             text = "Version: ${getPlatform().appVersion}",
             textAlign = TextAlign.Center
         )

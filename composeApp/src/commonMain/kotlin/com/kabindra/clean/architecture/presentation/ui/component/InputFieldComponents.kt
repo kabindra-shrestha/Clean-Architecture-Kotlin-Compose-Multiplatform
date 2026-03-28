@@ -63,7 +63,7 @@ fun InputField(
         {
             ImageHandlerVector(
                 modifier = Modifier
-                    .size(20.sdp)
+                    .size(12.sdp)
                     .aspectRatio(1f / 1f),
                 image = it,
                 contentDescription = ""
@@ -75,7 +75,7 @@ fun InputField(
         {
             ImageHandlerVector(
                 modifier = Modifier
-                    .size(20.sdp)
+                    .size(12.sdp)
                     .aspectRatio(1f / 1f),
                 image = it,
                 contentDescription = "",
@@ -144,7 +144,7 @@ fun PasswordField(
         {
             ImageHandlerVector(
                 modifier = Modifier
-                    .size(20.sdp)
+                    .size(12.sdp)
                     .aspectRatio(1f / 1f),
                 image = it,
                 contentDescription = ""
@@ -155,7 +155,7 @@ fun PasswordField(
     val trailingIcons = @Composable {
         ImageHandlerVector(
             modifier = Modifier
-                .size(20.sdp)
+                .size(12.sdp)
                 .aspectRatio(1f / 1f),
             image = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
             contentDescription = "",
@@ -223,7 +223,7 @@ fun <T> DropdownField(
         {
             ImageHandlerVector(
                 modifier = Modifier
-                    .size(20.sdp)
+                    .size(12.sdp)
                     .aspectRatio(1f / 1f),
                 image = it,
                 contentDescription = ""
@@ -234,7 +234,7 @@ fun <T> DropdownField(
     val trailingIcons: (@Composable () -> Unit) = {
         ImageHandlerVector(
             modifier = Modifier
-                .size(20.sdp)
+                .size(12.sdp)
                 .aspectRatio(1f / 1f),
             image = if (expanded) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
             contentDescription = "",

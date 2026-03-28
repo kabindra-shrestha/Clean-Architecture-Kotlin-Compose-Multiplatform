@@ -21,6 +21,7 @@ import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -36,6 +37,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import network.chaintech.sdpcomposemultiplatform.sdp
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ButtonComponent(
     modifier: Modifier = Modifier,
@@ -47,12 +49,12 @@ fun ButtonComponent(
     content: @Composable () -> Unit
 ) {
     val defaultButtonShape = RoundedCornerShape(
-        topStart = 10.sdp,
-        topEnd = 10.sdp,
-        bottomEnd = 10.sdp,
-        bottomStart = 10.sdp,
+        topStart = 6.sdp,
+        topEnd = 6.sdp,
+        bottomEnd = 6.sdp,
+        bottomStart = 6.sdp,
     )
-    val expressiveButtonShapes = ButtonDefaults.shape
+    val expressiveButtonShapes = ButtonDefaults.shapes()
 
     if (isOutlined) {
         if (useExpressiveShapes) {
@@ -60,7 +62,7 @@ fun ButtonComponent(
                 modifier = modifier,
                 enabled = enabled,
                 colors = buttonColors,
-                shape = expressiveButtonShapes,
+                shapes = expressiveButtonShapes,
                 onClick = { onClick() }
             ) {
                 content()
@@ -82,7 +84,7 @@ fun ButtonComponent(
                 modifier = modifier,
                 enabled = enabled,
                 colors = buttonColors,
-                shape = expressiveButtonShapes,
+                shapes = expressiveButtonShapes,
                 onClick = { onClick() }
             ) {
                 content()
@@ -143,7 +145,7 @@ fun ButtonIcon(
     ) {
         ImageHandlerVector(
             modifier = Modifier
-                .size(20.sdp)
+                .size(12.sdp)
                 .aspectRatio(1f / 1f),
             image = iconVector,
             contentDescription = "Icon Button"
@@ -173,14 +175,14 @@ fun ButtonIconAndText(
     ) {
         ImageHandlerVector(
             modifier = Modifier
-                .size(20.sdp)
+                .size(12.sdp)
                 .aspectRatio(1f / 1f),
             image = iconVector,
             contentDescription = iconContentDescription
         )
-        Spacer(modifier = Modifier.width(2.sdp))
+        Spacer(modifier = Modifier.width(1.sdp))
         TextComponent(
-            modifier = Modifier.padding(start = 2.sdp),
+            modifier = Modifier.padding(start = 1.sdp),
             text = text
         )
     }
@@ -197,7 +199,7 @@ fun ButtonTopIconAndText(
 ) {
     Column(
         modifier = modifier
-            .clip(RoundedCornerShape(12.sdp))
+            .clip(RoundedCornerShape(7.sdp))
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = ripple(bounded = true),
@@ -212,11 +214,11 @@ fun ButtonTopIconAndText(
             image = iconVector,
             contentDescription = iconContentDescription
         )
-        Spacer(modifier = Modifier.height(2.sdp))
+        Spacer(modifier = Modifier.height(1.sdp))
         TextComponent(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(2.sdp),
+                .padding(1.sdp),
             text = text,
             textAlign = TextAlign.Center,
             maxLines = 2
@@ -246,32 +248,33 @@ fun ButtonTextAndIcon(
     ) {
         ImageHandlerVector(
             modifier = Modifier
-                .size(20.sdp)
+                .size(12.sdp)
                 .aspectRatio(1f / 1f),
             image = iconVector,
             contentDescription = iconContentDescription
         )
-        Spacer(modifier = Modifier.width(2.sdp))
+        Spacer(modifier = Modifier.width(1.sdp))
         TextComponent(
-            modifier = Modifier.padding(start = 2.sdp),
+            modifier = Modifier.padding(start = 1.sdp),
             text = text
         )
 
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ButtonBack(
     modifier: Modifier = Modifier
-        .width(50.sdp)
-        .height(50.sdp),
+        .width(30.sdp)
+        .height(30.sdp),
     useExpressiveShapes: Boolean = true,
     onClick: () -> Unit = {}
 ) {
     if (useExpressiveShapes) {
         IconButton(
-            modifier = modifier.padding(10.sdp),
-            shape = IconButtonDefaults.standardShape,
+            modifier = modifier.padding(6.sdp),
+            shapes = IconButtonDefaults.shapes(),
             onClick = { onClick() }
         ) {
             ImageHandlerVector(
@@ -281,7 +284,7 @@ fun ButtonBack(
         }
     } else {
         IconButton(
-            modifier = modifier.padding(10.sdp),
+            modifier = modifier.padding(6.sdp),
             onClick = { onClick() }) {
             ImageHandlerVector(
                 image = Icons.Default.ArrowCircleLeft,
@@ -291,6 +294,7 @@ fun ButtonBack(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ButtonClose(
     modifier: Modifier = Modifier,
@@ -300,8 +304,8 @@ fun ButtonClose(
     if (useExpressiveShapes) {
         FilledTonalIconButton(
             modifier = modifier
-                .size(24.sdp),
-            shape = IconButtonDefaults.standardShape,
+                .size(14.sdp),
+            shapes = IconButtonDefaults.shapes(),
             onClick = { onClick() },
         ) {
             ImageHandlerVector(
@@ -312,7 +316,7 @@ fun ButtonClose(
     } else {
         FilledTonalIconButton(
             modifier = modifier
-                .size(24.sdp),
+                .size(14.sdp),
             onClick = { onClick() },
             shape = IconButtonDefaults.filledShape
         ) {
@@ -324,6 +328,7 @@ fun ButtonClose(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ButtonAction(
     modifier: Modifier = Modifier,
@@ -336,12 +341,12 @@ fun ButtonAction(
 ) {
     if (useExpressiveShapes) {
         IconButton(
-            shape = IconButtonDefaults.standardShape,
+            shapes = IconButtonDefaults.shapes(),
             onClick = onClick
         ) {
             ImageHandlerVector(
                 modifier = modifier
-                    .size(24.sdp)
+                    .size(14.sdp)
                     .aspectRatio(1f / 1f),
                 image = iconVector,
                 tint = tint,
@@ -352,7 +357,7 @@ fun ButtonAction(
         IconButton(onClick = onClick) {
             ImageHandlerVector(
                 modifier = modifier
-                    .size(24.sdp)
+                    .size(14.sdp)
                     .aspectRatio(1f / 1f),
                 image = iconVector,
                 tint = tint,

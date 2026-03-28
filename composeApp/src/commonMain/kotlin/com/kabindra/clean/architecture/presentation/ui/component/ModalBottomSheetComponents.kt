@@ -58,7 +58,7 @@ fun ModalBottomSheetComponent(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 2.sdp)
+                            .padding(horizontal = 1.sdp)
                     ) {
                         TextComponent(
                             text = title,
@@ -69,13 +69,13 @@ fun ModalBottomSheetComponent(
                         )
                         if (useExpressive && icon == Icons.Default.Close) {
                             ButtonClose(
-                                modifier = Modifier.size(28.sdp),
+                                modifier = Modifier.size(17.sdp),
                                 useExpressiveShapes = true,
                                 onClick = { onDismiss() }
                             )
                         } else {
                             ButtonAction(
-                                modifier = Modifier.size(28.sdp),
+                                modifier = Modifier.size(17.sdp),
                                 iconVector = icon,
                                 useExpressiveShapes = true,
                                 onClick = { onDismiss() }
@@ -88,6 +88,3 @@ fun ModalBottomSheetComponent(
         )
     }
 }
-
-
-

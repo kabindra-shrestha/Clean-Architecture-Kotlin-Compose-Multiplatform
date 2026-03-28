@@ -1,6 +1,5 @@
 package com.kabindra.clean.architecture.presentation.ui.component
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -60,7 +59,7 @@ fun PagerIndicator(modifier: Modifier = Modifier, pageCount: Int, currentPageInd
         modifier = modifier
             .wrapContentHeight()
             .fillMaxWidth()
-            .padding(bottom = 16.sdp),
+            .padding(bottom = 10.sdp),
         horizontalArrangement = Arrangement.Center
     ) {
         repeat(pageCount) { iteration ->
@@ -68,13 +67,13 @@ fun PagerIndicator(modifier: Modifier = Modifier, pageCount: Int, currentPageInd
                 if (currentPageIndex == iteration) carouselSelected else carouselUnselected
             Box(
                 modifier = Modifier
-                    .width(16.sdp)
-                    .height(4.sdp)
+                    .width(10.sdp)
+                    .height(2.sdp)
                     .padding(
-                        start = 2.sdp,
-                        end = 2.sdp
+                        start = 1.sdp,
+                        end = 1.sdp
                     )
-                    .clip(RoundedCornerShape(8.sdp))
+                    .clip(RoundedCornerShape(5.sdp))
                     .background(color)
             )
         }
@@ -88,9 +87,9 @@ fun TabIndicatorScope.TabIndicator(
     Box(
         modifier = Modifier
             .tabIndicatorOffset(selectedIndex)
-            .height(4.sdp)
-            .padding(horizontal = 28.sdp)
-            .clip(RoundedCornerShape(8.sdp))
+            .height(2.sdp)
+            .padding(horizontal = 17.sdp)
+            .clip(RoundedCornerShape(5.sdp))
             .background(tabSelected)
     )
 }
@@ -100,7 +99,7 @@ fun <T> HorizontalPagers(
     modifier: Modifier = Modifier.fillMaxWidth(),
     aspectRatio: Float = 16f / 9f,
     padding: Dp = 0.dp,
-    contentPadding: PaddingValues = PaddingValues(20.sdp),
+    contentPadding: PaddingValues = PaddingValues(12.sdp),
     pageSpacing: Dp = 0.dp,
     useGraphicsLayer: Boolean = false,
     isAutoScroll: Boolean = false,
@@ -140,7 +139,7 @@ fun <T> HorizontalPagers(
             Card(
                 modifier = modifier
                     .aspectRatio(aspectRatio)
-                    .clip(RoundedCornerShape(16.sdp))
+                    .clip(RoundedCornerShape(10.sdp))
                     .clickable(
                         interactionSource = pageInteractionSource,
                         indication = ripple(bounded = true),
@@ -199,7 +198,7 @@ fun <T> HorizontalPagers(
 fun <T> HorizontalPagersWithTabs(
     modifier: Modifier = Modifier.fillMaxWidth(),
     padding: Dp = 0.dp,
-    contentPadding: PaddingValues = PaddingValues(20.sdp),
+    contentPadding: PaddingValues = PaddingValues(12.sdp),
     pageSpacing: Dp = 0.dp,
     useGraphicsLayer: Boolean = false,
     tabs: List<String>,
@@ -217,7 +216,7 @@ fun <T> HorizontalPagersWithTabs(
 
     Column(modifier = modifier.padding(top = padding)) {
         PrimaryScrollableTabRow(
-            modifier = Modifier.padding(bottom = 10.sdp),
+            modifier = Modifier.padding(bottom = 6.sdp),
             containerColor = tabColor,
             selectedTabIndex = pagerState.currentPage,
             edgePadding = 0.dp,
@@ -239,8 +238,8 @@ fun <T> HorizontalPagersWithTabs(
                     content = {
                         Row(
                             modifier = Modifier
-                                .height(36.sdp)
-                                .clip(RoundedCornerShape(12.sdp))
+                                .height(22.sdp)
+                                .clip(RoundedCornerShape(7.sdp))
                                 .background(
                                     if (isSelected)
                                         tabSelected.copy(alpha = 0.2f)
@@ -250,7 +249,7 @@ fun <T> HorizontalPagersWithTabs(
                                 .border(
                                     width = 1.sdp,
                                     color = Color.Gray,
-                                    shape = RoundedCornerShape(12.sdp)
+                                    shape = RoundedCornerShape(7.sdp)
                                 ),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
@@ -260,20 +259,20 @@ fun <T> HorizontalPagersWithTabs(
                             }
 
                             if (tabsIcon) {
-                                Spacer(modifier = Modifier.width(8.sdp))
+                                Spacer(modifier = Modifier.width(5.sdp))
                                 ImageHandlerVector(
-                                    modifier = Modifier.size(24.sdp),
+                                    modifier = Modifier.size(14.sdp),
                                     image = Icons.Default.Person
                                 )
-                                Spacer(modifier = Modifier.width(8.sdp))
+                                Spacer(modifier = Modifier.width(5.sdp))
                                 if (isSelected) {
                                     tabTitle()
-                                    Spacer(modifier = Modifier.width(12.sdp))
+                                    Spacer(modifier = Modifier.width(7.sdp))
                                 }
                             } else {
-                                Spacer(modifier = Modifier.width(12.sdp))
+                                Spacer(modifier = Modifier.width(7.sdp))
                                 tabTitle()
-                                Spacer(modifier = Modifier.width(12.sdp))
+                                Spacer(modifier = Modifier.width(7.sdp))
                             }
                         }
                     },
@@ -310,4 +309,3 @@ fun <T> HorizontalPagersWithTabs(
         }
     }
 }
-

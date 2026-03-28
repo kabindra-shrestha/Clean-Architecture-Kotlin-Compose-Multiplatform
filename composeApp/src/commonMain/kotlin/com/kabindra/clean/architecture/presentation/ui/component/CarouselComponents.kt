@@ -35,11 +35,11 @@ fun <T> ExpressiveCarouselComponent(
     modifier: Modifier = Modifier,
     items: List<T>,
     variant: ExpressiveCarouselVariant = ExpressiveCarouselVariant.MULTI_BROWSE,
-    preferredItemWidth: Dp = 186.sdp,
-    itemWidth: Dp = 186.sdp,
+    preferredItemWidth: Dp = 112.sdp,
+    itemWidth: Dp = 112.sdp,
     maxItemWidth: Dp = Dp.Unspecified,
-    itemSpacing: Dp = 8.sdp,
-    contentPadding: PaddingValues = PaddingValues(horizontal = 16.sdp),
+    itemSpacing: Dp = 5.sdp,
+    contentPadding: PaddingValues = PaddingValues(horizontal = 10.sdp),
     userScrollEnabled: Boolean = true,
     itemContent: @Composable CarouselItemScope.(item: T, index: Int) -> Unit,
 ) {
@@ -105,7 +105,7 @@ fun ExpressiveTextCarousel(
         CardComponent(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.sdp)
+                .height(120.sdp)
                 .maskClip(MaterialTheme.shapes.extraLarge)
                 .clickable { onItemClick(item) },
             variant = CardVariant.FILLED,
@@ -113,8 +113,8 @@ fun ExpressiveTextCarousel(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.sdp),
-                verticalArrangement = Arrangement.spacedBy(8.sdp),
+                    .padding(10.sdp),
+                verticalArrangement = Arrangement.spacedBy(5.sdp),
             ) {
                 TextComponent(
                     text = item,
@@ -148,7 +148,7 @@ fun ExpressiveImageCarousel(
         CardComponent(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.sdp)
+                .height(120.sdp)
                 .maskClip(MaterialTheme.shapes.extraLarge)
                 .clickable { onImageClick(imageUrl) },
             variant = CardVariant.ELEVATED,
@@ -163,7 +163,7 @@ fun ExpressiveImageCarousel(
                 TextComponent(
                     modifier = Modifier
                         .align(Alignment.BottomStart)
-                        .padding(12.sdp),
+                        .padding(7.sdp),
                     text = "Image #${index + 1}",
                     type = TextType.Label,
                     size = TextSize.Small,

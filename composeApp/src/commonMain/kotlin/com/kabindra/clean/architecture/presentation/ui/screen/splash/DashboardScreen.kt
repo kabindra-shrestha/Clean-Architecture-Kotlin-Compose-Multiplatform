@@ -150,9 +150,17 @@ fun DashboardScreen(
     val toolbarActions = remember {
         listOf(
             FloatingToolbarAction(id = "home", label = "Home", icon = Icons.Default.Home),
-            FloatingToolbarAction(id = "favorite", label = "Favorite", icon = Icons.Default.Favorite),
+            FloatingToolbarAction(
+                id = "favorite",
+                label = "Favorite",
+                icon = Icons.Default.Favorite
+            ),
             FloatingToolbarAction(id = "profile", label = "Profile", icon = Icons.Default.Person),
-            FloatingToolbarAction(id = "settings", label = "Settings", icon = Icons.Default.Settings),
+            FloatingToolbarAction(
+                id = "settings",
+                label = "Settings",
+                icon = Icons.Default.Settings
+            ),
         )
     }
 
@@ -202,8 +210,8 @@ fun DashboardScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.sdp),
-            verticalArrangement = Arrangement.spacedBy(12.sdp),
+                .padding(10.sdp),
+            verticalArrangement = Arrangement.spacedBy(7.sdp),
         ) {
             TextComponent(
                 text = "This sheet is rendered with `ModalBottomSheetComponent`.",
@@ -223,27 +231,27 @@ fun DashboardScreen(
             .padding(innerPadding)
             .verticalScroll(rememberScrollState())
             .padding(
-                horizontal = 16.sdp,
-                vertical = 12.sdp
+                horizontal = 10.sdp,
+                vertical = 7.sdp
             ),
-        verticalArrangement = Arrangement.spacedBy(16.sdp),
+        verticalArrangement = Arrangement.spacedBy(10.sdp),
     ) {
         CardComponent(modifier = Modifier.fillMaxWidth()) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.sdp),
+                    .padding(10.sdp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.sdp),
+                horizontalArrangement = Arrangement.spacedBy(7.sdp),
             ) {
                 AppIcon(
                     modifier = Modifier
-                        .width(72.sdp)
-                        .height(72.sdp),
+                        .width(43.sdp)
+                        .height(43.sdp),
                 )
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.sdp),
+                    verticalArrangement = Arrangement.spacedBy(2.sdp),
                 ) {
                     TextComponent(
                         text = "Reusable Components Dashboard",
@@ -265,8 +273,8 @@ fun DashboardScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.sdp),
-                verticalArrangement = Arrangement.spacedBy(10.sdp),
+                    .padding(10.sdp),
+                verticalArrangement = Arrangement.spacedBy(6.sdp),
             ) {
                 TextComponent(
                     text = "Text + App Components",
@@ -276,15 +284,15 @@ fun DashboardScreen(
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.sdp),
+                    horizontalArrangement = Arrangement.spacedBy(7.sdp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     AppIconFilled(
                         modifier = Modifier
-                            .width(120.sdp)
-                            .height(46.sdp)
+                            .width(72.sdp)
+                            .height(28.sdp)
                     )
-                    AppBrandIcon(modifier = Modifier.size(36.sdp))
+                    AppBrandIcon(modifier = Modifier.size(22.sdp))
                 }
                 TextComponent(
                     text = "TextComponent (Display/Headline/Title/Body/Label)",
@@ -339,8 +347,8 @@ fun DashboardScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.sdp),
-                verticalArrangement = Arrangement.spacedBy(10.sdp),
+                    .padding(10.sdp),
+                verticalArrangement = Arrangement.spacedBy(6.sdp),
             ) {
                 TextComponent(
                     text = "Scaffold Components",
@@ -365,7 +373,7 @@ fun DashboardScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(130.sdp),
+                        .height(78.sdp),
                 ) {
                     FloatingToolbarComponent(
                         modifier = Modifier.align(Alignment.BottomCenter),
@@ -386,7 +394,7 @@ fun DashboardScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(150.sdp),
+                        .height(90.sdp),
                 ) {
                     FloatingToolbarComponent(
                         modifier = Modifier.align(Alignment.BottomCenter),
@@ -397,7 +405,9 @@ fun DashboardScreen(
                         useVibrantColors = useExpressive,
                         fabIcon = Icons.Default.Add,
                         onItemClick = { selectedToolbarActionLabel = it.label },
-                        onFabClick = { horizontalFabToolbarExpanded = !horizontalFabToolbarExpanded },
+                        onFabClick = {
+                            horizontalFabToolbarExpanded = !horizontalFabToolbarExpanded
+                        },
                     )
                 }
                 TextComponent(
@@ -409,12 +419,12 @@ fun DashboardScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(230.sdp),
+                        .height(138.sdp),
                 ) {
                     FloatingToolbarComponent(
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
-                            .padding(end = 4.sdp),
+                            .padding(end = 2.sdp),
                         items = toolbarActions.take(3),
                         variant = FloatingToolbarVariant.VERTICAL,
                         expanded = true,
@@ -432,12 +442,12 @@ fun DashboardScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(250.sdp),
+                        .height(150.sdp),
                 ) {
                     FloatingToolbarComponent(
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
-                            .padding(end = 4.sdp),
+                            .padding(end = 2.sdp),
                         items = toolbarActions,
                         variant = FloatingToolbarVariant.VERTICAL_WITH_FAB,
                         expanded = verticalFabToolbarExpanded,
@@ -461,8 +471,8 @@ fun DashboardScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.sdp),
-                verticalArrangement = Arrangement.spacedBy(12.sdp),
+                    .padding(10.sdp),
+                verticalArrangement = Arrangement.spacedBy(7.sdp),
             ) {
                 TextComponent(
                     text = "Typography + Buttons",
@@ -477,7 +487,7 @@ fun DashboardScreen(
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.sdp),
+                    horizontalArrangement = Arrangement.spacedBy(5.sdp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     ButtonIconAndText(
@@ -495,7 +505,7 @@ fun DashboardScreen(
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.sdp),
+                    horizontalArrangement = Arrangement.spacedBy(5.sdp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     ButtonIcon(
@@ -514,7 +524,7 @@ fun DashboardScreen(
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.sdp),
+                    horizontalArrangement = Arrangement.spacedBy(5.sdp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     ButtonBack(useExpressiveShapes = useExpressive, onClick = {})
@@ -532,8 +542,8 @@ fun DashboardScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.sdp),
-                verticalArrangement = Arrangement.spacedBy(12.sdp),
+                    .padding(10.sdp),
+                verticalArrangement = Arrangement.spacedBy(7.sdp),
             ) {
                 TextComponent(
                     text = "Carousel Components",
@@ -550,7 +560,7 @@ fun DashboardScreen(
                 ExpressiveTextCarousel(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(230.sdp),
+                        .height(138.sdp),
                     items = carouselItems,
                     variant = if (useExpressive) {
                         ExpressiveCarouselVariant.MULTI_BROWSE
@@ -567,7 +577,7 @@ fun DashboardScreen(
                 ExpressiveImageCarousel(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(230.sdp),
+                        .height(138.sdp),
                     imageUrls = carouselImageUrls,
                     variant = if (useExpressive) {
                         ExpressiveCarouselVariant.CENTERED_HERO
@@ -582,8 +592,8 @@ fun DashboardScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.sdp),
-                verticalArrangement = Arrangement.spacedBy(12.sdp),
+                    .padding(10.sdp),
+                verticalArrangement = Arrangement.spacedBy(7.sdp),
             ) {
                 TextComponent(
                     text = "Input Components",
@@ -649,8 +659,8 @@ fun DashboardScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.sdp),
-                verticalArrangement = Arrangement.spacedBy(12.sdp),
+                    .padding(10.sdp),
+                verticalArrangement = Arrangement.spacedBy(7.sdp),
             ) {
                 TextComponent(
                     text = "Card Components",
@@ -664,7 +674,7 @@ fun DashboardScreen(
                     useExpressive = useExpressive,
                 ) {
                     TextComponent(
-                        modifier = Modifier.padding(12.sdp),
+                        modifier = Modifier.padding(7.sdp),
                         text = "Filled Card (Material 3 default variant).",
                         maxLines = 2,
                     )
@@ -675,7 +685,7 @@ fun DashboardScreen(
                     useExpressive = useExpressive,
                 ) {
                     TextComponent(
-                        modifier = Modifier.padding(12.sdp),
+                        modifier = Modifier.padding(7.sdp),
                         text = "Elevated Card (default elevation and visible depth).",
                         maxLines = 2,
                     )
@@ -686,7 +696,7 @@ fun DashboardScreen(
                     useExpressive = useExpressive,
                 ) {
                     TextComponent(
-                        modifier = Modifier.padding(12.sdp),
+                        modifier = Modifier.padding(7.sdp),
                         text = "Outlined Card (Material 3 default border style).",
                         maxLines = 2,
                     )
@@ -697,7 +707,7 @@ fun DashboardScreen(
                     useExpressive = useExpressive,
                 ) {
                     TextComponent(
-                        modifier = Modifier.padding(12.sdp),
+                        modifier = Modifier.padding(7.sdp),
                         text = "Reusable Elevated Card for content sections.",
                         maxLines = 2,
                     )
@@ -708,7 +718,7 @@ fun DashboardScreen(
                     useExpressive = useExpressive,
                 ) {
                     TextComponent(
-                        modifier = Modifier.padding(12.sdp),
+                        modifier = Modifier.padding(7.sdp),
                         text = "Reusable Filled Card for compact layouts.",
                         maxLines = 2,
                     )
@@ -720,8 +730,8 @@ fun DashboardScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.sdp),
-                verticalArrangement = Arrangement.spacedBy(12.sdp),
+                    .padding(10.sdp),
+                verticalArrangement = Arrangement.spacedBy(7.sdp),
             ) {
                 TextComponent(
                     text = "Progress Components",
@@ -742,17 +752,17 @@ fun DashboardScreen(
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.sdp),
+                    horizontalArrangement = Arrangement.spacedBy(10.sdp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     LoadingIndicator(
-                        modifier = Modifier.size(56.sdp),
+                        modifier = Modifier.size(34.sdp),
                         isCircular = true,
                         progress = progress,
                         useExpressive = useExpressive,
                     )
                     LoadingIndicator(
-                        modifier = Modifier.size(56.sdp),
+                        modifier = Modifier.size(34.sdp),
                         isCircular = true,
                         useExpressive = useExpressive,
                     )
@@ -770,8 +780,8 @@ fun DashboardScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.sdp),
-                verticalArrangement = Arrangement.spacedBy(12.sdp),
+                    .padding(10.sdp),
+                verticalArrangement = Arrangement.spacedBy(7.sdp),
             ) {
                 TextComponent(
                     text = "Lazy + Pager Components",
@@ -782,10 +792,10 @@ fun DashboardScreen(
                 HorizontalPagersWithTabs(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(180.sdp),
+                        .height(108.sdp),
                     tabs = pagerTabs,
                     pageItems = pagerItems,
-                    contentPadding = PaddingValues(horizontal = 20.sdp),
+                    contentPadding = PaddingValues(horizontal = 12.sdp),
                     tabIndicator = { selectedIndex -> TabIndicator(selectedIndex) },
                     pageContent = { _, _, item ->
                         CardComponent(
@@ -794,7 +804,7 @@ fun DashboardScreen(
                             useExpressive = useExpressive,
                         ) {
                             TextComponent(
-                                modifier = Modifier.padding(14.sdp),
+                                modifier = Modifier.padding(8.sdp),
                                 text = item,
                                 maxLines = 3,
                             )
@@ -804,7 +814,7 @@ fun DashboardScreen(
                 BaseLazy(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(220.sdp),
+                        .height(132.sdp),
                     items = lazyItems,
                     listType = LazyListType.LIST,
                     scrollDirection = LazyScrollDirection.VERTICAL,
@@ -820,7 +830,7 @@ fun DashboardScreen(
                             useExpressive = useExpressive,
                         ) {
                             TextComponent(
-                                modifier = Modifier.padding(12.sdp),
+                                modifier = Modifier.padding(7.sdp),
                                 text = "${index + 1}. $item",
                                 maxLines = 1,
                             )
@@ -841,13 +851,13 @@ fun DashboardScreen(
         CardComponent(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(240.sdp),
+                .height(144.sdp),
             variant = CardVariant.FILLED,
             useExpressive = useExpressive,
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 TextComponent(
-                    modifier = Modifier.padding(14.sdp),
+                    modifier = Modifier.padding(8.sdp),
                     text = "Expandable FAB Component Demo",
                     type = TextType.Title,
                     size = TextSize.Medium,

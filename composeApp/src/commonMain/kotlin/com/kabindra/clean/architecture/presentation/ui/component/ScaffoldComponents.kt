@@ -4,10 +4,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingToolbarDefaults
@@ -289,9 +289,9 @@ private fun FloatingToolbarActionItemContent(
             modifier = Modifier
                 .clip(MaterialTheme.shapes.small)
                 .clickable { onItemClick(item) }
-                .padding(horizontal = 8.sdp, vertical = 4.sdp),
+                .padding(horizontal = 5.sdp, vertical = 2.sdp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(2.sdp),
+            verticalArrangement = Arrangement.spacedBy(1.sdp),
         ) {
             Icon(
                 imageVector = item.icon,
@@ -329,7 +329,7 @@ fun BottomNavigationBarComponent(
                         label.icon?.let {
                             ImageHandlerVector(
                                 modifier = Modifier
-                                    .size(32.sdp)
+                                    .size(19.sdp)
                                     .padding(1.sdp),
                                 image = it,
                                 contentDescription = label.title

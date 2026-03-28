@@ -43,8 +43,8 @@ sealed class ListItemContent {
 @Composable
 fun <T> BaseLazy(
     modifier: Modifier = Modifier.fillMaxSize(),
-    contentPadding: PaddingValues = PaddingValues(8.sdp),
-    arrangement: Arrangement.HorizontalOrVertical = Arrangement.spacedBy(12.sdp),
+    contentPadding: PaddingValues = PaddingValues(5.sdp),
+    arrangement: Arrangement.HorizontalOrVertical = Arrangement.spacedBy(7.sdp),
     items: List<T>,
     listType: LazyListType = LazyListType.LIST,
     scrollDirection: LazyScrollDirection = LazyScrollDirection.VERTICAL,
@@ -61,7 +61,7 @@ fun <T> BaseLazy(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.sdp),
+                .padding(10.sdp),
             contentAlignment = Alignment.Center
         ) {
             LoadingIndicator(

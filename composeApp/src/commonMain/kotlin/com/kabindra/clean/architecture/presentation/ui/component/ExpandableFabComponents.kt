@@ -47,6 +47,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import network.chaintech.sdpcomposemultiplatform.sdp
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun <T> ExpandableFabComponent(
     modifier: Modifier = Modifier,
@@ -117,7 +118,7 @@ private fun <T> ExpressiveExpandableFabComponent(
         }
 
         FloatingActionButtonMenu(
-            modifier = Modifier.padding(bottom = 47.sdp),
+            modifier = Modifier.padding(bottom = 28.sdp),
             expanded = expand,
             button = {
                 ToggleFloatingActionButton(
@@ -149,7 +150,7 @@ private fun <T> ExpressiveExpandableFabComponent(
                     text = { Text(text = itemTitle(item)) },
                     icon = {
                         ImageHandlerVector(
-                            modifier = Modifier.size(22.sdp),
+                            modifier = Modifier.size(13.sdp),
                             image = itemIcon(item),
                             contentDescription = itemTitle(item)
                         )
@@ -198,8 +199,8 @@ private fun <T> LegacyExpandableFabComponent(
             exit = fadeOut() + slideOutVertically(targetOffsetY = { it }) + shrinkVertically()
         ) {
             Column(
-                modifier = Modifier.padding(8.sdp),
-                verticalArrangement = Arrangement.spacedBy(8.sdp)
+                modifier = Modifier.padding(5.sdp),
+                verticalArrangement = Arrangement.spacedBy(5.sdp)
             ) {
                 items.forEach { item ->
                     LegacyExpandableFabRow(
@@ -224,7 +225,7 @@ private fun <T> LegacyExpandableFabComponent(
         )
 
         FloatingActionButton(
-            modifier = Modifier.padding(bottom = 47.sdp),
+            modifier = Modifier.padding(bottom = 28.sdp),
             shape = shape,
             onClick = { expand = !expand }
         ) {
@@ -245,13 +246,13 @@ private fun <T> LegacyExpandableFabRow(
     onFabClick: () -> Unit
 ) {
     ExtendedFloatingActionButton(
-        modifier = Modifier.width(200.sdp),
+        modifier = Modifier.width(120.sdp),
         text = { Text(text = itemTitle(item)) },
         icon = {
             ImageHandlerVector(
                 modifier = Modifier
-                    .size(32.sdp)
-                    .padding(2.sdp),
+                    .size(19.sdp)
+                    .padding(1.sdp),
                 image = itemIcon(item),
                 contentDescription = itemTitle(item)
             )
