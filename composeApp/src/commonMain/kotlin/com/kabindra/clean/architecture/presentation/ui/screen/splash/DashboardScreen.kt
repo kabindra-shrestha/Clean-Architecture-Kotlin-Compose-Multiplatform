@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
@@ -62,6 +63,9 @@ import com.kabindra.clean.architecture.presentation.ui.component.ExpandableFabCo
 import com.kabindra.clean.architecture.presentation.ui.component.ExpressiveCarouselVariant
 import com.kabindra.clean.architecture.presentation.ui.component.ExpressiveImageCarousel
 import com.kabindra.clean.architecture.presentation.ui.component.ExpressiveTextCarousel
+import com.kabindra.clean.architecture.presentation.ui.component.FloatingToolbarAction
+import com.kabindra.clean.architecture.presentation.ui.component.FloatingToolbarComponent
+import com.kabindra.clean.architecture.presentation.ui.component.FloatingToolbarVariant
 import com.kabindra.clean.architecture.presentation.ui.component.HorizontalPagersWithTabs
 import com.kabindra.clean.architecture.presentation.ui.component.InputField
 import com.kabindra.clean.architecture.presentation.ui.component.LazyListType
@@ -102,6 +106,9 @@ fun DashboardScreen(
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
     var useExpressive by rememberSaveable { mutableStateOf(true) }
     var lazyHasScrolled by rememberSaveable { mutableStateOf(false) }
+    var horizontalFabToolbarExpanded by rememberSaveable { mutableStateOf(true) }
+    var verticalFabToolbarExpanded by rememberSaveable { mutableStateOf(true) }
+    var selectedToolbarActionLabel by rememberSaveable { mutableStateOf("Home") }
 
     val pagerTabs = remember { listOf("Buttons", "Inputs", "Progress") }
     val pagerItems = remember {
@@ -140,6 +147,14 @@ fun DashboardScreen(
             DashboardFabAction("Settings", Icons.Default.Settings),
         )
     }
+    val toolbarActions = remember {
+        listOf(
+            FloatingToolbarAction(id = "home", label = "Home", icon = Icons.Default.Home),
+            FloatingToolbarAction(id = "favorite", label = "Favorite", icon = Icons.Default.Favorite),
+            FloatingToolbarAction(id = "profile", label = "Profile", icon = Icons.Default.Person),
+            FloatingToolbarAction(id = "settings", label = "Settings", icon = Icons.Default.Settings),
+        )
+    }
 
     val progressTransition = rememberInfiniteTransition(label = "dashboard-progress")
     val progress by progressTransition.animateFloat(
@@ -168,7 +183,7 @@ fun DashboardScreen(
     if (showLoadingDialog) {
         LoadingDialog(
             isVisible = true,
-            message = "Loading reusable components preview..",
+            message = "Loading reusable components preview...",
             useExpressive = useExpressive,
         )
         LaunchedEffect(Unit) {
@@ -325,7 +340,7 @@ fun DashboardScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.sdp),
-                verticalArrangement = Arrangement.spacedBy(8.sdp),
+                verticalArrangement = Arrangement.spacedBy(10.sdp),
             ) {
                 TextComponent(
                     text = "Scaffold Components",
@@ -340,6 +355,104 @@ fun DashboardScreen(
                     canNavigateBack = true,
                     useExpressive = useExpressive,
                     onBackNavigate = {},
+                )
+                TextComponent(
+                    text = "Floating Toolbar (Horizontal)",
+                    type = TextType.Title,
+                    size = TextSize.Small,
+                    fontWeight = FontWeight.Medium,
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(130.sdp),
+                ) {
+                    FloatingToolbarComponent(
+                        modifier = Modifier.align(Alignment.BottomCenter),
+                        items = toolbarActions,
+                        variant = FloatingToolbarVariant.HORIZONTAL,
+                        expanded = true,
+                        showLabelBelowIcon = true,
+                        useVibrantColors = useExpressive,
+                        onItemClick = { selectedToolbarActionLabel = it.label },
+                    )
+                }
+                TextComponent(
+                    text = "Floating Toolbar + FAB (Horizontal)",
+                    type = TextType.Title,
+                    size = TextSize.Small,
+                    fontWeight = FontWeight.Medium,
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(150.sdp),
+                ) {
+                    FloatingToolbarComponent(
+                        modifier = Modifier.align(Alignment.BottomCenter),
+                        items = toolbarActions,
+                        variant = FloatingToolbarVariant.HORIZONTAL_WITH_FAB,
+                        expanded = horizontalFabToolbarExpanded,
+                        showLabelBelowIcon = false,
+                        useVibrantColors = useExpressive,
+                        fabIcon = Icons.Default.Add,
+                        onItemClick = { selectedToolbarActionLabel = it.label },
+                        onFabClick = { horizontalFabToolbarExpanded = !horizontalFabToolbarExpanded },
+                    )
+                }
+                TextComponent(
+                    text = "Floating Toolbar (Vertical)",
+                    type = TextType.Title,
+                    size = TextSize.Small,
+                    fontWeight = FontWeight.Medium,
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(230.sdp),
+                ) {
+                    FloatingToolbarComponent(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(end = 4.sdp),
+                        items = toolbarActions.take(3),
+                        variant = FloatingToolbarVariant.VERTICAL,
+                        expanded = true,
+                        showLabelBelowIcon = false,
+                        useVibrantColors = useExpressive,
+                        onItemClick = { selectedToolbarActionLabel = it.label },
+                    )
+                }
+                TextComponent(
+                    text = "Floating Toolbar + FAB (Vertical)",
+                    type = TextType.Title,
+                    size = TextSize.Small,
+                    fontWeight = FontWeight.Medium,
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(250.sdp),
+                ) {
+                    FloatingToolbarComponent(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(end = 4.sdp),
+                        items = toolbarActions,
+                        variant = FloatingToolbarVariant.VERTICAL_WITH_FAB,
+                        expanded = verticalFabToolbarExpanded,
+                        showLabelBelowIcon = false,
+                        useVibrantColors = useExpressive,
+                        fabIcon = Icons.Default.Add,
+                        onItemClick = { selectedToolbarActionLabel = it.label },
+                        onFabClick = { verticalFabToolbarExpanded = !verticalFabToolbarExpanded },
+                    )
+                }
+                TextComponent(
+                    text = "Selected toolbar action: $selectedToolbarActionLabel",
+                    type = TextType.Label,
+                    size = TextSize.Small,
+                    maxLines = 1,
                 )
             }
         }

@@ -21,25 +21,30 @@ fun AppTypography() = Typography().run {
     val fontFamily = ManRopeFontFamily()
 
     copy(
-        displayLarge = displayLarge.copy(fontSize = 57.ssp, fontFamily = fontFamily),
-        displayMedium = displayMedium.copy(fontSize = 45.ssp, fontFamily = fontFamily),
-        displaySmall = displaySmall.copy(fontSize = 36.ssp, fontFamily = fontFamily),
+        // 57 * 0.6 = 34, 45 * 0.6 = 27, 36 * 0.6 = 22
+        displayLarge = displayLarge.copy(fontSize = 34.ssp, fontFamily = fontFamily),
+        displayMedium = displayMedium.copy(fontSize = 27.ssp, fontFamily = fontFamily),
+        displaySmall = displaySmall.copy(fontSize = 22.ssp, fontFamily = fontFamily),
 
-        headlineLarge = headlineLarge.copy(fontSize = 32.ssp, fontFamily = fontFamily),
-        headlineMedium = headlineMedium.copy(fontSize = 28.ssp, fontFamily = fontFamily),
-        headlineSmall = headlineSmall.copy(fontSize = 24.ssp, fontFamily = fontFamily),
+        // 32 * 0.6 = 19, 28 * 0.6 = 17, 24 * 0.6 = 14
+        headlineLarge = headlineLarge.copy(fontSize = 19.ssp, fontFamily = fontFamily),
+        headlineMedium = headlineMedium.copy(fontSize = 17.ssp, fontFamily = fontFamily),
+        headlineSmall = headlineSmall.copy(fontSize = 14.ssp, fontFamily = fontFamily),
 
-        titleLarge = titleLarge.copy(fontSize = 22.ssp, fontFamily = fontFamily),
-        titleMedium = titleMedium.copy(fontSize = 16.ssp, fontFamily = fontFamily),
-        titleSmall = titleSmall.copy(fontSize = 14.ssp, fontFamily = fontFamily),
+        // 22 * 0.6 = 13, 16 * 0.6 = 10, 14 * 0.6 = 8
+        titleLarge = titleLarge.copy(fontSize = 13.ssp, fontFamily = fontFamily),
+        titleMedium = titleMedium.copy(fontSize = 10.ssp, fontFamily = fontFamily),
+        titleSmall = titleSmall.copy(fontSize = 8.ssp, fontFamily = fontFamily),
 
-        bodyLarge = bodyLarge.copy(fontSize = 16.ssp, fontFamily = fontFamily),
-        bodyMedium = bodyMedium.copy(fontSize = 14.ssp, fontFamily = fontFamily),
-        bodySmall = bodySmall.copy(fontSize = 12.ssp, fontFamily = fontFamily),
+        // 16 * 0.6 = 10, 14 * 0.6 = 8, 12 * 0.6 = 7
+        bodyLarge = bodyLarge.copy(fontSize = 10.ssp, fontFamily = fontFamily),
+        bodyMedium = bodyMedium.copy(fontSize = 8.ssp, fontFamily = fontFamily),
+        bodySmall = bodySmall.copy(fontSize = 7.ssp, fontFamily = fontFamily),
 
-        labelLarge = labelLarge.copy(fontSize = 14.ssp, fontFamily = fontFamily),
-        labelMedium = labelMedium.copy(fontSize = 12.ssp, fontFamily = fontFamily),
-        labelSmall = labelSmall.copy(fontSize = 11.ssp, fontFamily = fontFamily),
+        // 14 * 0.6 = 8, 12 * 0.6 = 7, 11 * 0.6 = 7
+        labelLarge = labelLarge.copy(fontSize = 8.ssp, fontFamily = fontFamily),
+        labelMedium = labelMedium.copy(fontSize = 7.ssp, fontFamily = fontFamily),
+        labelSmall = labelSmall.copy(fontSize = 7.ssp, fontFamily = fontFamily),
     )
 }
 
