@@ -42,8 +42,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.configuration.OhTeePeeConfigurations
 import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.utils.conditional
-
-import com.kabindra.clean.architecture.presentation.ui.theme.createDimensions
 import network.chaintech.sdpcomposemultiplatform.sdp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -165,7 +163,7 @@ internal fun OhTeePeeCell(
                 }
                 .onFocusEvent { isFocused = it.isFocused }
                 .background(cellConfiguration.backgroundColor)
-                .padding(createDimensions().paddingNormal), // Adjust padding as needed,
+                .padding(4.sdp), // Adjust padding as needed,
             keyboardOptions = KeyboardOptions(
                 autoCorrectEnabled = false,
                 keyboardType = keyboardType,

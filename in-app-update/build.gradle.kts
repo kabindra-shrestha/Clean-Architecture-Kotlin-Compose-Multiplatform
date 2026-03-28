@@ -48,18 +48,17 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                // implementation(compose.material)
-                implementation(compose.material3)
+                implementation(libs.compose.runtime)
+                implementation(libs.compose.foundation)
+                implementation(libs.compose.material3)
                 implementation(compose.materialIconsExtended)
-                implementation(compose.ui)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
+                implementation(libs.compose.ui)
+                implementation(libs.compose.components.resources)
+                implementation(libs.compose.uiToolingPreview)
+                implementation(libs.androidx.lifecycle.viewmodelCompose)
+                implementation(libs.androidx.lifecycle.runtimeCompose)
 
-                implementation(libs.androidx.lifecycle.runtime.compose)
                 implementation(libs.androidx.lifecycle.viewmodel)
-                // implementation(libs.androidx.lifecycle.viewmodel.compose)
 
                 implementation(libs.bundles.compottie)
                 implementation(libs.bundles.coil)
@@ -73,9 +72,8 @@ kotlin {
                 // Add Android-specific dependencies here. Note that this source set depends on
                 // commonMain by default and will correctly pull the Android artifacts of any KMP
                 // dependencies declared in commonMain.
-                implementation(compose.preview)
                 implementation(libs.androidx.activity.compose)
-                implementation(libs.compose.ui.tooling.preview)
+                implementation(libs.compose.uiToolingPreview)
 
                 implementation(libs.app.update)
                 implementation(libs.app.update.ktx)

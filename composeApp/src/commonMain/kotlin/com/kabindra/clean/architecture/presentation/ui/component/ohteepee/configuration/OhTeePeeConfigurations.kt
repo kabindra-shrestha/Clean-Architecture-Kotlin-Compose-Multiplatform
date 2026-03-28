@@ -8,8 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.utils.EMPTY
-
-import com.kabindra.clean.architecture.presentation.ui.theme.createDimensions
 import com.kabindra.clean.architecture.presentation.ui.theme.transparent
 import network.chaintech.sdpcomposemultiplatform.sdp
 
@@ -77,7 +75,7 @@ data class OhTeePeeConfigurations(
                 borderColor = LocalContentColor.current,
             ),
             cellModifier: Modifier = Modifier
-                .padding(createDimensions().paddingTooSmall)
+                .padding(2.sdp)
                 .size(48.sdp),
             elevation: Dp = 0.sdp,
             cursorColor: Color = transparent,

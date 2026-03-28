@@ -5,7 +5,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
@@ -21,6 +20,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -30,27 +30,16 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.sp
-import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.OhTeePeeInput
-import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.configuration.OhTeePeeCellConfiguration
-import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.configuration.OhTeePeeConfigurations
-import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.configuration.OhTeePeeErrorAnimationConfig
-
-import com.kabindra.clean.architecture.presentation.ui.theme.createDimensions
-import com.kabindra.clean.architecture.presentation.ui.theme.inputFieldActive
 import com.kabindra.clean.architecture.presentation.ui.theme.inputFieldDefault
 import com.kabindra.clean.architecture.presentation.ui.theme.inputFieldError
 import com.kabindra.clean.architecture.presentation.ui.theme.inputFieldLabelDefault
 import com.kabindra.clean.architecture.presentation.ui.theme.inputFieldLabelError
 import com.kabindra.clean.architecture.presentation.ui.theme.inputFieldTextDefault
 import com.kabindra.clean.architecture.presentation.ui.theme.inputFieldTextError
-import com.kabindra.clean.architecture.presentation.ui.theme.transparent
 import network.chaintech.sdpcomposemultiplatform.sdp
 
 @Composable
@@ -74,7 +63,7 @@ fun InputField(
         {
             ImageHandlerVector(
                 modifier = Modifier
-                    .size(20.sdp)
+                    .size(12.sdp)
                     .aspectRatio(1f / 1f),
                 image = it,
                 contentDescription = ""
@@ -86,7 +75,7 @@ fun InputField(
         {
             ImageHandlerVector(
                 modifier = Modifier
-                    .size(20.sdp)
+                    .size(12.sdp)
                     .aspectRatio(1f / 1f),
                 image = it,
                 contentDescription = "",
@@ -100,7 +89,7 @@ fun InputField(
         value = value,
         onValueChange = onValueChange,
         label = { TextComponent(text = label) },
-        isError = isError && errorText.isNotEmpty(),
+        isError = isError,
         modifier = modifier,
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = inputFieldDefault,
@@ -129,8 +118,8 @@ fun InputField(
         visualTransformation = VisualTransformation.None,
         enabled = isEnabled,
         supportingText = {
-            if (!isError && errorText.isNotEmpty()) {
-                TextError(text = errorText, maxLines = 2)
+            if (isError && errorText.isNotEmpty()) {
+                TextComponent(text = errorText, maxLines = 2)
             }
         }
     )
@@ -155,7 +144,7 @@ fun PasswordField(
         {
             ImageHandlerVector(
                 modifier = Modifier
-                    .size(20.sdp)
+                    .size(12.sdp)
                     .aspectRatio(1f / 1f),
                 image = it,
                 contentDescription = ""
@@ -166,7 +155,7 @@ fun PasswordField(
     val trailingIcons = @Composable {
         ImageHandlerVector(
             modifier = Modifier
-                .size(20.sdp)
+                .size(12.sdp)
                 .aspectRatio(1f / 1f),
             image = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
             contentDescription = "",
@@ -178,8 +167,8 @@ fun PasswordField(
         value = value,
         onValueChange = onValueChange,
         label = { TextComponent(text = label) },
-        isError = !isError,
-        modifier = Modifier.fillMaxWidth(),
+        isError = isError,
+        modifier = modifier.fillMaxWidth(),
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = inputFieldDefault,
             focusedTextColor = inputFieldTextDefault,
@@ -206,75 +195,11 @@ fun PasswordField(
         singleLine = true,
         visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         supportingText = {
-            if (!isError && errorText.isNotEmpty()) {
-                TextError(text = errorText, maxLines = 2)
+            if (isError && errorText.isNotEmpty()) {
+                TextComponent(text = errorText, maxLines = 2)
             }
         }
     )
-}
-
-@Composable
-fun OTPField(
-    modifier: Modifier = Modifier,
-    value: String,
-    onValueChange: (String, Boolean) -> Unit,
-    isValueInvalid: Boolean = false,
-    isError: Boolean = false,
-    errorText: String = "",
-    keyboardType: KeyboardType = KeyboardType.Text,
-    imeAction: ImeAction = ImeAction.Done,
-    cellsCount: Int = 4,
-    autoFocusByDefault: Boolean = false
-) {
-    val backgroundColor = transparent
-    val borderColor = inputFieldDefault
-    val defaultConfig = OhTeePeeCellConfiguration.withDefaults(
-        backgroundColor = backgroundColor,
-        textStyle = TextStyle(
-            color = inputFieldTextDefault,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-        ),
-        borderColor = borderColor,
-        borderWidth = 1.sdp,
-    )
-
-    OhTeePeeInput(
-        value = value,
-        onValueChange = onValueChange,
-        isValueInvalid = /*value == ""*/isValueInvalid,
-        keyboardType = keyboardType,
-        imeAction = imeAction,
-        configurations = OhTeePeeConfigurations.withDefaults(
-            cellsCount = cellsCount,
-            emptyCellConfig = defaultConfig.copy(
-                borderColor = inputFieldDefault
-            ),
-            filledCellConfig = defaultConfig.copy(
-                borderColor = inputFieldDefault
-            ),
-            activeCellConfig = defaultConfig.copy(
-                borderColor = inputFieldActive,
-                borderWidth = 2.sdp
-            ),
-            errorCellConfig = defaultConfig.copy(
-                borderColor = inputFieldError
-            ),
-            cellModifier = Modifier
-                .padding(createDimensions().paddingExtraSmall)
-                .size(48.sdp),
-            errorAnimationConfig = OhTeePeeErrorAnimationConfig.Shake(
-                repeat = 15,
-                translationXRange = 5f,
-            ),
-            clearInputOnError = false
-        ),
-        autoFocusByDefault = autoFocusByDefault,
-        modifier = modifier.padding(top = createDimensions().paddingNormal)
-    )
-    if (!isError && errorText.isNotEmpty()) {
-        TextError(modifier = modifier, text = errorText, maxLines = 2)
-    }
 }
 
 @Composable
@@ -292,13 +217,13 @@ fun <T> DropdownField(
     isEnabled: Boolean = false
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var textFieldWidth by remember { mutableStateOf(0) }
+    var textFieldWidth by remember { mutableIntStateOf(0) }
 
     val leadingIcons: (@Composable () -> Unit)? = leadingIcon?.let {
         {
             ImageHandlerVector(
                 modifier = Modifier
-                    .size(20.sdp)
+                    .size(12.sdp)
                     .aspectRatio(1f / 1f),
                 image = it,
                 contentDescription = ""
@@ -309,7 +234,7 @@ fun <T> DropdownField(
     val trailingIcons: (@Composable () -> Unit) = {
         ImageHandlerVector(
             modifier = Modifier
-                .size(20.sdp)
+                .size(12.sdp)
                 .aspectRatio(1f / 1f),
             image = if (expanded) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
             contentDescription = "",
@@ -324,7 +249,8 @@ fun <T> DropdownField(
             readOnly = true, // Prevent manual text entry
             label = { TextComponent(text = label) },
             isError = isError,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .onSizeChanged { textFieldWidth = it.width }
                 .clickable { expanded = !expanded }, // Make the entire field clickable
             colors = OutlinedTextFieldDefaults.colors(
@@ -342,8 +268,8 @@ fun <T> DropdownField(
             trailingIcon = trailingIcons,
             enabled = isEnabled,
             supportingText = {
-                if (!isError && errorText.isNotEmpty()) {
-                    TextError(text = errorText, maxLines = 2)
+                if (isError && errorText.isNotEmpty()) {
+                    TextComponent(text = errorText, maxLines = 2)
                 }
             },
             // Remove the internal clickable behavior since it's handled by Box

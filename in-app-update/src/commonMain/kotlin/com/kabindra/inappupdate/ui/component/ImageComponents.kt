@@ -23,7 +23,9 @@ import network.chaintech.sdpcomposemultiplatform.sdp
 
 @Composable
 fun ImageHandlerURL(
-    modifier: Modifier = Modifier.width(250.sdp).height(250.sdp),
+    modifier: Modifier = Modifier
+        .width(150.sdp)
+        .height(150.sdp),
     image: String = "",
     contentDescription: String = "",
     contentScale: ContentScale = ContentScale.Fit
@@ -38,7 +40,9 @@ fun ImageHandlerURL(
 
 @Composable
 fun ImageHandlerVector(
-    modifier: Modifier = Modifier.width(250.sdp).height(250.sdp),
+    modifier: Modifier = Modifier
+        .width(150.sdp)
+        .height(150.sdp),
     image: ImageVector?,
     contentDescription: String = "",
     tint: Color? = null,
@@ -51,7 +55,9 @@ fun ImageHandlerVector(
         modifier = modifier
             .then(
                 if (circular)
-                    modifier.clip(CircleShape).background(backgroundColor)
+                    modifier
+                        .clip(CircleShape)
+                        .background(backgroundColor)
                 else
                     modifier
             )
@@ -69,7 +75,9 @@ fun ImageHandlerVector(
 
 @Composable
 fun ImageHandlerLottie(
-    modifier: Modifier = Modifier.width(250.sdp).height(250.sdp),
+    modifier: Modifier = Modifier
+        .width(150.sdp)
+        .height(150.sdp),
     image: LottieComposition?,
     contentDescription: String = ""
 ) {

@@ -6,18 +6,20 @@
 //  Copyright © 2024 orgName. All rights reserved.
 //
 
-import UIKit
-import UserNotifications
+import ComposeApp
 import FirebaseCore
 import FirebaseMessaging
-import ComposeApp
+import UIKit
+import UserNotifications
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let gcmMessageIDKey = "gcm.message_id"
 
-    func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
         FirebaseApp.configure()
 
         // [START set_messaging_delegate]
@@ -45,8 +47,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func application(_ application: UIApplication,
-                     didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+    func application(
+        _ application: UIApplication,
+        didReceiveRemoteNotification userInfo: [AnyHashable: Any]
+    ) {
         // If you are receiving a notification message while your app is in the background,
         // this callback will not be fired till the user taps on the notification launching the application.
         // TODO: Handle data of notification
@@ -64,9 +68,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // [START receive_message]
-    func application(_ application: UIApplication,
-                     didReceiveRemoteNotification userInfo: [AnyHashable: Any]) async
-        -> UIBackgroundFetchResult {
+    func application(
+        _ application: UIApplication,
+        didReceiveRemoteNotification userInfo: [AnyHashable: Any]
+    ) async
+        -> UIBackgroundFetchResult
+    {
         // If you are receiving a notification message while your app is in the background,
         // this callback will not be fired till the user taps on the notification launching the application.
         // TODO: Handle data of notification
@@ -87,16 +94,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // [END receive_message]
 
-    func application(_ application: UIApplication,
-                     didFailToRegisterForRemoteNotificationsWithError error: Error) {
+    func application(
+        _ application: UIApplication,
+        didFailToRegisterForRemoteNotificationsWithError error: Error
+    ) {
         print("Firebase Unable to register for remote notifications: \(error.localizedDescription)")
     }
 
     // This function is added here only for debugging purposes, and can be removed if swizzling is enabled.
     // If swizzling is disabled then this function must be implemented so that the APNs token can be paired to
     // the FCM registration token.
-    func application(_ application: UIApplication,
-                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    func application(
+        _ application: UIApplication,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    ) {
         print("Firebase APNs token retrieved: \(deviceToken)")
 
         // With swizzling disabled you must set the APNs token here.
@@ -108,9 +119,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     // Receive displayed notifications for iOS 10 devices.
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                willPresent notification: UNNotification) async
-        -> UNNotificationPresentationOptions {
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification
+    ) async
+        -> UNNotificationPresentationOptions
+    {
         let userInfo = notification.request.content.userInfo
 
         // With swizzling disabled you must let Messaging know about the message, for Analytics
@@ -130,8 +144,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         return [[.alert, .sound]]
     }
 
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                didReceive response: UNNotificationResponse) async {
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse
+    ) async {
         let userInfo = response.notification.request.content.userInfo
 
         // [START_EXCLUDE]
@@ -151,13 +167,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
     func handleRedirection(_ userInfo: [AnyHashable: Any]) {
-        let notificationPayload: NotificationPayload? = ((userInfo as NSDictionary) as? Dictionary<String, Any>)?.object()
+        let notificationPayload: NotificationPayload? = ((userInfo as NSDictionary) as? [String: Any])?.object()
 
         if notificationPayload != nil {
             if let type = notificationPayload?.type, !type.isEmpty,
-               let ticketId = notificationPayload?.ticketId,
-               let workflow = notificationPayload?.workflow,
-               let date = notificationPayload?.date {
+                let ticketId = notificationPayload?.ticketId,
+                let workflow = notificationPayload?.workflow,
+                let date = notificationPayload?.date
+            {
                 FirebaseInitializerKt.handleNavigationRedirection(
                     type: type,
                     ticket_id: ticketId,

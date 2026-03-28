@@ -26,10 +26,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
-import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabPosition
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.material3.TabIndicatorScope
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,6 +41,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.kabindra.clean.architecture.presentation.ui.theme.carouselSelected
 import com.kabindra.clean.architecture.presentation.ui.theme.carouselUnselected
@@ -59,7 +59,7 @@ fun PagerIndicator(modifier: Modifier = Modifier, pageCount: Int, currentPageInd
         modifier = modifier
             .wrapContentHeight()
             .fillMaxWidth()
-            .padding(bottom = 16.sdp),
+            .padding(bottom = 10.sdp),
         horizontalArrangement = Arrangement.Center
     ) {
         repeat(pageCount) { iteration ->
@@ -67,10 +67,13 @@ fun PagerIndicator(modifier: Modifier = Modifier, pageCount: Int, currentPageInd
                 if (currentPageIndex == iteration) carouselSelected else carouselUnselected
             Box(
                 modifier = Modifier
-                    .width(16.sdp)
-                    .height(4.sdp)
-                    .padding(start = 2.sdp, end = 2.sdp)
-                    .clip(RoundedCornerShape(8.sdp))
+                    .width(10.sdp)
+                    .height(2.sdp)
+                    .padding(
+                        start = 1.sdp,
+                        end = 1.sdp
+                    )
+                    .clip(RoundedCornerShape(5.sdp))
                     .background(color)
             )
         }
@@ -78,16 +81,15 @@ fun PagerIndicator(modifier: Modifier = Modifier, pageCount: Int, currentPageInd
 }
 
 @Composable
-fun TabIndicator(
-    tabPositions: List<TabPosition>,
+fun TabIndicatorScope.TabIndicator(
     selectedIndex: Int
 ) {
     Box(
         modifier = Modifier
-            .tabIndicatorOffset(tabPositions[selectedIndex])
-            .height(4.sdp)
-            .padding(horizontal = 28.sdp)
-            .clip(RoundedCornerShape(8.sdp))
+            .tabIndicatorOffset(selectedIndex)
+            .height(2.sdp)
+            .padding(horizontal = 17.sdp)
+            .clip(RoundedCornerShape(5.sdp))
             .background(tabSelected)
     )
 }
@@ -96,16 +98,20 @@ fun TabIndicator(
 fun <T> HorizontalPagers(
     modifier: Modifier = Modifier.fillMaxWidth(),
     aspectRatio: Float = 16f / 9f,
-    padding: Dp = 0.sdp,
-    contentPadding: PaddingValues = PaddingValues(30.sdp),
-    pageSpacing: Dp = 0.sdp,
+    padding: Dp = 0.dp,
+    contentPadding: PaddingValues = PaddingValues(12.sdp),
+    pageSpacing: Dp = 0.dp,
     useGraphicsLayer: Boolean = false,
     isAutoScroll: Boolean = false,
     showIndicator: Boolean = true,
     pageItems: List<T>,
     pageContent: @Composable (T) -> Unit, // Generic content renderer
 ) {
-    Box(modifier = modifier.aspectRatio(aspectRatio).padding(top = padding)) {
+    Box(
+        modifier = modifier
+            .aspectRatio(aspectRatio)
+            .padding(top = padding)
+    ) {
         val pagerState = rememberPagerState(pageCount = { pageItems.size })
         val pagerIsDragged by pagerState.interactionSource.collectIsDraggedAsState()
 
@@ -133,7 +139,7 @@ fun <T> HorizontalPagers(
             Card(
                 modifier = modifier
                     .aspectRatio(aspectRatio)
-                    .clip(RoundedCornerShape(16.sdp))
+                    .clip(RoundedCornerShape(10.sdp))
                     .clickable(
                         interactionSource = pageInteractionSource,
                         indication = ripple(bounded = true),
@@ -191,14 +197,14 @@ fun <T> HorizontalPagers(
 @Composable
 fun <T> HorizontalPagersWithTabs(
     modifier: Modifier = Modifier.fillMaxWidth(),
-    padding: Dp = 0.sdp,
-    contentPadding: PaddingValues = PaddingValues(30.sdp),
-    pageSpacing: Dp = 0.sdp,
+    padding: Dp = 0.dp,
+    contentPadding: PaddingValues = PaddingValues(12.sdp),
+    pageSpacing: Dp = 0.dp,
     useGraphicsLayer: Boolean = false,
     tabs: List<String>,
     tabColor: Color = transparent,
-    tabIndicator: @Composable (tabPositions: List<TabPosition>, selectedIndex: Int) -> Unit = { tabPositions, selectedIndex ->
-        // TabIndicator(tabPositions, selectedIndex)
+    tabIndicator: @Composable TabIndicatorScope.(selectedIndex: Int) -> Unit = { _ ->
+        // TabIndicator(selectedIndex)
     },
     tabsIcon: Boolean = false,
     pageItems: List<T>,
@@ -209,13 +215,13 @@ fun <T> HorizontalPagersWithTabs(
     val scope = rememberCoroutineScope()
 
     Column(modifier = modifier.padding(top = padding)) {
-        ScrollableTabRow(
-            modifier = Modifier.padding(bottom = 10.sdp),
+        PrimaryScrollableTabRow(
+            modifier = Modifier.padding(bottom = 6.sdp),
             containerColor = tabColor,
             selectedTabIndex = pagerState.currentPage,
-            edgePadding = 0.sdp,
-            indicator = { tabPositions ->
-                tabIndicator(tabPositions, pagerState.currentPage)
+            edgePadding = 0.dp,
+            indicator = {
+                tabIndicator(pagerState.currentPage)
             },
             divider = {}
         ) {
@@ -232,8 +238,8 @@ fun <T> HorizontalPagersWithTabs(
                     content = {
                         Row(
                             modifier = Modifier
-                                .height(36.sdp)
-                                .clip(RoundedCornerShape(12.sdp))
+                                .height(22.sdp)
+                                .clip(RoundedCornerShape(7.sdp))
                                 .background(
                                     if (isSelected)
                                         tabSelected.copy(alpha = 0.2f)
@@ -243,7 +249,7 @@ fun <T> HorizontalPagersWithTabs(
                                 .border(
                                     width = 1.sdp,
                                     color = Color.Gray,
-                                    shape = RoundedCornerShape(12.sdp)
+                                    shape = RoundedCornerShape(7.sdp)
                                 ),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
@@ -253,20 +259,20 @@ fun <T> HorizontalPagersWithTabs(
                             }
 
                             if (tabsIcon) {
-                                Spacer(modifier = Modifier.width(8.sdp))
+                                Spacer(modifier = Modifier.width(5.sdp))
                                 ImageHandlerVector(
-                                    modifier = Modifier.size(24.sdp),
+                                    modifier = Modifier.size(14.sdp),
                                     image = Icons.Default.Person
                                 )
-                                Spacer(modifier = Modifier.width(8.sdp))
+                                Spacer(modifier = Modifier.width(5.sdp))
                                 if (isSelected) {
                                     tabTitle()
-                                    Spacer(modifier = Modifier.width(12.sdp))
+                                    Spacer(modifier = Modifier.width(7.sdp))
                                 }
                             } else {
-                                Spacer(modifier = Modifier.width(12.sdp))
+                                Spacer(modifier = Modifier.width(7.sdp))
                                 tabTitle()
-                                Spacer(modifier = Modifier.width(12.sdp))
+                                Spacer(modifier = Modifier.width(7.sdp))
                             }
                         }
                     },
@@ -303,4 +309,3 @@ fun <T> HorizontalPagersWithTabs(
         }
     }
 }
-

@@ -23,8 +23,6 @@ import androidx.compose.ui.window.Dialog
 import com.kabindra.clean.architecture.presentation.ui.component.ButtonText
 import com.kabindra.clean.architecture.presentation.ui.component.ImageHandlerLottie
 import com.kabindra.clean.architecture.presentation.ui.component.TextComponent
-
-import com.kabindra.clean.architecture.presentation.ui.theme.createDimensions
 import com.kabindra.clean.architecture.utils.constants.StatusCode.Companion.STATUS_CODE_NOT_HANDLED
 import com.kabindra.clean.architecture.utils.handler.HandleResponseStatusCode
 import composemultiplatformcleanarchitecture.composeapp.generated.resources.Res
@@ -56,12 +54,12 @@ fun GlobalErrorDialog(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(createDimensions().paddingSmall),
+                    .padding(2.sdp),
                 shape = RoundedCornerShape(16.sdp),
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(createDimensions().paddingSmall)
+                        .padding(2.sdp)
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
@@ -89,7 +87,7 @@ fun GlobalErrorDialog(
                     if (isAction) {
                         Row(
                             modifier = Modifier
-                                .padding(createDimensions().paddingSmall)
+                                .padding(2.sdp)
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceEvenly
@@ -140,12 +138,12 @@ fun ServerMaintenanceDialog(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(createDimensions().paddingSmall),
+                    .padding(2.sdp),
                 shape = RoundedCornerShape(16.sdp),
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(createDimensions().paddingSmall)
+                        .padding(2.sdp)
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
@@ -172,7 +170,7 @@ fun ServerMaintenanceDialog(
                     if (isAction) {
                         Row(
                             modifier = Modifier
-                                .padding(createDimensions().paddingSmall)
+                                .padding(2.sdp)
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceEvenly
@@ -219,12 +217,12 @@ fun VersionCheckDialog(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(createDimensions().paddingSmall),
+                    .padding(2.sdp),
                 shape = RoundedCornerShape(16.sdp),
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(createDimensions().paddingSmall)
+                        .padding(2.sdp)
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
@@ -251,7 +249,7 @@ fun VersionCheckDialog(
                     if (isAction) {
                         Row(
                             modifier = Modifier
-                                .padding(createDimensions().paddingSmall)
+                                .padding(2.sdp)
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceEvenly

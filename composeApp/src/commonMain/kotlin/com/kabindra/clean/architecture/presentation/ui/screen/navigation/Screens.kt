@@ -1,5 +1,6 @@
 package com.kabindra.clean.architecture.presentation.ui.screen.navigation
 
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 enum class Screens(val title: String) {
@@ -8,26 +9,20 @@ enum class Screens(val title: String) {
     Home(title = "Home"),
 }
 
-sealed class Route {
-    @Serializable
-    data object SplashRoute : Route()
+@Serializable
+data object SplashRoute : NavKey
 
-    @Serializable
-    data object LoginMainRoute : Route()
+@Serializable
+data object RegisterRoute : NavKey
 
-    @Serializable
-    data object RegisterRoute : Route()
+@Serializable
+data object LoginRoute : NavKey
 
-    @Serializable
-    data object LoginRoute : Route()
+@Serializable
+data class LoginVerifyOTPRoute(
+    val username: String,
+    val appLoginCode: String,
+) : NavKey
 
-    @Serializable
-    data class LoginVerifyOTPRoute(
-        val username: String,
-        val appLoginCode: String,
-    ) : Route()
-
-    @Serializable
-    data object DashboardRoute : Route()
-
-}
+@Serializable
+data object DashboardRoute : NavKey

@@ -53,8 +53,8 @@ fun RegisterScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         AppIcon(
             modifier = Modifier
-                .width(200.sdp)
-                .height(200.sdp)
+                .width(120.sdp)
+                .height(120.sdp)
                 .align(Alignment.Center)
         )
 
@@ -62,7 +62,7 @@ fun RegisterScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .offset(y = (-75).sdp),
+                .offset(y = (-45).sdp),
             text = "Register Screen",
             textAlign = TextAlign.Center
         )

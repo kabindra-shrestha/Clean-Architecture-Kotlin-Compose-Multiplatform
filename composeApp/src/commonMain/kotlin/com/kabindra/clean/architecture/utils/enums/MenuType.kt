@@ -6,13 +6,13 @@ import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.kabindra.clean.architecture.presentation.ui.screen.navigation.Route
+import androidx.navigation3.runtime.NavKey
 
 enum class MenuType(
     val title: String,
     val icon: ImageVector?,
     val slug: String,
-    val route: Route?,
+    val route: NavKey?,
     val isDrawer: Boolean = false,
     val isBottomNavigation: Boolean = false
 ) {

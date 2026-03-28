@@ -4,56 +4,6 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-/*
-
-// Primary colors for prominent UI elements
-val primaryLight = Color(0xFF000000) // Black
-val onPrimaryLight = Color(0xFFFFFFFF) // White text/icons on primary
-val primaryContainerLight = Color(0xFFE0E0E0) // Light gray for container
-val onPrimaryContainerLight = Color(0xFF000000) // Black text/icons on container
-
-// Secondary colors for supporting elements
-val secondaryLight = Color(0xFF444444) // Dark gray
-val onSecondaryLight = Color(0xFFFFFFFF) // White text/icons on secondary
-val secondaryContainerLight = Color(0xFFE0E0E0) // Light gray container
-val onSecondaryContainerLight = Color(0xFF000000) // Black text/icons on secondary container
-
-// Tertiary colors for less prominent UI elements
-val tertiaryLight = Color(0xFF888888) // Medium gray
-val onTertiaryLight = Color(0xFFFFFFFF) // White text/icons on tertiary
-val tertiaryContainerLight = Color(0xFFE0E0E0) // Light gray container
-val onTertiaryContainerLight = Color(0xFF000000) // Black text/icons on tertiary container
-
-// Error colors
-val errorLight = Color(0xFFD32F2F) // Reddish error color
-val onErrorLight = Color(0xFFFF5733) // White text/icons on error
-val errorContainerLight = Color(0xFFFFCDD2) // Lighter red for error container
-val onErrorContainerLight = Color(0xFFFF5733) // Black text/icons on error container
-
-// Background and surface colors
-val backgroundLight = Color(0xFFFFFFFF) // White background
-val onBackgroundLight = Color(0xFF000000) // Black text/icons on background
-val surfaceLight = Color(0xFFF5F5F5) // Slightly off-white surface
-val onSurfaceLight = Color(0xFF000000) // Black text/icons on surface
-val surfaceVariantLight = Color(0xFFE0E0E0) // Light gray variant surface
-val onSurfaceVariantLight = Color(0xFF000000) // Black text/icons on variant
-
-// Miscellaneous
-val outlineLight = Color(0xFF999999) // Medium gray outline
-val outlineVariantLight = Color(0xFFCCCCCC) // Light gray variant outline
-val scrimLight = Color(0xFF000000) // Black scrim
-val inverseSurfaceLight = Color(0xFF000000) // Black inverse surface
-val inverseOnSurfaceLight = Color(0xFFFFFFFF) // White text/icons on inverse
-val inversePrimaryLight = Color(0xFFFFFFFF) // White for inverse primary
-val surfaceDimLight = Color(0xFFEEEEEE) // Dim light surface
-val surfaceBrightLight = Color(0xFFFFFFFF) // Bright white surface
-val surfaceContainerLowestLight = Color(0xFFFFFFFF) // Lowest container
-val surfaceContainerLowLight = Color(0xFFFAFAFA) // Slightly off-white
-val surfaceContainerLight = Color(0xFFF5F5F5) // Light gray
-val surfaceContainerHighLight = Color(0xFFEEEEEE) // Medium gray
-val surfaceContainerHighestLight = Color(0xFFE0E0E0) // Light gray
-*/
-
 val primaryLight = Color(0xFF0D9488)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFF008378)
@@ -153,8 +103,6 @@ val inputFieldTextDefault = Color(0xFF636363)
 val inputFieldTextError = Color(0xFF93000A)
 val inputFieldLabelDefault = Color(0xFF636363)
 val inputFieldLabelError = Color(0xFFBA1A1A)
-val qrScannerOverlay = Color(0x88000000)
-val qrScannerBorder = Color(0xFF008000)
 val carouselSelected = Color(0xFF0D9488)
 val carouselUnselected = Color(0xFFC5C5C5)
 val drawerBackgroundSelected = Color(0xFF0D9488)
@@ -163,57 +111,14 @@ val drawerTextSelected = Color(0xFFC5C5C5)
 val drawerTextUnselected = Color(0xFF0D9488)
 val tabSelected = Color(0xFF0D9488)
 val tabUnselected = Color(0xFFC5C5C5)
-val profileTimelineBorder = Color(0xFF374151)
-val ticketTimelineBorder = Color(0xFF374151)
-val ticketHistoryStatus = Color(0xFF374151)
-val leaveOptionSelected = Color(0xFF0D9488)
-val leaveOptionUnselected = Color(0xFFFFFFFF)
 val textSelected = Color(0xFFFFFFFF)
 val textUnselected = Color(0xFF636363)
-val attendanceDefault = Color(0xFFFFFFFF)
-val attendanceToday = Color(0xFFFFFBF1)
-
-@Composable
-fun present() = if (isSystemInDarkTheme()) presentDark else presentLight
-
-@Composable
-fun absent() = if (isSystemInDarkTheme()) absentDark else absentLight
-
-@Composable
-fun missedPunch() = if (isSystemInDarkTheme()) missedPunchDark else missedPunchLight
-
-@Composable
-fun dayOff() = if (isSystemInDarkTheme()) dayOffDark else dayOffLight
-
-@Composable
-fun workOnDayOff() = if (isSystemInDarkTheme()) workOnDayOffDark else workOnDayOffLight
-
-@Composable
-fun timeRequest() = if (isSystemInDarkTheme()) timeRequestDark else timeRequestLight
-
-@Composable
-fun leaveRequest() = if (isSystemInDarkTheme()) leaveRequestDark else leaveRequestLight
 
 // Light Theme Colors
-val presentLight = Color(0xFFB7FFD2)
-val absentLight = Color(0xFFFFB7B7)
-val missedPunchLight = Color(0xFFFFD3AD)
-val dayOffLight = Color(0xFF99D8FF)
-val workOnDayOffLight = Color(0xFFFE5E6FE)
-
-val timeRequestLight = Color(0xFF99D8FF)
-val leaveRequestLight = Color(0xFFFFB7B7)
-
+val customLight = Color(0xFFB7FFD2)
 
 // Dark Theme Colors
-val presentDark = Color(0xFFB7FFD2)
-val absentDark = Color(0xFFFFB7B7)
-val missedPunchDark = Color(0xFFFFD3AD)
-val dayOffDark = Color(0xFF99D8FF)
-val workOnDayOffDark = Color(0xFF431C57)
+val customDark = Color(0xFFB7FFD2)
 
-val timeRequestDark = Color(0xFF99D8FF)
-val leaveRequestDark = Color(0xFFFFB7B7)
-
-
-val approve = Color(0xFF10B981)
+@Composable
+fun custom() = if (isSystemInDarkTheme()) customDark else customLight
