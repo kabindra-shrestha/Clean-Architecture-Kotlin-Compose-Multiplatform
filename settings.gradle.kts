@@ -1,6 +1,4 @@
 rootProject.name = "ComposeMultiplatformCleanArchitecture"
-include(":composeApp")
-include(":in-app-update")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -12,8 +10,8 @@ pluginManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
-        gradlePluginPortal()
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 
@@ -31,3 +29,8 @@ dependencyResolutionManagement {
         maven("https://jogamp.org/deployment/maven")
     }
 }
+
+include(":androidApp")
+include(":shared")
+include(":webApp")
+include(":in-app-update")
