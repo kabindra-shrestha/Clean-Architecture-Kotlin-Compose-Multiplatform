@@ -34,9 +34,9 @@ class RefreshTokenRepositoryImpl(
                     val responses: RefreshTokenDTO = response.body()
 
                     if (getStatus<Status>(responses.status)) {
-                        appDatabase.apiTokenDao.deleteAll()
+                        appDatabase.apiTokenDao().deleteAll()
 
-                        appDatabase.apiTokenDao.add(
+                        appDatabase.apiTokenDao().add(
                             ApiTokenDTO(
                                 responses.response?.token!!,
                                 responses.response.refresh_token!!

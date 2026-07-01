@@ -62,7 +62,6 @@ import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.http.parameters
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
@@ -103,72 +102,59 @@ val provideHttpClientModule = module {
                 agent = getPlatform().userAgent
             }
             install(DefaultRequest) {
-                runBlocking {
-                    url("baseUrl")
+                url("baseUrl")
 
-                    contentType(ContentType.Application.Json)
+                contentType(ContentType.Application.Json)
 
-                    val platform = getPlatform()
+                val platform = getPlatform()
 
-                    header(HEADER_USER_DEVICE, platform.userDevice + HEADER_USER_DEVICE_KEY)
-                    header(HEADER_USER_DEVICE_PLATFORM, platform.devicePlatform)
-                    header(HEADER_USER_DEVICE_VERSION, platform.deviceVersion)
-                    header(HEADER_USER_DEVICE_BUILD, platform.deviceBuild)
-                    header(HEADER_USER_DEVICE_BRAND, platform.deviceBrand)
-                    header(HEADER_USER_DEVICE_MODEL, platform.deviceModel)
-                    header(HEADER_USER_DEVICE_APP_VERSION, platform.appVersion)
-                    header(HEADER_USER_DEVICE_APP_VERSION_CODE, platform.appVersionCode)
-                }
+                header(HEADER_USER_DEVICE, platform.userDevice + HEADER_USER_DEVICE_KEY)
+                header(HEADER_USER_DEVICE_PLATFORM, platform.devicePlatform)
+                header(HEADER_USER_DEVICE_VERSION, platform.deviceVersion)
+                header(HEADER_USER_DEVICE_BUILD, platform.deviceBuild)
+                header(HEADER_USER_DEVICE_BRAND, platform.deviceBrand)
+                header(HEADER_USER_DEVICE_MODEL, platform.deviceModel)
+                header(HEADER_USER_DEVICE_APP_VERSION, platform.appVersion)
+                header(HEADER_USER_DEVICE_APP_VERSION_CODE, platform.appVersionCode)
             }
             install(Auth) {
                 bearer {
                     loadTokens {
-                        runBlocking {
-                            val accessToken = tokenProvider.getAccessToken()
-                            val refreshToken = tokenProvider.getRefreshToken()
-                            if (accessToken.isNotEmpty() && refreshToken.isNotEmpty()) {
-                                BearerTokens(accessToken, refreshToken)
-                            } else {
-                                tokenProvider.clearTokens()
+                        val accessToken = tokenProvider.getAccessToken()
+                        val refreshToken = tokenProvider.getRefreshToken()
+                        if (accessToken.isNotEmpty() && refreshToken.isNotEmpty()) {
+                            BearerTokens(accessToken, refreshToken)
+                        } else {
+                            tokenProvider.clearTokens()
 
-                                null
-                                // BearerTokens("", "")
-                            }
+                            null
+                            // BearerTokens("", "")
                         }
                     }
                     refreshTokens {
-                        runBlocking {
-                            val refreshToken = tokenProvider.getRefreshToken()
-                            if (refreshToken.isNotEmpty()) {
-                                val response: HttpResponse = client.submitForm(
-                                    url = ApiEndpoints.API_REFRESH_TOKEN,
-                                    formParameters = parameters {
-                                        append("refresh_token", refreshToken)
-                                    }
-                                ) {
-                                    markAsRefreshTokenRequest()
+                        val refreshToken = tokenProvider.getRefreshToken()
+                        if (refreshToken.isNotEmpty()) {
+                            val response: HttpResponse = client.submitForm(
+                                url = ApiEndpoints.API_REFRESH_TOKEN,
+                                formParameters = parameters {
+                                    append("refresh_token", refreshToken)
                                 }
-                                if (response.status.isSuccess()) {
-                                    val responses: RefreshTokenDTO = response.body()
+                            ) {
+                                markAsRefreshTokenRequest()
+                            }
+                            if (response.status.isSuccess()) {
+                                val responses: RefreshTokenDTO = response.body()
 
-                                    if (getStatus<Status>(responses.status)) {
-                                        tokenProvider.updateTokens(
-                                            responses.response?.token!!,
-                                            responses.response.refresh_token!!
-                                        )
+                                if (getStatus<Status>(responses.status)) {
+                                    tokenProvider.updateTokens(
+                                        responses.response?.token!!,
+                                        responses.response.refresh_token!!
+                                    )
 
-                                        BearerTokens(
-                                            responses.response.token,
-                                            responses.response.refresh_token
-                                        )
-                                    } else {
-                                        tokenProvider.clearTokens()
-
-                                        invalidateAuthTokens(client)
-
-                                        null
-                                        // BearerTokens("", "")
-                                    }
+                                    BearerTokens(
+                                        responses.response.token,
+                                        responses.response.refresh_token
+                                    )
                                 } else {
                                     tokenProvider.clearTokens()
 
@@ -185,6 +171,13 @@ val provideHttpClientModule = module {
                                 null
                                 // BearerTokens("", "")
                             }
+                        } else {
+                            tokenProvider.clearTokens()
+
+                            invalidateAuthTokens(client)
+
+                            null
+                            // BearerTokens("", "")
                         }
                     }
                     sendWithoutRequest { request ->

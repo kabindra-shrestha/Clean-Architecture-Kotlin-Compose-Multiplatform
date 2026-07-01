@@ -33,4 +33,6 @@ dependencyResolutionManagement {
 include(":androidApp")
 include(":shared")
 include(":webApp")
+include("sqlJsWorker")
+include("sqliteWasmWorker")
 include(":in-app-update")

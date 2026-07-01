@@ -41,12 +41,12 @@ class LoginRepositoryImpl(
                     val responses: LoginCheckUserDTO = response.body()
 
                     if (getStatus<Status>(responses.status)) {
-                        appDatabase.apiTokenDao.deleteAll()
-                        appDatabase.userDao.deleteAll()
+                        appDatabase.apiTokenDao().deleteAll()
+                        appDatabase.userDao().deleteAll()
 
                         responses.response.takeIf { !it?.token.isNullOrEmpty() && !it?.refresh_token.isNullOrEmpty() }
                             ?.let {
-                                appDatabase.apiTokenDao.add(
+                                appDatabase.apiTokenDao().add(
                                     ApiTokenDTO(
                                         it.token!!,
                                         it.refresh_token!!
@@ -61,7 +61,7 @@ class LoginRepositoryImpl(
 
                         responses.response.takeIf { it?.user_details != null }
                             ?.let {
-                                appDatabase.userDao.add(it.user_details!!)
+                                appDatabase.userDao().add(it.user_details!!)
                             }
 
                         emit(Result.Success(responses.toDomain()))
@@ -85,10 +85,10 @@ class LoginRepositoryImpl(
                     val responses: LoginVerifyDTO = response.body()
 
                     if (getStatus<Status>(responses.status)) {
-                        appDatabase.apiTokenDao.deleteAll()
-                        appDatabase.userDao.deleteAll()
+                        appDatabase.apiTokenDao().deleteAll()
+                        appDatabase.userDao().deleteAll()
 
-                        appDatabase.apiTokenDao.add(
+                        appDatabase.apiTokenDao().add(
                             ApiTokenDTO(
                                 responses.response?.token!!,
                                 responses.response.refresh_token!!
@@ -100,7 +100,7 @@ class LoginRepositoryImpl(
                             responses.response.refresh_token!!
                         )
 
-                        appDatabase.userDao.add(responses.response.user_details!!)
+                        appDatabase.userDao().add(responses.response.user_details!!)
 
                         emit(Result.Success(responses.toDomain()))
                     } else {
@@ -124,9 +124,9 @@ class LoginRepositoryImpl(
                     val responses: LoginRefreshUserDetailsDTO = response.body()
 
                     if (getStatus<Status>(responses.status)) {
-                        appDatabase.userDao.deleteAll()
+                        appDatabase.userDao().deleteAll()
 
-                        appDatabase.userDao.add(responses.response?.user_details!!)
+                        appDatabase.userDao().add(responses.response?.user_details!!)
 
                         emit(Result.Success(responses.toDomain()))
                     } else {

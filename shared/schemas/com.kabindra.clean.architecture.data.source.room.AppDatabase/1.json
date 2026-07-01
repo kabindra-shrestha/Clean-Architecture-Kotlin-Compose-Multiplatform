@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0830342d0e16fcced56945942f62eebf",
+    "identityHash": "cb05edc0154ab109f99dd554e590bc20",
     "entities": [
       {
         "tableName": "apiToken",
@@ -31,7 +31,7 @@
       },
       {
         "tableName": "users",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT DEFAULT '', `code` TEXT NOT NULL DEFAULT '', `department` TEXT DEFAULT '', `branch` TEXT DEFAULT '', `contact` TEXT DEFAULT '', `email` TEXT DEFAULT '', `username` TEXT DEFAULT '', `profile_picture` TEXT DEFAULT '', `firebase_topics` TEXT NOT NULL, PRIMARY KEY(`code`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT DEFAULT '', `code` TEXT NOT NULL DEFAULT '', `department` TEXT DEFAULT '', `branch` TEXT DEFAULT '', `contact` TEXT DEFAULT '', `email` TEXT DEFAULT '', `username` TEXT DEFAULT '', `profile_picture` TEXT DEFAULT '', `firebase_topics` TEXT NOT NULL DEFAULT '[]', PRIMARY KEY(`code`))",
         "fields": [
           {
             "fieldPath": "name",
@@ -86,7 +86,8 @@
             "fieldPath": "firebase_topics",
             "columnName": "firebase_topics",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "'[]'"
           }
         ],
         "primaryKey": {
@@ -99,7 +100,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0830342d0e16fcced56945942f62eebf')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cb05edc0154ab109f99dd554e590bc20')"
     ]
   }
 }

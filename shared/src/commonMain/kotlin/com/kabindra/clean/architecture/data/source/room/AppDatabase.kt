@@ -1,15 +1,18 @@
 package com.kabindra.clean.architecture.data.source.room
 
-import androidx.room.ConstructedBy
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import androidx.room.RoomDatabaseConstructor
-import androidx.room.TypeConverters
+import androidx.room3.ConstructedBy
+import androidx.room3.Database
+import androidx.room3.RoomDatabase
+import androidx.room3.RoomDatabaseConstructor
 import com.kabindra.clean.architecture.data.model.ApiTokenDTO
 import com.kabindra.clean.architecture.data.model.UserDTO
-import com.kabindra.clean.architecture.data.source.room.converter.FirebaseTopicsConverters
 import com.kabindra.clean.architecture.data.source.room.dao.ApiTokenDao
 import com.kabindra.clean.architecture.data.source.room.dao.UserDao
+
+// The expect declaration referenced by @ConstructedBy must be visible to the processor
+expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
+    override fun initialize(): AppDatabase
+}
 
 @Database(
     entities = [ApiTokenDTO::class, UserDTO::class],
@@ -17,16 +20,9 @@ import com.kabindra.clean.architecture.data.source.room.dao.UserDao
     exportSchema = true
 )
 @ConstructedBy(AppDatabaseConstructor::class)
-@TypeConverters(
-    FirebaseTopicsConverters::class
-)
 abstract class AppDatabase : RoomDatabase() {
-    abstract val apiTokenDao: ApiTokenDao
-    abstract val userDao: UserDao
+    abstract fun apiTokenDao(): ApiTokenDao
+    abstract fun userDao(): UserDao
 }
 
-// The Room compiler generates the `actual` implementations.
-@Suppress("NO_ACTUAL_FOR_EXPECT")
-expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
-    override fun initialize(): AppDatabase
-}
+

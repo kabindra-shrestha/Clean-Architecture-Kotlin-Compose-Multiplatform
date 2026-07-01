@@ -15,7 +15,7 @@ class UserRoomRepositoryImpl(private val appDatabase: AppDatabase) :
         flow {
             emit(Result.Loading)
             try {
-                val data = appDatabase.userDao.findAll()
+                val data = appDatabase.userDao().findAll()
                 emit(Result.Success(data[0].toDomain()))
             } catch (e: Exception) {
                 emit(Result.Error(ResultError.parseException(e)))

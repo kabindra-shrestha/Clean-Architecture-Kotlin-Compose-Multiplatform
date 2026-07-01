@@ -13,7 +13,7 @@ class TokenProvider(private val appDatabase: AppDatabase) {
 
     suspend fun getAccessToken(): String = mutex.withLock {
         if (accessToken.isNullOrEmpty()) {
-            val tokens = appDatabase.apiTokenDao.findAll()
+            val tokens = appDatabase.apiTokenDao().findAll()
             accessToken = tokens.firstOrNull()?.token?.takeIf { it.isNotEmpty() } ?: ""
         }
         accessToken ?: ""
@@ -21,7 +21,7 @@ class TokenProvider(private val appDatabase: AppDatabase) {
 
     suspend fun getRefreshToken(): String = mutex.withLock {
         if (refreshToken.isNullOrEmpty()) {
-            val tokens = appDatabase.apiTokenDao.findAll()
+            val tokens = appDatabase.apiTokenDao().findAll()
             refreshToken = tokens.firstOrNull()?.refresh_token?.takeIf { it.isNotEmpty() } ?: ""
         }
         refreshToken ?: ""
@@ -31,14 +31,14 @@ class TokenProvider(private val appDatabase: AppDatabase) {
         accessToken = newAccessToken
         refreshToken = newRefreshToken
 
-        appDatabase.apiTokenDao.deleteAll() // Clear old tokens if needed
-        appDatabase.apiTokenDao.add(ApiTokenDTO(newAccessToken, newRefreshToken)) // Add the new one
+        appDatabase.apiTokenDao().deleteAll() // Clear old tokens if needed
+        appDatabase.apiTokenDao().add(ApiTokenDTO(newAccessToken, newRefreshToken)) // Add the new one
     }
 
     suspend fun clearTokens() = mutex.withLock {
         accessToken = ""
         refreshToken = ""
 
-        appDatabase.apiTokenDao.deleteAll()
+        appDatabase.apiTokenDao().deleteAll()
     }
 }

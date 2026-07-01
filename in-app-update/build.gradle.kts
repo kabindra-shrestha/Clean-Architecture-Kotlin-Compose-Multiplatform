@@ -92,7 +92,7 @@ kotlin {
             // on common by default and will correctly pull the iOS artifacts of any
             // KMP dependencies declared in commonMain.
         }
-        jsMain.dependencies {
+        wasmJsMain.dependencies {
         }
     }
 

@@ -24,14 +24,16 @@ kotlin {
 
     js {
         browser()
+        binaries.executable()
     }
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         browser()
+        binaries.executable()
     }
 
-    androidLibrary {
+    android {
         namespace = "com.kabindra.clean.architecture.shared"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -57,11 +59,10 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
             implementation(libs.ktor.client.okhttp)
-            implementation(libs.room.runtime.android)
+
+            implementation(libs.sqlite.bundled)
 
             implementation(project.dependencies.platform(libs.google.firebase.bom))
-            implementation(libs.room.runtime)
-            implementation(libs.sqlite.bundled)
             implementation(libs.bundles.firebase)
         }
         commonMain.dependencies {
@@ -82,6 +83,7 @@ kotlin {
             implementation(libs.jetbrains.lifecycle.viewmodelNavigation3)
             // implementation(libs.navigation3.browser)
             implementation(libs.androidx.startup.runtime)
+            implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.core)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
@@ -89,6 +91,10 @@ kotlin {
             implementation(libs.bundles.koin)
             implementation(libs.bundles.ktor)
             implementation(libs.bundles.coil)
+
+            // Room
+            implementation(libs.room.runtime)
+            implementation(libs.sqlite)
 
             // Third party libraries
             implementation(libs.bundles.compottie)
@@ -99,23 +105,78 @@ kotlin {
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
-
-            implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
+
             implementation(libs.bundles.firebase)
         }
-        jsMain.dependencies {
-            implementation(libs.wrappers.browser)
+        val webMain by creating {
+            dependsOn(commonMain.get())
+        }
+        jsMain {
+            dependsOn(webMain)
+            dependencies {
+                implementation(libs.wrappers.browser)
+                implementation(libs.ktor.client.js)
+                implementation(libs.sqlite.web)
+                implementation(project((":sqliteWasmWorker")))
+                implementation(project((":sqlJsWorker")))
+            }
+        }
+        wasmJsMain {
+            dependsOn(webMain)
+            dependencies {
+                implementation(libs.wrappers.browser)
+                implementation(libs.ktor.client.js)
+                implementation(libs.sqlite.web)
+                implementation(project((":sqliteWasmWorker")))
+                implementation(project((":sqlJsWorker")))
+            }
         }
     }
+
+    // ...existing code...
 }
 
-room {
+room3 {
     schemaDirectory("$projectDir/schemas")
 }
 
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
 
-    ksp(libs.room.compiler)
+    // KSP dependencies for Room - must match actual KSP source set configurations
+    add("kspCommonMainMetadata", libs.room.compiler)
+    // Support multiple possible KSP configuration names across Gradle/Kotlin plugin versions
+    add("kspAndroidMain", libs.room.compiler)
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
+    add("kspJs", libs.room.compiler)
+    add("kspWasmJs", libs.room.compiler)
 }
+
+// Developer task: run KSP for all targets and validate Room schema output
+tasks.register("verifyRoomSchemas") {
+    // Common KSP tasks for targets used in this project. Adjust if your target names differ.
+    val kspTasks = listOf(
+        "kspCommonMainMetadata",
+        "kspAndroidMain",
+        "kspIosArm64",
+        "kspIosSimulatorArm64",
+        "kspJs",
+        "kspWasmJs"
+    )
+
+    kspTasks.forEach { name ->
+        tasks.findByName(name)?.let { dependsOn(it) } ?: logger.warn("KSP task not found: $name")
+    }
+
+    doLast {
+        val schemaDir = file("$projectDir/schemas")
+        if (!schemaDir.exists() || schemaDir.listFiles()?.isEmpty() != false) {
+            throw GradleException("Room schema directory is missing or empty: $schemaDir")
+        }
+        println("Room schemas verified in: $schemaDir")
+    }
+}
+

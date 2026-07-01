@@ -40,3 +40,13 @@ Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-mu
 
 We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
 If you face any issues, please report them on [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP).
+
+## Developer helpers
+
+This repo includes a ready-to-use AI assistant prompt and setup guides to help contributors work on Room (KSP) and Firebase configuration.
+
+- Assistant prompt: `./.ai/compose-multiplatform-assistant-prompt.md` — copy this when you want to get consistent help from an AI assistant.
+- Room setup & troubleshooting: `./docs/ROOM_SETUP.md`
+- Firebase setup & troubleshooting: `./docs/FIREBASE_SETUP.md`
+
+Follow the docs above for common tasks such as regenerating Room schemas for all targets and verifying platform Firebase configuration.

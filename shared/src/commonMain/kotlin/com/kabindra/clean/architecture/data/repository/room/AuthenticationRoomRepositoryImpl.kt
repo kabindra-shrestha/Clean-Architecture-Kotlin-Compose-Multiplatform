@@ -19,7 +19,7 @@ class AuthenticationRoomRepositoryImpl(
         flow {
             emit(Result.Loading)
             try {
-                val data = appDatabase.apiTokenDao.findAll()
+                val data = appDatabase.apiTokenDao().findAll()
                 emit(Result.Success(data.isNotEmpty() && data[0].token.isNotEmpty()))
             } catch (e: Exception) {
                 emit(Result.Error(ResultError.parseException(e)))
@@ -30,32 +30,38 @@ class AuthenticationRoomRepositoryImpl(
         flow {
             emit(Result.Loading)
             try {
-                val data = appDatabase.apiTokenDao.findAll()
+                val data = appDatabase.apiTokenDao().findAll()
                 emit(Result.Success(data[0].token))
             } catch (e: Exception) {
                 emit(Result.Error(ResultError.parseException(e)))
             }
         }
 
-    override suspend fun logout(): Flow<Result<Boolean>> =
-        flow {
-            emit(Result.Loading)
-            try {
-                val users = appDatabase.userDao.findAll()
-                if (users.isNotEmpty()) {
-                    val user = users[0]
-                    user.firebase_topics.takeIf { it.isNotEmpty() }?.let { topics ->
-                        unsubscribeFromTopics(topics)
-                    }
-                }
-                appDatabase.apiTokenDao.deleteAll()
-                appDatabase.userDao.deleteAll()
+     override suspend fun logout(): Flow<Result<Boolean>> =
+         flow {
+             emit(Result.Loading)
+             try {
+                 val users = appDatabase.userDao().findAll()
+                 if (users.isNotEmpty()) {
+                     val user = users[0]
+                     user.firebase_topics.takeIf { it.isNotEmpty() }?.let { topicsJson ->
+                         try {
+                             val json = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
+                             val topics = json.decodeFromString<List<String>>(topicsJson)
+                             unsubscribeFromTopics(topics)
+                         } catch (e: Exception) {
+                             // Topics parsing failed, continue logout
+                         }
+                     }
+                 }
+                 appDatabase.apiTokenDao().deleteAll()
+                 appDatabase.userDao().deleteAll()
 
-                invalidateAuthTokens(client)
+                 invalidateAuthTokens(client)
 
-                emit(Result.Success(true))
-            } catch (e: Exception) {
-                emit(Result.Error(ResultError.parseException(e)))
-            }
-        }
+                 emit(Result.Success(true))
+             } catch (e: Exception) {
+                 emit(Result.Error(ResultError.parseException(e)))
+             }
+         }
 }

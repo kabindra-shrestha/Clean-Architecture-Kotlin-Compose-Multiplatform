@@ -6,7 +6,7 @@
 //  Copyright © 2024 orgName. All rights reserved.
 //
 
-import ComposeApp
+import Shared
 import FirebaseCore
 import FirebaseMessaging
 import UIKit

@@ -1,5 +1,6 @@
 package com.kabindra.clean.architecture
 
+import com.kabindra.clean.architecture.utils.Platform
 import web.navigator.navigator
 
 class JsPlatform: Platform {

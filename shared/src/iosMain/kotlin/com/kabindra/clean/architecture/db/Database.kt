@@ -1,6 +1,6 @@
 package com.kabindra.clean.architecture.db
 
-import androidx.room.Room
+import androidx.room3.Room
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.kabindra.clean.architecture.data.source.room.AppDatabase
 import kotlinx.cinterop.ExperimentalForeignApi
