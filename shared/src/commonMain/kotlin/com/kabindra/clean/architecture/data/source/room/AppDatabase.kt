@@ -9,11 +9,6 @@ import com.kabindra.clean.architecture.data.model.UserDTO
 import com.kabindra.clean.architecture.data.source.room.dao.ApiTokenDao
 import com.kabindra.clean.architecture.data.source.room.dao.UserDao
 
-// The expect declaration referenced by @ConstructedBy must be visible to the processor
-expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
-    override fun initialize(): AppDatabase
-}
-
 @Database(
     entities = [ApiTokenDTO::class, UserDTO::class],
     version = 1,
@@ -25,4 +20,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 }
 
-
+// The Room compiler generates the `actual` implementations.
+@Suppress("NO_ACTUAL_FOR_EXPECT")
+expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
+    override fun initialize(): AppDatabase
+}

@@ -43,7 +43,6 @@ import com.kabindra.inappupdate.completeUpdate
 import com.kabindra.inappupdate.exitApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import network.chaintech.sdpcomposemultiplatform.sdp
 import org.koin.compose.viewmodel.koinViewModel
@@ -96,7 +95,7 @@ fun SplashScreen(
     }
 
     LaunchedEffect(Unit) {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Default).launch {
             try {
                 val token = getToken()
                 if (token != null) {

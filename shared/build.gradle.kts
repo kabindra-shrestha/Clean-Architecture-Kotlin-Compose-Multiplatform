@@ -33,7 +33,7 @@ kotlin {
         binaries.executable()
     }
 
-    android {
+    androidLibrary {
         namespace = "com.kabindra.clean.architecture.shared"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -109,11 +109,7 @@ kotlin {
 
             implementation(libs.bundles.firebase)
         }
-        val webMain by creating {
-            dependsOn(commonMain.get())
-        }
         jsMain {
-            dependsOn(webMain)
             dependencies {
                 implementation(libs.wrappers.browser)
                 implementation(libs.ktor.client.js)
@@ -123,7 +119,6 @@ kotlin {
             }
         }
         wasmJsMain {
-            dependsOn(webMain)
             dependencies {
                 implementation(libs.wrappers.browser)
                 implementation(libs.ktor.client.js)
@@ -137,17 +132,8 @@ kotlin {
     // ...existing code...
 }
 
-room3 {
-    schemaDirectory("$projectDir/schemas")
-}
-
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
-
-    // KSP dependencies for Room - must match actual KSP source set configurations
-    add("kspCommonMainMetadata", libs.room.compiler)
-    // Support multiple possible KSP configuration names across Gradle/Kotlin plugin versions
-    add("kspAndroidMain", libs.room.compiler)
     add("kspAndroid", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
@@ -155,28 +141,6 @@ dependencies {
     add("kspWasmJs", libs.room.compiler)
 }
 
-// Developer task: run KSP for all targets and validate Room schema output
-tasks.register("verifyRoomSchemas") {
-    // Common KSP tasks for targets used in this project. Adjust if your target names differ.
-    val kspTasks = listOf(
-        "kspCommonMainMetadata",
-        "kspAndroidMain",
-        "kspIosArm64",
-        "kspIosSimulatorArm64",
-        "kspJs",
-        "kspWasmJs"
-    )
-
-    kspTasks.forEach { name ->
-        tasks.findByName(name)?.let { dependsOn(it) } ?: logger.warn("KSP task not found: $name")
-    }
-
-    doLast {
-        val schemaDir = file("$projectDir/schemas")
-        if (!schemaDir.exists() || schemaDir.listFiles()?.isEmpty() != false) {
-            throw GradleException("Room schema directory is missing or empty: $schemaDir")
-        }
-        println("Room schemas verified in: $schemaDir")
-    }
+room3 {
+    schemaDirectory(layout.projectDirectory.dir("schemas"))
 }
-
