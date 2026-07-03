@@ -1,7 +1,6 @@
 When creating a Glimmer List component, refer to the following source code in
 `List.kt`:
 
-
 ```kotlin
 /*
  * Copyright 2025 The Android Open Source Project

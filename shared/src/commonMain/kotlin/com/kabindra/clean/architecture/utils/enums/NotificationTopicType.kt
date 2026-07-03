@@ -4,11 +4,10 @@ import com.kabindra.clean.architecture.utils.subscribeToTopic
 import com.kabindra.clean.architecture.utils.unsubscribeFromTopic
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 
 fun subscribeToTopics(topics: List<String>) {
-    CoroutineScope(Dispatchers.IO).launch {
+    CoroutineScope(Dispatchers.Default).launch {
         try {
             topics.forEach { topic ->
                 subscribeToTopic(topic)
@@ -19,7 +18,7 @@ fun subscribeToTopics(topics: List<String>) {
 }
 
 fun unsubscribeFromTopics(topics: List<String>) {
-    CoroutineScope(Dispatchers.IO).launch {
+    CoroutineScope(Dispatchers.Default).launch {
         try {
             topics.forEach { topic ->
                 unsubscribeFromTopic(topic)

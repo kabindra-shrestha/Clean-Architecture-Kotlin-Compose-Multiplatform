@@ -1,7 +1,6 @@
 When creating a Glimmer Icon component, refer to the following source code in
 `IconSizes.kt` for setting icon sizes:
 
-
 ```kotlin
 /*
  * Copyright 2025 The Android Open Source Project

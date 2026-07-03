@@ -37,31 +37,31 @@ class AuthenticationRoomRepositoryImpl(
             }
         }
 
-     override suspend fun logout(): Flow<Result<Boolean>> =
-         flow {
-             emit(Result.Loading)
-             try {
-                 val users = appDatabase.userDao().findAll()
-                 if (users.isNotEmpty()) {
-                     val user = users[0]
-                     user.firebase_topics.takeIf { it.isNotEmpty() }?.let { topicsJson ->
-                         try {
-                             val json = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
-                             val topics = json.decodeFromString<List<String>>(topicsJson)
-                             unsubscribeFromTopics(topics)
-                         } catch (e: Exception) {
-                             // Topics parsing failed, continue logout
-                         }
-                     }
-                 }
-                 appDatabase.apiTokenDao().deleteAll()
-                 appDatabase.userDao().deleteAll()
+    override suspend fun logout(): Flow<Result<Boolean>> =
+        flow {
+            emit(Result.Loading)
+            try {
+                val users = appDatabase.userDao().findAll()
+                if (users.isNotEmpty()) {
+                    val user = users[0]
+                    user.firebase_topics.takeIf { it.isNotEmpty() }?.let { topicsJson ->
+                        try {
+                            val json = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
+                            val topics = json.decodeFromString<List<String>>(topicsJson)
+                            unsubscribeFromTopics(topics)
+                        } catch (e: Exception) {
+                            // Topics parsing failed, continue logout
+                        }
+                    }
+                }
+                appDatabase.apiTokenDao().deleteAll()
+                appDatabase.userDao().deleteAll()
 
-                 invalidateAuthTokens(client)
+                invalidateAuthTokens(client)
 
-                 emit(Result.Success(true))
-             } catch (e: Exception) {
-                 emit(Result.Error(ResultError.parseException(e)))
-             }
-         }
+                emit(Result.Success(true))
+            } catch (e: Exception) {
+                emit(Result.Error(ResultError.parseException(e)))
+            }
+        }
 }

@@ -1,7 +1,6 @@
 When using a Projected Context to launch the Glasses Projected activity on the
 Projected Device, refer to the following source code in `ProjectedContext.kt`:
 
-
 ```kotlin
 /*
  * Copyright 2025 The Android Open Source Project

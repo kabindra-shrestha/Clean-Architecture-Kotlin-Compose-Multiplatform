@@ -1,7 +1,6 @@
 When creating a Glimmer Stack component, refer to the following source code in
 `StackItemScope.kt` for setting the stack item scope:
 
-
 ```kotlin
 /*
  * Copyright 2025 The Android Open Source Project

@@ -1,9 +1,9 @@
 package com.kabindra.clean.architecture.db
 
-import androidx.room.Room
+import androidx.room3.Room
 import com.kabindra.clean.architecture.data.source.room.AppDatabase
-import org.dany.worker.createSQLiteWasmWorker
 import kotlinx.coroutines.Dispatchers
+import org.dany.worker.createSQLiteWasmWorker
 
 actual fun getDatabaseBuilder(): AppDatabase {
     return Room.inMemoryDatabaseBuilder<AppDatabase>()

@@ -317,7 +317,7 @@ private fun FloatingToolbarActionItemContent(
 @Composable
 fun BottomNavigationBarComponent(
     modifier: Modifier = Modifier,
-    selectedRoute: String = LoginRoute::class.qualifiedName!!,
+    selectedRoute: String = LoginRoute.Route,
     onClick: (selectedSlug: String) -> Unit
 ) {
     NavigationBar(modifier = modifier) {
@@ -345,7 +345,7 @@ fun BottomNavigationBarComponent(
                         )
                     },
                     selected = if (label.route != null) {
-                        selectedRoute.contains(label.route::class.qualifiedName!!)
+                        selectedRoute.contains(label.route.toString())
                     } else {
                         false
                     },

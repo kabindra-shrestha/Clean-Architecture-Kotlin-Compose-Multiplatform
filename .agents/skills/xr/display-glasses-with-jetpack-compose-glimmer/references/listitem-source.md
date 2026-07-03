@@ -1,7 +1,6 @@
 When creating a Glimmer Icon Sizes component, refer to the following source
 code in `ListItem.kt` for list items:
 
-
 ```kotlin
 /*
  * Copyright 2025 The Android Open Source Project

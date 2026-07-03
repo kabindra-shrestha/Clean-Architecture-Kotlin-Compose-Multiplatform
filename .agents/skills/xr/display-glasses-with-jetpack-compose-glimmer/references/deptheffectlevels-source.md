@@ -1,7 +1,6 @@
 When simulating depth on AI glasses using shadows, refer to the following source
 code in `DepthEffectLevels.kt`:
 
-
 ```kotlin
 /*
  * Copyright 2025 The Android Open Source Project

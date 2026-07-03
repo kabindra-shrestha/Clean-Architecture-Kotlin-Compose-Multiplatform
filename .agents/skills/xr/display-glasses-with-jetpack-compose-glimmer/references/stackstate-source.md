@@ -1,7 +1,6 @@
 When creating a Glimmer Stack component, refer to the following source code in
 `StackState.kt` for creating a state for the stack:
 
-
 ```kotlin
 /*
  * Copyright 2025 The Android Open Source Project

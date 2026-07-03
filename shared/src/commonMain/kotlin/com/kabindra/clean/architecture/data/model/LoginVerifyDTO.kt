@@ -1,13 +1,10 @@
 package com.kabindra.clean.architecture.data.model
 
-import com.kabindra.clean.architecture.domain.entity.ApiToken
 import com.kabindra.clean.architecture.domain.entity.Features
 import com.kabindra.clean.architecture.domain.entity.FeaturesUsed
 import com.kabindra.clean.architecture.domain.entity.LoginUser
 import com.kabindra.clean.architecture.domain.entity.LoginVerify
-import com.kabindra.clean.architecture.domain.entity.User
 import com.kabindra.clean.architecture.utils.base.BaseResponse
-import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 @Serializable

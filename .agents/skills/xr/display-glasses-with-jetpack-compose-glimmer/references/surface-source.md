@@ -1,7 +1,6 @@
 When using surfaces to build a custom component, refer to the following source
 code in `Surface.kt`:
 
-
 ```kotlin
 /*
  * Copyright 2025 The Android Open Source Project

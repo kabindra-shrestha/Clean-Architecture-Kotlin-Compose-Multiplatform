@@ -32,7 +32,8 @@ class TokenProvider(private val appDatabase: AppDatabase) {
         refreshToken = newRefreshToken
 
         appDatabase.apiTokenDao().deleteAll() // Clear old tokens if needed
-        appDatabase.apiTokenDao().add(ApiTokenDTO(newAccessToken, newRefreshToken)) // Add the new one
+        appDatabase.apiTokenDao()
+            .add(ApiTokenDTO(newAccessToken, newRefreshToken)) // Add the new one
     }
 
     suspend fun clearTokens() = mutex.withLock {

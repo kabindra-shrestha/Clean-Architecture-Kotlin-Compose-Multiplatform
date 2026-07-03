@@ -5,7 +5,6 @@ import androidx.room3.Entity
 import androidx.room3.PrimaryKey
 import com.kabindra.clean.architecture.domain.entity.User
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 
 @Entity(tableName = "users")
 @Serializable
