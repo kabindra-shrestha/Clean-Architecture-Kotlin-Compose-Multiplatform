@@ -22,7 +22,7 @@ Validation and quick fixes
     - `alias(libs.plugins.room)`
     - `room3 { schemaDirectory("$projectDir/schemas") }`
     -
-    `dependencies { add("kspCommonMainMetadata", libs.room.compiler); add("kspAndroid", libs.room.compiler); add("kspIosArm64", libs.room.compiler); ... }`
+   `dependencies { add("kspCommonMainMetadata", libs.room.compiler); add("kspAndroid", libs.room.compiler); add("kspIosArm64", libs.room.compiler); ... }`
 
 2. Regenerate KSP outputs for each target (run these from project root):
 

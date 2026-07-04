@@ -87,9 +87,9 @@ fun TabIndicatorScope.TabIndicator(
     Box(
         modifier = Modifier
             .tabIndicatorOffset(selectedIndex)
-            .height(2.sdp)
-            .padding(horizontal = 17.sdp)
-            .clip(RoundedCornerShape(5.sdp))
+            .height(3.sdp)
+            .padding(horizontal = 2.sdp)
+            .clip(RoundedCornerShape(topStart = 3.sdp, topEnd = 3.sdp))
             .background(tabSelected)
     )
 }

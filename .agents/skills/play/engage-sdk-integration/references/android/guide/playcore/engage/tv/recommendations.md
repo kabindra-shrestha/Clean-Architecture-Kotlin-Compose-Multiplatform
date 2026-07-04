@@ -88,7 +88,8 @@ transaction:
 
 > [!NOTE]
 > **Note:** Publish APIs are upsert operations, replacing existing content; update entities by
-> republishing the entire cluster. Only publish recommendations for adult accounts. Avoid using delete
+> republishing the entire cluster. Only publish recommendations for adult accounts. Avoid using
+> delete
 > APIs followed by publish, as the latter inherently replaces content.
 
 ### Cross-device sync

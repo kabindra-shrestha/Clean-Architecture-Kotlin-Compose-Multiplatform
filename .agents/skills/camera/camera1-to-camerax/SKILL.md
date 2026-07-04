@@ -25,7 +25,6 @@ for interoperability, or version 1.5.0 or higher for Compose extensions.
 
 If you are using a Version Catalog (`libs.versions.toml`), add the following:
 
-
 ```kotlin
 [versions]
 camerax = "<minimum_version_needed>"
@@ -42,7 +41,6 @@ androidx-camera-compose = { group = "androidx.camera", name = "camera-compose", 
 
 And in your `build.gradle.kts` (or `build.gradle`):
 
-
 ```kotlin
 implementation(libs.androidx.camera.core)
 implementation(libs.androidx.camera.camera2)
@@ -54,7 +52,6 @@ implementation(libs.androidx.camera.compose)
 <br />
 
 Without a Version Catalog, fall back to these standard Gradle dependencies:
-
 
 ```kotlin
 implementation "androidx.camera:camera-core:<minimum_version_needed>"
@@ -69,7 +66,8 @@ implementation "androidx.camera:camera-compose:<minimum_version_needed>"
 ## Step 1: Remove Legacy Implementation
 
 1. Delete all `android.hardware.Camera` instances.
-2. Delete `SurfaceView` and `SurfaceHolder.Callback` implementations (`surfaceCreated`, `surfaceChanged`, `surfaceDestroyed`).
+2. Delete `SurfaceView` and `SurfaceHolder.Callback` implementations (`surfaceCreated`,
+   `surfaceChanged`, `surfaceDestroyed`).
 3. Remove custom lifecycle handling that opens or releases the camera in `onResume` or `onPause`.
 4. Remove manual matrix calculations for orientation.
 
@@ -77,7 +75,6 @@ implementation "androidx.camera:camera-compose:<minimum_version_needed>"
 
 Request the `ProcessCameraProvider` and bind use cases to the Activity or
 Fragment lifecycle.
-
 
 ```kotlin
 val context = LocalContext.current
@@ -122,7 +119,6 @@ Use `androidx.camera.view.PreviewView`.
 
 **1. Set up preview**:
 
-
 ```kotlin
 preview.setSurfaceProvider(previewView.surfaceProvider)
 ```
@@ -130,7 +126,6 @@ preview.setSurfaceProvider(previewView.surfaceProvider)
 <br />
 
 **2. Handle tap-to-focus**:
-
 
 ```kotlin
 val factory = previewView.meteringPointFactory
@@ -147,7 +142,6 @@ Use `androidx.camera.compose.CameraXViewfinder`.
 
 **1. Set up preview and SurfaceRequest**:
 
-
 ```kotlin
 var surfaceRequest by remember { mutableStateOf<SurfaceRequest?>(null) }
 val preview = remember {
@@ -160,7 +154,6 @@ val preview = remember {
 <br />
 
 **2. Render viewfinder**:
-
 
 ```kotlin
 surfaceRequest?.let { request ->
@@ -175,7 +168,6 @@ surfaceRequest?.let { request ->
 <br />
 
 **3. Handle tap-to-focus in Compose**:
-
 
 ```kotlin
 // Inside your tap gesture handler...
@@ -193,7 +185,6 @@ cameraControl?.startFocusAndMetering(action)
 
 **4. Update target rotation for Compose**:
 
-
 ```kotlin
 LaunchedEffect(configuration) {
   if (!view.isInEditMode) {
@@ -210,7 +201,6 @@ LaunchedEffect(configuration) {
 
 Use the `ImageCapture` use case to take the picture. The `ImageProxy` handles
 rotation directly.
-
 
 ```kotlin
 imageCapture.takePicture(
@@ -251,7 +241,6 @@ imageCapture.takePicture(
 To flip between front and rear cameras, change the `CameraSelector` and
 re-trigger the `ProcessCameraProvider` logic.
 
-
 ```kotlin
 lensFacing = if (lensFacing == CameraSelector.LENS_FACING_BACK) {
   CameraSelector.LENS_FACING_FRONT
@@ -264,7 +253,12 @@ lensFacing = if (lensFacing == CameraSelector.LENS_FACING_BACK) {
 
 ## Constraints
 
-- **Don't manage the camera lifecycle manually** : Bind the camera to a `LifecycleOwner` through the `ProcessCameraProvider`. Avoid manual camera open or close logic in `onResume` or `onPause`.
-- **Don't calculate focus matrices manually** : `MeteringPointFactory` handles coordinate transformations, including device rotation offsets. Avoid custom matrix implementations.
-- **Don't forget to close the ImageProxy** : Remember to invoke `image.close()` in the capture callback. Skipping this call locks the capture pipeline and interrupts subsequent photos.
-- **Don't wrap `PreviewView` in `AndroidView` for Compose code** : For Compose UI layouts, use `CameraXViewfinder`. Compiling `PreviewView` in an `AndroidView` is an old fallback option that introduces resizing issues.
+- **Don't manage the camera lifecycle manually** : Bind the camera to a `LifecycleOwner` through the
+  `ProcessCameraProvider`. Avoid manual camera open or close logic in `onResume` or `onPause`.
+- **Don't calculate focus matrices manually** : `MeteringPointFactory` handles coordinate
+  transformations, including device rotation offsets. Avoid custom matrix implementations.
+- **Don't forget to close the ImageProxy** : Remember to invoke `image.close()` in the capture
+  callback. Skipping this call locks the capture pipeline and interrupts subsequent photos.
+- **Don't wrap `PreviewView` in `AndroidView` for Compose code** : For Compose UI layouts, use
+  `CameraXViewfinder`. Compiling `PreviewView` in an `AndroidView` is an old fallback option that
+  introduces resizing issues.

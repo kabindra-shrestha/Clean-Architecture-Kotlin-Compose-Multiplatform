@@ -152,7 +152,8 @@ coordinated user flow across both the glasses and the phone.
 `requestPermissions`](https://developer.android.com/reference/kotlin/androidx/core/app/ActivityCompat#requestPermissions(android.app.Activity,%20java.lang.String%5B%5D,%20int))
 > with [
 `ActivityResultLauncher<String>`](https://developer.android.com/reference/kotlin/androidx/activity/result/ActivityResultLauncher))
-> in code running on the glasses. Doing so attempts to launch a non-interactable permission dialog on
+> in code running on the glasses. Doing so attempts to launch a non-interactable permission dialog
+> on
 > the glasses, breaking the user flow.
 >
 > <br />

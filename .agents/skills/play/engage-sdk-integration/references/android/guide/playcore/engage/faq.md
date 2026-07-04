@@ -297,6 +297,7 @@ In summary: While you can integrate Engage with anonymous logins, users will
 only be able to resume content on the same device.
 
 #### Can I use AccountProfile with only `accountId` and no
+
 `profileId`, even when my app supports both accountId and `profileId`?
 
 AccountProfile requires both `accountId` and `profileId` to function correctly.

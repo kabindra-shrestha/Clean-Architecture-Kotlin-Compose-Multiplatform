@@ -7,7 +7,6 @@ Android versions to safely receive broadcasts when the app is live in memory.
 
 ### BroadcastReceiver Implementation
 
-
 ```kotlin
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -74,7 +73,6 @@ class EngageBroadcastReceiver : BroadcastReceiver() {
 Add the `<receiver>` tag inside the `<application>` block in
 `AndroidManifest.xml`
 
-
 ```kotlin
 <!--    Add the `<receiver>` tag inside the `<application>` block in `AndroidManifest.xml`:-->
 <receiver
@@ -95,7 +93,6 @@ Add the `<receiver>` tag inside the `<application>` block in
 <br />
 
 ## EngageWorker
-
 
 ```kotlin
 import android.content.Context
@@ -268,7 +265,6 @@ class EngageWorker(context: Context, workerParams: WorkerParameters) : Coroutine
 
 ## ClusterRequestFactory
 
-
 ```kotlin
 class ClusterRequestFactory(context: Context) {
 
@@ -310,7 +306,6 @@ class ClusterRequestFactory(context: Context) {
 
 ## EngagePublisher
 
-
 ```kotlin
 object EngagePublisher {
 
@@ -335,7 +330,6 @@ object EngagePublisher {
 
 ## Constants
 
-
 ```kotlin
 object Constants {
     // Holds common values like attempt counts, publish types etc.
@@ -355,7 +349,6 @@ object Constants {
 <br />
 
 ## ItemToEntityConverter
-
 
 ```kotlin
 object ItemToEntityConverter {
@@ -405,7 +398,6 @@ integrations.
 
 ### AndroidManifest.xml (TV)
 
-
 ```kotlin
 <!-- Mandatory for TV integrations -->
 <uses-permission android:name="com.android.providers.tv.permission.WRITE_EPG_DATA" />
@@ -414,7 +406,6 @@ integrations.
 <br />
 
 ### PlatformSpecificUri Example
-
 
 ```kotlin
 val platformSpecificPlaybackUris = listOf(
@@ -432,7 +423,6 @@ val platformSpecificPlaybackUris = listOf(
 <br />
 
 ### AccountProfile Example
-
 
 ```kotlin
 val accountProfile: AccountProfile
