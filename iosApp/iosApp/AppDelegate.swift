@@ -6,9 +6,9 @@
 //  Copyright © 2024 orgName. All rights reserved.
 //
 
-import ComposeApp
 import FirebaseCore
 import FirebaseMessaging
+import Shared
 import UIKit
 import UserNotifications
 

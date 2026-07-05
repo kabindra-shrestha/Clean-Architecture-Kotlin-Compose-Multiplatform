@@ -1,6 +1,4 @@
 rootProject.name = "ComposeMultiplatformCleanArchitecture"
-include(":composeApp")
-include(":in-app-update")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -12,8 +10,9 @@ pluginManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
-        gradlePluginPortal()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 
@@ -26,8 +25,16 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         mavenCentral()
         mavenLocal()
         maven("https://jogamp.org/deployment/maven")
     }
 }
+
+include(":androidApp")
+include(":shared")
+include(":webApp")
+include("sqlJsWorker")
+include("sqliteWasmWorker")
+include(":in-app-update")
