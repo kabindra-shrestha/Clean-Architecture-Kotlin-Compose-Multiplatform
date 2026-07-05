@@ -1,8 +1,8 @@
 plugins {
-    alias(libs.plugins.androidKotlinMultiplatformLibrary)
-    alias(libs.plugins.jetbrainsCompose)
-    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.composeCompiler)
 }
 
 kotlin {
@@ -12,8 +12,8 @@ kotlin {
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
         namespace = "com.kabindra.inappupdate"
-        compileSdk = 36
-        minSdk = 26
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
 
         withHostTestBuilder {
         }
@@ -33,11 +33,22 @@ kotlin {
     // project can be found here:
     // https://developer.android.com/kotlin/multiplatform/migrate
     listOf(
-        iosX64(), iosArm64(), iosSimulatorArm64()
+        iosArm64(),
+        iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "in-app-updateKit"
+            baseName = "in-app-update"
+            isStatic = true
         }
+    }
+
+    js {
+        browser()
+    }
+
+    @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
+    wasmJs {
+        browser()
     }
 
     // Source set declarations.
@@ -46,48 +57,42 @@ kotlin {
     // common to share sources between related targets.
     // See: https://kotlinlang.org/docs/multiplatform-hierarchy.html
     sourceSets {
-        commonMain {
-            dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                // implementation(compose.material)
-                implementation(compose.material3)
-                implementation(compose.materialIconsExtended)
-                implementation(compose.ui)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
-
-                implementation(libs.androidx.lifecycle.runtime.compose)
-                implementation(libs.androidx.lifecycle.viewmodel)
-                // implementation(libs.androidx.lifecycle.viewmodel.compose)
-
-                implementation(libs.bundles.compottie)
-                implementation(libs.bundles.coil)
-            }
-        }
-
         androidMain {
             dependencies {
                 // Add Android-specific dependencies here. Note that this source set depends on
                 // commonMain by default and will correctly pull the Android artifacts of any KMP
                 // dependencies declared in commonMain.
-                implementation(compose.preview)
                 implementation(libs.androidx.activity.compose)
-                implementation(libs.compose.ui.tooling.preview)
+                implementation(libs.compose.uiToolingPreview)
 
                 implementation(libs.app.update)
                 implementation(libs.app.update.ktx)
             }
         }
+        commonMain.dependencies {
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.material3)
+            implementation(compose.materialIconsExtended)
+            implementation(libs.compose.ui)
+            implementation(libs.compose.components.resources)
+            implementation(libs.compose.uiToolingPreview)
+            implementation(libs.androidx.lifecycle.viewmodelCompose)
+            implementation(libs.androidx.lifecycle.runtimeCompose)
 
-        iosMain {
-            dependencies {
-                // Add iOS-specific dependencies here. This a source set created by Kotlin Gradle
-                // Plugin (KGP) that each specific iOS target (e.g., iosX64) depends on as
-                // part of KMP’s default source set hierarchy. Note that this source set depends
-                // on common by default and will correctly pull the iOS artifacts of any
-                // KMP dependencies declared in commonMain.
-            }
+            implementation(libs.bundles.compottie)
+            implementation(libs.bundles.coil)
+
+            implementation(libs.sdp.ssp)
+        }
+        iosMain.dependencies {
+            // Add iOS-specific dependencies here. This a source set created by Kotlin Gradle
+            // Plugin (KGP) that each specific iOS target (e.g., iosX64) depends on as
+            // part of KMP’s default source set hierarchy. Note that this source set depends
+            // on common by default and will correctly pull the iOS artifacts of any
+            // KMP dependencies declared in commonMain.
+        }
+        wasmJsMain.dependencies {
         }
     }
 

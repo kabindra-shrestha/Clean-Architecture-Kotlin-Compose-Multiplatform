@@ -6,7 +6,6 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 private val lightScheme = lightColorScheme(
@@ -109,18 +108,8 @@ fun AppTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = AppTypography,
+        typography = AppTypography(),
         content = content
     )
-}
-
-private val LocalAppDimens = staticCompositionLocalOf {
-    normalDimensions
-}
-
-object AppTheme {
-    val dimens: Dimensions
-        @Composable
-        get() = LocalAppDimens.current
 }
 

@@ -20,7 +20,7 @@ struct NotificationPayload: Codable {
     var ticketId: String?
     var workflow: String?
     var date: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case aps
         case fcmOptions = "fcm_options"
@@ -33,7 +33,7 @@ struct NotificationPayload: Codable {
         case workflow = "workflow"
         case date = "date"
     }
-    
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.aps = try values.decodeIfPresent(Aps.self, forKey: .aps)
@@ -46,7 +46,7 @@ struct NotificationPayload: Codable {
         self.ticketId = decodeToString(values, key: .ticketId)
         self.workflow = decodeToString(values, key: .workflow)
         self.date = decodeToString(values, key: .date)
-        
+
     }
 }
 
@@ -54,20 +54,20 @@ struct NotificationPayload: Codable {
 struct Aps: Codable {
     var alert: Alert?
     var mutableContent, sound: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case alert
         case mutableContent = "mutable-content"
         case sound
     }
-    
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.alert = try values.decode(Alert.self, forKey: .alert)
-        
+
         self.mutableContent = decodeToString(values, key: .mutableContent)
         self.sound = decodeToString(values, key: .sound)
-        
+
     }
 }
 
@@ -82,7 +82,7 @@ struct FcmOptions: Codable {
 }
 
 extension Decodable {
-    func decodeToString<K:CodingKey>(_ value: KeyedDecodingContainer<K>, key: KeyedDecodingContainer<K>.Key) -> String? {
+    func decodeToString<K: CodingKey>(_ value: KeyedDecodingContainer<K>, key: KeyedDecodingContainer<K>.Key) -> String? {
         var str: String? = nil
         if let res = try? value.decodeIfPresent(String.self, forKey: key) {
             str = res
@@ -102,12 +102,12 @@ extension Dictionary where Key == String, Value: Any {
         do {
             let data = try JSONSerialization.data(withJSONObject: self, options: [])
             return try JSONDecoder().decode(T.self, from: data)
-        }catch {
-            print("DEBUG ERROR OBJECT :-",error.localizedDescription.debugDescription)
+        } catch {
+            print("DEBUG ERROR OBJECT :-", error.localizedDescription.debugDescription)
             return nil
         }
     }
-    
+
     func getJsonString() -> String {
         do {
             let json = try JSONSerialization.data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted)
