@@ -1,6 +1,8 @@
 This document describes how to integrate the Credential Manager API with an
 Android app that uses WebView. Credential Manager is supported natively in the
-`android.webkit.WebView` library in [version 1.12.0](https://developer.android.com/jetpack/androidx/releases/webkit#1.12.0) and later.
+`android.webkit.WebView` library
+in [version 1.12.0](https://developer.android.com/jetpack/androidx/releases/webkit#1.12.0) and
+later.
 
 ## Prerequisites
 
@@ -81,4 +83,5 @@ should generate initial JSON for registration (create) and authentication (get)
 processes. It should also handle validation and verification of the responses
 received from the web page.
 
-Verify the implementation corresponds to the [UX recommendations](https://developer.android.com/design/ui/mobile/guides/patterns/passkeys).
+Verify the implementation corresponds to
+the [UX recommendations](https://developer.android.com/design/ui/mobile/guides/patterns/passkeys).

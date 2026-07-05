@@ -64,6 +64,8 @@ kotlin {
 
             implementation(project.dependencies.platform(libs.google.firebase.bom))
             implementation(libs.bundles.firebase)
+
+            implementation(libs.inspektor)
         }
         commonMain.dependencies {
             implementation(projects.inAppUpdate)
@@ -100,6 +102,9 @@ kotlin {
             // Third party libraries
             implementation(libs.bundles.compottie)
             implementation(libs.sdp.ssp)
+
+            implementation(libs.haze)
+            implementation(libs.haze.blur)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -109,6 +114,8 @@ kotlin {
             implementation(libs.sqlite.bundled)
 
             implementation(libs.bundles.firebase)
+
+            implementation(libs.inspektor)
         }
         jsMain {
             dependencies {
@@ -129,8 +136,6 @@ kotlin {
             }
         }
     }
-
-    // ...existing code...
 }
 
 dependencies {

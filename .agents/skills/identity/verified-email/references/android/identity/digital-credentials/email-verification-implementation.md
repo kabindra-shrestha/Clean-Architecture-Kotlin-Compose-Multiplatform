@@ -1,10 +1,13 @@
 > [!IMPORTANT]
-> **Important:** We released an agent skill to help you implement email verification with the Digital Credentials API. Try out the skill from the [Android skills
+> **Important:** We released an agent skill to help you implement email verification with the
+> Digital Credentials API. Try out the skill from the [Android skills
 > repository](https://github.com/android/skills).
 
 This guide describes how to implement verified email retrieval using the
-[Digital Credentials Verifier API](https://developer.android.com/identity/digital-credentials/credential-verifier) through an [OpenID for Verifiable
-Presentations (OpenID4VP)](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html) request.
+[Digital Credentials Verifier API](https://developer.android.com/identity/digital-credentials/credential-verifier)
+through an [OpenID for Verifiable
+Presentations (OpenID4VP)](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)
+request.
 
 ## Add dependencies
 
@@ -39,8 +42,11 @@ Use your app or activity context to create a `CredentialManager` object.
 
 ## Construct the Digital Credential request
 
-To request a verified email, construct a [`GetCredentialRequest`](https://developer.android.com/reference/android/credentials/GetCredentialRequest)
-containing a [`GetDigitalCredentialOption`](https://developer.android.com/reference/androidx/credentials/GetDigitalCredentialOption). This option requires a
+To request a verified email, construct a [
+`GetCredentialRequest`](https://developer.android.com/reference/android/credentials/GetCredentialRequest)
+containing a [
+`GetDigitalCredentialOption`](https://developer.android.com/reference/androidx/credentials/GetDigitalCredentialOption).
+This option requires a
 `requestJson` string formatted as an OpenID for Verifiable Presentations
 (OpenID4VP) request.
 
@@ -95,11 +101,17 @@ The request contains the following key information:
   claims being requested (`email_verified`). You can request other claims to
   determine the level of verification. A few possible claims are as follows:
 
-  - `email_verified`: In the response, this is a Boolean that indicates whether the email is verified.
-  - `hd` (hosted domain): In the response, this is empty.
+    - `email_verified`: In the response, this is a Boolean that indicates whether the email is
+      verified.
+    - `hd` (hosted domain): In the response, this is empty.
 
   > [!NOTE]
-  > **Note:** If `email_verified` is `true` and `hd` is empty in the response, it implies that the account is an authorized Google Account. Currently, Google does not issue [verifiable credentials](https://developer.android.com/identity/digital-credentials#verifiable-credentials) for Google Workspace Accounts. However, the `hd` field is present in verifiable credentials issued for non-workspace accounts. You are encouraged to implement handling this field to future-proof your app.
+  > **Note:** If `email_verified` is `true` and `hd` is empty in the response, it implies that the
+  account is an authorized Google Account. Currently, Google does not
+  issue [verifiable credentials](https://developer.android.com/identity/digital-credentials#verifiable-credentials)
+  for Google Workspace Accounts. However, the `hd` field is present in verifiable credentials issued
+  for non-workspace accounts. You are encouraged to implement handling this field to future-proof
+  your app.
 
 - If the email is non-@gmail.com, Google verified this email when the Google
   Account was created, but there is no freshness claim. Therefore, for
@@ -145,7 +157,9 @@ Present the user with the request, using the Credential Manager built-in UI.
     }
 
 > [!NOTE]
-> **Note:** There is no equivalent of Sign in with Google's `preferImmediatelyAvailableCredentials` for Digital Credentials. If no verifiable credential is found (for example, no eligible account on device), the user will be shown a "No options available" or similar system screen.
+> **Note:** There is no equivalent of Sign in with Google's `preferImmediatelyAvailableCredentials`
+> for Digital Credentials. If no verifiable credential is found (for example, no eligible account on
+> device), the user will be shown a "No options available" or similar system screen.
 
 ## Parse the response on the client
 
@@ -154,7 +168,8 @@ This is useful for immediately updating the UI, for example, by showing the
 user's name.
 
 > [!IMPORTANT]
-> **Important:** This step is not for validation. Full cryptographic verification must be performed on your server.
+> **Important:** This step is not for validation. Full cryptographic verification must be performed
+> on your server.
 
 The following code extracts the raw [Selective Disclosure JWT
 (SD-JWT)](https://datatracker.ietf.org/doc/rfc9901/) and uses a helper to decode its claims.
@@ -182,7 +197,8 @@ The following code extracts the raw [Selective Disclosure JWT
 
 ## Handle the response
 
-The Credential Manager API will return a [`DigitalCredential`](https://developer.android.com/reference/androidx/credentials/DigitalCredential)
+The Credential Manager API will return a [
+`DigitalCredential`](https://developer.android.com/reference/androidx/credentials/DigitalCredential)
 response.
 
 The following is an example of what the raw `responseJsonString` looks like, and
@@ -221,7 +237,8 @@ additional metadata as well along with verified email:
      */
 
 > [!NOTE]
-> **Note:** We highly recommend that after receiving the verified email, you trigger Credential Manager's [passkey creation](https://developer.android.com/identity/credential-manager/passkeys/create-passkeys).
+> **Note:** We highly recommend that after receiving the verified email, you trigger Credential
+> Manager's [passkey creation](https://developer.android.com/identity/credential-manager/passkeys/create-passkeys).
 
 ## Server-side validation for account creation
 
@@ -238,16 +255,23 @@ the user in.
 The digital credential provides two critical levels of verification for your
 server:
 
-- **Authenticity of the data** : Verifying the issuer (`iss`) URL and the `SD-JWT` signature proves that a trusted authority issued this data.
-- **Identity of the presenter** : Verifying the `cnf` field and the Key Binding (`kb`) signature confirms that the credential is being shared by the same device it was originally issued to, preventing it from being intercepted or used on another device.
+- **Authenticity of the data** : Verifying the issuer (`iss`) URL and the `SD-JWT` signature proves
+  that a trusted authority issued this data.
+- **Identity of the presenter** : Verifying the `cnf` field and the Key Binding (`kb`) signature
+  confirms that the credential is being shared by the same device it was originally issued to,
+  preventing it from being intercepted or used on another device.
 
 The validation on the server must achieve the following:
 
-- **Verify issuer** : Ensure the `iss` (issuer) field matches `https://verifiablecredentials-pa.googleapis.com`.
-- **Verify signature**: Check the signature of the SD-JWT using the public keys (JWKs) available at https://verifiablecredentials-pa.googleapis.com/.well-known/vc-public-jwks.
+- **Verify issuer** : Ensure the `iss` (issuer) field matches
+  `https://verifiablecredentials-pa.googleapis.com`.
+- **Verify signature**: Check the signature of the SD-JWT using the public keys (JWKs) available
+  at https://verifiablecredentials-pa.googleapis.com/.well-known/vc-public-jwks.
 
 > [!NOTE]
-> **Note:** Use a standard library (such as [@sd-jwt/sd-jwt-vc](https://datatracker.ietf.org/doc/rfc9901/) for Node.js) to perform the verification steps as outlined in the [OpenID for Verifiable
+> **Note:** Use a standard library (such
+> as [@sd-jwt/sd-jwt-vc](https://datatracker.ietf.org/doc/rfc9901/) for Node.js) to perform the
+> verification steps as outlined in the [OpenID for Verifiable
 > Presentations specification](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html).
 
 For full security, make sure that you also validate the `nonce` to prevent
@@ -279,14 +303,16 @@ intercepted or spoofed before provisioning the new account.
 ## Passkey creation
 
 An optional but highly recommended next step after provisioning an account is to
-immediately [create a passkey](https://developer.android.com/identity/passkeys/create-passkeys) for that account. This provides a secure,
+immediately [create a passkey](https://developer.android.com/identity/passkeys/create-passkeys) for
+that account. This provides a secure,
 passwordless method for the user to sign in. This flow is identical to a
 standard passkey registration.
 
 ## WebView support
 
 For the flow to work on a WebView, developers should implement a [JavaScript
-bridge](https://developer.android.com/identity/sign-in/credential-manager-webview) (JS Bridge) to facilitate the handoff. This bridge allows the
+bridge](https://developer.android.com/identity/sign-in/credential-manager-webview) (JS Bridge) to
+facilitate the handoff. This bridge allows the
 Webview to signal the native app, which can then perform the actual call
 to the Credential Manager API.
 

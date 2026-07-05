@@ -4,10 +4,15 @@ Analyzes Android codebases to identify and recommend high-value AppFunctions.
 
 ### Workflow: Feature Discovery
 
-1. **Analyze Manifest \& Entry Points** : Scan `AndroidManifest.xml` and Activity, Fragment, Service classes to identify core user journeys (e.g., Search, Create, Share).
-2. **Identify Atomic Tasks**: Look for methods or logic that represent distinct, self-contained user outcomes.
-3. **Evaluate AI Value**: Prioritize tasks that are frequently used or difficult to navigate using touch UI, but instead be expressed using voice or text (e.g., "Remind me to call Alice when I get home").
-4. **Recommend \& Justify**: List recommendations with a "Rationale" focusing on how an AI assistant adds value (efficiency, hands-free use, or multi-step automation).
+1. **Analyze Manifest \& Entry Points** : Scan `AndroidManifest.xml` and Activity, Fragment, Service
+   classes to identify core user journeys (e.g., Search, Create, Share).
+2. **Identify Atomic Tasks**: Look for methods or logic that represent distinct, self-contained user
+   outcomes.
+3. **Evaluate AI Value**: Prioritize tasks that are frequently used or difficult to navigate using
+   touch UI, but instead be expressed using voice or text (e.g., "Remind me to call Alice when I get
+   home").
+4. **Recommend \& Justify**: List recommendations with a "Rationale" focusing on how an AI assistant
+   adds value (efficiency, hands-free use, or multi-step automation).
 
 ## Critical Constraints
 

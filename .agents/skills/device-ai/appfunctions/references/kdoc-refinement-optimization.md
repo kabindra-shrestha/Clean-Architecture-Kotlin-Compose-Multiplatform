@@ -4,27 +4,35 @@ Optimizes AppFunction KDoc for AI agents and Model Context Protocol.
 
 ### Workflow: Agent-Centric Documentation
 
-1. **Identify the Core Outcome** : Start the description with a strong, imperative verb (e.g., "Search", "Create", "Update"). Focus on the *user
+1. **Identify the Core Outcome** : Start the description with a strong, imperative verb (e.g., "
+   Search", "Create", "Update"). Focus on the *user
    benefit*, not the code implementation.
-2. **Workflow Dependencies** : Explicitly state if another function must be called first using the standard phrase: **Required workflow: Call "Function
+2. **Workflow Dependencies** : Explicitly state if another function must be called first using the
+   standard phrase: **Required workflow: Call "Function
    A" first to "Objective"**.
 3. **Parameter Documentation** :
-   - For **Functions** : Use specific `@param` tags. Isolate validation rules and default values here.
-   - For **Serializables** : Use inline KDoc directly for each property declarations. KSP will **not** extract documentation from class-level tags.
-4. **Error Surface Mapping** : Rewrite `@throws` descriptions to provide actionable recovery steps for the AI agent (e.g., "If "Error", suggest the user check their internet connection").
+    - For **Functions** : Use specific `@param` tags. Isolate validation rules and default values
+      here.
+    - For **Serializables** : Use inline KDoc directly for each property declarations. KSP will *
+      *not** extract documentation from class-level tags.
+4. **Error Surface Mapping** : Rewrite `@throws` descriptions to provide actionable recovery steps
+   for the AI agent (e.g., "If "Error", suggest the user check their internet connection").
 
 ### Workflow: Global App Description (Server Instructions)
 
 When writing the `appfn:description` for `app_metadata.xml`, follow these
 instructions:
 
-1. **Capture Cross-Function Relationships**: Explain dependencies or sequences between tools (e.g., "Always call 'authenticate' before fetching data").
-2. **Document Operational Patterns**: Guide the LLM on token conserving usage (e.g., "Use 'batch_update' over multiple 'update' calls").
-3. **Specify Constraints**: Define clear boundaries (e.g., "File operations limited to workspace", "Rate limit: 10 req/min").
+1. **Capture Cross-Function Relationships**: Explain dependencies or sequences between tools (
+   e.g., "Always call 'authenticate' before fetching data").
+2. **Document Operational Patterns**: Guide the LLM on token conserving usage (e.g., "Use '
+   batch_update' over multiple 'update' calls").
+3. **Specify Constraints**: Define clear boundaries (e.g., "File operations limited to workspace", "
+   Rate limit: 10 req/min").
 4. **Anti-Patterns** :
-   - DON'T repeat individual function descriptions.
-   - DON'T include marketing claims or subjective praise.
-   - DON'T attempt to prompt model personality or conversation style.
+    - DON'T repeat individual function descriptions.
+    - DON'T include marketing claims or subjective praise.
+    - DON'T attempt to prompt model personality or conversation style.
 
 ## Critical Constraints
 

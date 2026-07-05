@@ -6,8 +6,11 @@ to assert the authenticity of an entity.
 
 Digital Credentials is a public W3C standard that specifies how to access a
 user's verifiable digital credentials from a digital wallet, and is implemented
-for web use cases with the [W3C Credential Management API](https://www.w3.org/TR/credential-management-1/). On
-Android, Credential Manager's [`DigitalCredential`](https://developer.android.com/reference/kotlin/androidx/credentials/DigitalCredential) API is used for
+for web use cases with
+the [W3C Credential Management API](https://www.w3.org/TR/credential-management-1/). On
+Android, Credential Manager's [
+`DigitalCredential`](https://developer.android.com/reference/kotlin/androidx/credentials/DigitalCredential)
+API is used for
 verifying digital credentials.
 
 ### Android version compatibility
@@ -19,8 +22,11 @@ The Verifier API is supported on Android 9 (API level 28) and higher.
 To verify digital credentials in your Android project, do the following:
 
 1. Add dependencies to your app's build script and initialize a `CredentialManager` class.
-2. Construct a digital credential request and use it to initialize a `DigitalCredentialOption`, followed by building the `GetCredentialRequest`.
-3. Launch the `getCredential` flow with the constructed request to receive a successful `GetCredentialResponse` or handle any exceptions that may occur. Upon successful retrieval, validate the response.
+2. Construct a digital credential request and use it to initialize a `DigitalCredentialOption`,
+   followed by building the `GetCredentialRequest`.
+3. Launch the `getCredential` flow with the constructed request to receive a successful
+   `GetCredentialResponse` or handle any exceptions that may occur. Upon successful retrieval,
+   validate the response.
 
 #### Add dependencies and initialize
 

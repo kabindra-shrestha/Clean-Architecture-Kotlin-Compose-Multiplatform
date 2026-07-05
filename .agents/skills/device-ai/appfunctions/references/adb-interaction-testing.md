@@ -7,21 +7,28 @@ emulator using ADB for AppFunction testing and debugging.
 
 If a user wants to see which App Functions are registered on the device.
 
-1. **List All Functions** : Use `adb shell cmd app_function list-app-functions` to see all registered App Functions for the current user in JSON format.
-2. **Filter by Package** : To see functions for a specific package, pipe the output to grep or a JSON processor: `adb shell cmd app_function
+1. **List All Functions** : Use `adb shell cmd app_function list-app-functions` to see all
+   registered App Functions for the current user in JSON format.
+2. **Filter by Package** : To see functions for a specific package, pipe the output to grep or a
+   JSON processor: `adb shell cmd app_function
    list-app-functions | grep <package_name>`.
 
 ### Scenario 2: Invoking App Functions
 
 If a user wants to test the execution of an App Function.
 
-1. **Analyze Description** : Before invoking, you MUST read the `description` field for the function in the `list-app-functions` output. This often contains critical usage constraints, required workflows, or disambiguation rules.
-2. **Follow Constraints**: Rigorously follow any instructions found in the description (e.g., "ask the user to disambiguate", "call another tool first").
-3. **Format Parameters** : The `--parameters` argument must be a valid JSON string representing the function's input arguments.
+1. **Analyze Description** : Before invoking, you MUST read the `description` field for the function
+   in the `list-app-functions` output. This often contains critical usage constraints, required
+   workflows, or disambiguation rules.
+2. **Follow Constraints**: Rigorously follow any instructions found in the description (e.g., "ask
+   the user to disambiguate", "call another tool first").
+3. **Format Parameters** : The `--parameters` argument must be a valid JSON string representing the
+   function's input arguments.
 4. **Execute Function** : Use `adb shell cmd app_function execute-app-function
    --package <PACKAGE_NAME> --function <FUNCTION_ID> --parameters
    '<PARAMETERS_JSON>'`.
-5. **Handle Response** : The result will be returned as a JSON string. Use `--brief-yaml` for a more concise output if preferred.
+5. **Handle Response** : The result will be returned as a JSON string. Use `--brief-yaml` for a more
+   concise output if preferred.
 
 ### Scenario 3: Managing Function State
 

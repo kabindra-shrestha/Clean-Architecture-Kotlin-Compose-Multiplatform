@@ -10,7 +10,6 @@ Symbol Processing) plugin.
 
 1. **Version Check**: Use the latest library versions from maven.google.com.
 
-
 ```kotlin
 implementation(libs.androidx.appfunctions)
 implementation(libs.androidx.appfunctions.service)
@@ -18,7 +17,6 @@ ksp(libs.androidx.appfunctions.compiler)
 ```
 
 <br />
-
 
 ```kotlin
 ksp {
@@ -55,28 +53,32 @@ Reference this in `AndroidManifest.xml` within the `<application>` tag:
 When generating Kotlin code for AppFunctions, you MUST adhere to these rules:
 
 1. **Annotations** :
-   - Annotate the function with `@AppFunction(isDescribedByKDoc = true)`.
-   - Annotate associated data classes with `@AppFunctionSerializable(isDescribedByKDoc = true)`.
+    - Annotate the function with `@AppFunction(isDescribedByKDoc = true)`.
+    - Annotate associated data classes with `@AppFunctionSerializable(isDescribedByKDoc = true)`.
 2. **Parameter Strategy** :
-   - **First Parameter** : MUST be `androidx.appfunctions.AppFunctionContext`.
-   - **Specificity**: Keep parameters specific. State objects need to be unambiguous.
-   - **Optionality**: If a parameter is not essential, make it optional with a reasonable default value.
+    - **First Parameter** : MUST be `androidx.appfunctions.AppFunctionContext`.
+    - **Specificity**: Keep parameters specific. State objects need to be unambiguous.
+    - **Optionality**: If a parameter is not essential, make it optional with a reasonable default
+      value.
 3. **Execution \& Threading** :
-   - Use `suspend` functions.
-   - Switch to the relevant Coroutine Dispatcher (e.g., `withContext(Dispatchers.IO)`) because AppFunction implementations run on the Android UI thread by default.
+    - Use `suspend` functions.
+    - Switch to the relevant Coroutine Dispatcher (e.g., `withContext(Dispatchers.IO)`) because
+      AppFunction implementations run on the Android UI thread by default.
 4. **Supported Types** :
-   - **Primitives** : `Int`, `Long`, `Float`, `Double`, `Boolean`.
-   - **Arrays** : `IntArray`, `LongArray`, `FloatArray`, `DoubleArray`, `BooleanArray`.
-   - **Native Types** : `String`, `PendingIntent`, `Uri`, `LocalTime`, `LocalDate`, `LocalDateTime`, `Instant`. (Prefer `LocalDateTime` or `Instant` for date/time).
-   - **Custom Objects** : Classes annotated with `@AppFunctionSerializable`.
-   - **Collections** : `List` of any supported non-primitive type.
+    - **Primitives** : `Int`, `Long`, `Float`, `Double`, `Boolean`.
+    - **Arrays** : `IntArray`, `LongArray`, `FloatArray`, `DoubleArray`, `BooleanArray`.
+    - **Native Types** : `String`, `PendingIntent`, `Uri`, `LocalTime`, `LocalDate`,
+      `LocalDateTime`, `Instant`. (Prefer `LocalDateTime` or `Instant` for date/time).
+    - **Custom Objects** : Classes annotated with `@AppFunctionSerializable`.
+    - **Collections** : `List` of any supported non-primitive type.
 5. **Default Values** :
-   - Use defaults that align with the type's "empty" state (e.g., `0` for `Int`, `null` for nullable, `emptyList()` for `List`).
+    - Use defaults that align with the type's "empty" state (e.g., `0` for `Int`, `null` for
+      nullable, `emptyList()` for `List`).
 6. **Error Handling** :
-   - Throw subclasses of `androidx.appfunctions.AppFunctionException` to report errors to callers.
+    - Throw subclasses of `androidx.appfunctions.AppFunctionException` to report errors to callers.
 7. **Security** :
-   - Don't expose highly sensitive user data (passwords, financial details).
-   - Don't expose irreversible destructive actions without confirmation steps.
+    - Don't expose highly sensitive user data (passwords, financial details).
+    - Don't expose irreversible destructive actions without confirmation steps.
 
 ### Step 4: (Optional) System Configuration for Dependency Injection
 
@@ -85,7 +87,6 @@ Only required for dependency injection configuration. Implement
 instances of classes containing `@AppFunction` methods.
 
 **Example Hilt Integration:**
-
 
 ```kotlin
 @HiltAndroidApp
@@ -123,7 +124,6 @@ Configuration APIs and the `@AppFunction` annotation are located in
 
 ### Example: Serializable with Inline KDoc
 
-
 ```kotlin
 /**
  * A note.
@@ -142,7 +142,6 @@ data class Note(
 <br />
 
 ### Example: Implementation Detail
-
 
 ```kotlin
 /**
@@ -211,7 +210,8 @@ class NoteFunctions @Inject constructor(
 
 **Solution**:
 
-1. Verify `@AppFunctionSerializable` classes use inline KDoc comments, NOT class-level `@param` tags.
+1. Verify `@AppFunctionSerializable` classes use inline KDoc comments, NOT class-level `@param`
+   tags.
 2. Check that the `assets/app_function_v2.xml` file exists in the APK.
 3. Confirm the `ksp("androidx.appfunctions:appfunctions-compiler")` dependency is correctly applied.
 4. Ensure the `ksp` argument `appfunctions:aggregateAppFunctions` is set to `"true"`.

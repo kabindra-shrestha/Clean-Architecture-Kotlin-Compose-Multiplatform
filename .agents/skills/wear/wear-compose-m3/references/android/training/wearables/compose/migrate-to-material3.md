@@ -123,12 +123,12 @@ import androidx.wear.compose.material3.ColorScheme
 
 The following table describes the key differences between M2.5 and M3:
 
-| M2.5 | M3 |
-|---|---|
-| `Color` | Has been renamed to `ColorScheme` |
-| 13 colors | 28 colors |
-| N/A | New dynamic color theming |
-| N/A | New tertiary colors for more expression |
+| M2.5      | M3                                      |
+|-----------|-----------------------------------------|
+| `Color`   | Has been renamed to `ColorScheme`       |
+| 13 colors | 28 colors                               |
+| N/A       | New dynamic color theming               |
+| N/A       | New tertiary colors for more expression |
 
 #### Dynamic color theming
 
@@ -199,14 +199,14 @@ following [TextStyles](https://cs.android.com/androidx/platform/frameworks/suppo
 are available in M3. These are
 employed by default by various M3 components.
 
-| Typography | TextStyle |
-|------------|---|
-| Display    | displayLarge, displayMedium, displaySmall |
-| Title      | titleLarge, titleMedium, titleSmall |
-| Label      | labelLarge, labelMedium, labelSmall |
-| Body       | bodyLarge, bodyMedium, bodySmall, bodyExtraSmall |
+| Typography | TextStyle                                                                       |
+|------------|---------------------------------------------------------------------------------|
+| Display    | displayLarge, displayMedium, displaySmall                                       |
+| Title      | titleLarge, titleMedium, titleSmall                                             |
+| Label      | labelLarge, labelMedium, labelSmall                                             |
+| Body       | bodyLarge, bodyMedium, bodySmall, bodyExtraSmall                                |
 | Numeral    | numeralExtraLarge, numeralLarge, numeralMedium, numeralSmall, numeralExtraSmall |
-| Arc        | arcLarge, arcMedium, arcSmall |
+| Arc        | arcLarge, arcMedium, arcSmall                                                   |
 
 ### Shape
 
