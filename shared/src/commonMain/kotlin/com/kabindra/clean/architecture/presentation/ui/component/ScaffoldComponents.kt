@@ -1,13 +1,16 @@
 package com.kabindra.clean.architecture.presentation.ui.component
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingToolbarDefaults
@@ -152,6 +155,7 @@ fun FloatingToolbarComponent(
     expanded: Boolean = true,
     showLabelBelowIcon: Boolean = false,
     useVibrantColors: Boolean = true,
+    isScrollable: Boolean = false,
     fabIcon: ImageVector? = null,
     onItemClick: (FloatingToolbarAction) -> Unit = {},
     onFabClick: () -> Unit = {},
@@ -190,11 +194,24 @@ fun FloatingToolbarComponent(
                 modifier = modifier,
                 colors = colors,
                 content = {
-                    ToolbarHorizontalActions(
-                        items = items,
-                        showLabelBelowIcon = showLabelBelowIcon,
-                        onItemClick = onItemClick,
-                    )
+                    if (isScrollable) {
+                        Row(
+                            modifier = Modifier.horizontalScroll(rememberScrollState()),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            ToolbarHorizontalActions(
+                                items = items,
+                                showLabelBelowIcon = showLabelBelowIcon,
+                                onItemClick = onItemClick,
+                            )
+                        }
+                    } else {
+                        ToolbarHorizontalActions(
+                            items = items,
+                            showLabelBelowIcon = showLabelBelowIcon,
+                            onItemClick = onItemClick,
+                        )
+                    }
                 },
             )
         }
@@ -206,11 +223,24 @@ fun FloatingToolbarComponent(
                 modifier = modifier,
                 colors = colors,
                 content = {
-                    ToolbarHorizontalActions(
-                        items = items,
-                        showLabelBelowIcon = showLabelBelowIcon,
-                        onItemClick = onItemClick,
-                    )
+                    if (isScrollable) {
+                        Row(
+                            modifier = Modifier.horizontalScroll(rememberScrollState()),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            ToolbarHorizontalActions(
+                                items = items,
+                                showLabelBelowIcon = showLabelBelowIcon,
+                                onItemClick = onItemClick,
+                            )
+                        }
+                    } else {
+                        ToolbarHorizontalActions(
+                            items = items,
+                            showLabelBelowIcon = showLabelBelowIcon,
+                            onItemClick = onItemClick,
+                        )
+                    }
                 },
             )
         }

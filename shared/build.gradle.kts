@@ -80,6 +80,7 @@ kotlin {
 
             implementation(libs.jetbrains.navigation3.ui)
             implementation(libs.jetbrains.material3.adaptiveNavigation3)
+            implementation(libs.adaptive.navigation.suite)
             implementation(libs.jetbrains.lifecycle.viewmodelNavigation3)
             // implementation(libs.navigation3.browser)
             implementation(libs.androidx.startup.runtime)

@@ -6,6 +6,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,12 +14,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -31,11 +37,18 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ScrollableTabRow
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRowDefaults
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteDefaults
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldValue
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
+import androidx.compose.material3.adaptive.navigationsuite.rememberNavigationSuiteScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -48,6 +61,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
@@ -56,7 +70,6 @@ import com.kabindra.clean.architecture.presentation.ui.component.AppBrandIcon
 import com.kabindra.clean.architecture.presentation.ui.component.AppIcon
 import com.kabindra.clean.architecture.presentation.ui.component.AppIconFilled
 import com.kabindra.clean.architecture.presentation.ui.component.BaseLazy
-import com.kabindra.clean.architecture.presentation.ui.component.BottomNavigationBarComponent
 import com.kabindra.clean.architecture.presentation.ui.component.ButtonAction
 import com.kabindra.clean.architecture.presentation.ui.component.ButtonBack
 import com.kabindra.clean.architecture.presentation.ui.component.ButtonClose
@@ -96,17 +109,17 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import network.chaintech.sdpcomposemultiplatform.sdp
 
-private enum class DashboardCategory(val title: String) {
-    Brand("Brand"),
-    Typography("Typography"),
-    Buttons("Buttons"),
-    Inputs("Inputs"),
-    Cards("Cards"),
-    Loading("Loading"),
-    Navigation("Navigation"),
-    Pager("Pager"),
-    Lists("Lists"),
-    Carousels("Carousels")
+private enum class DashboardCategory(val title: String, val icon: ImageVector) {
+    Brand("Brand", Icons.Default.Home),
+    Typography("Typography", Icons.Default.Settings),
+    Buttons("Buttons", Icons.Default.Add),
+    Inputs("Inputs", Icons.Default.Lock),
+    Cards("Cards", Icons.Default.Favorite),
+    Loading("Loading", Icons.Default.Settings),
+    Navigation("Navigation", Icons.Default.Person),
+    Pager("Pager", Icons.Default.Home),
+    Lists("Lists", Icons.Default.Person),
+    Carousels("Carousels", Icons.Default.Favorite)
 }
 
 @Composable
@@ -123,8 +136,24 @@ fun DashboardScreen(
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
 
     val categories = remember { DashboardCategory.entries }
+    var selectedCategory by rememberSaveable { mutableStateOf(DashboardCategory.Brand) }
     val pagerState = rememberPagerState(pageCount = { categories.size })
     val coroutineScope = rememberCoroutineScope()
+
+    val adaptiveInfo = currentWindowAdaptiveInfoV2()
+    val layoutType = NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
+
+    val navSuiteState = rememberNavigationSuiteScaffoldState(
+        initialValue = NavigationSuiteScaffoldValue.Hidden
+    )
+
+    LaunchedEffect(layoutType) {
+        if (layoutType == NavigationSuiteType.NavigationBar) {
+            navSuiteState.hide()   // mobile: rely on your custom FloatingToolbarComponent bottomBar
+        } else {
+            navSuiteState.show()   // web/tablet: show the rail/drawer
+        }
+    }
 
     if (!isConnected) {
         GlobalErrorDialog(
@@ -151,7 +180,7 @@ fun DashboardScreen(
 
     ModalBottomSheetComponent(
         title = "ModalBottomSheetComponent",
-        text = "Showcasing current configuration",
+        text = "Showcasing configuration",
         isVisible = showBottomSheet,
         useExpressive = useExpressive,
         onDismiss = { showBottomSheet = false },
@@ -163,7 +192,7 @@ fun DashboardScreen(
             verticalArrangement = Arrangement.spacedBy(10.sdp),
         ) {
             TextComponent(
-                text = "Expressive Mode is currently ${if (useExpressive) "ON" else "OFF"}.",
+                text = "Expressive Mode: ${if (useExpressive) "ON" else "OFF"}.",
                 type = TextType.Title,
                 size = TextSize.Medium,
             )
@@ -176,144 +205,195 @@ fun DashboardScreen(
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(innerPadding)
-            .pointerInput(Unit) {
-                detectTapGestures(onTap = {
-                    focusManager.clearFocus()
-                })
-            }
-    ) {
-        // Sticky Header with Global Controls
-        CardComponent(
-            modifier = Modifier.fillMaxWidth().padding(10.sdp),
-            variant = CardVariant.ELEVATED
-        ) {
-            Column(
-                modifier = Modifier.padding(12.sdp),
-                verticalArrangement = Arrangement.spacedBy(10.sdp)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.sdp)
-                ) {
-                    AppIcon(modifier = Modifier.size(36.sdp))
-                    Column(modifier = Modifier.weight(1f)) {
-                        TextComponent(
-                            text = "Component Gallery",
-                            type = TextType.Title,
-                            size = TextSize.Large,
-                            fontWeight = FontWeight.Bold,
-                        )
-                        TextComponent(
-                            text = "Interactive Showcase",
-                            type = TextType.Label,
-                            size = TextSize.Small,
-                        )
-                    }
-                    ButtonText(
-                        text = "Login Screen",
-                        useExpressiveShapes = useExpressive,
-                        onClick = onNavigateLogin
-                    )
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(10.sdp)
-                ) {
-                    ButtonText(
-                        modifier = Modifier.weight(1f),
-                        text = if (useExpressive) "Expressive: ON" else "Expressive: OFF",
-                        isOutlined = true,
-                        useExpressiveShapes = useExpressive,
-                        onClick = { useExpressive = !useExpressive }
-                    )
-                    ButtonIconAndText(
-                        modifier = Modifier.weight(1f),
-                        text = "Global Loader",
-                        useExpressiveShapes = useExpressive,
-                        onClick = { showLoadingDialog = true }
-                    )
-                }
-            }
-        }
-
-        // Categories Tabs
-        ScrollableTabRow(
-            selectedTabIndex = pagerState.currentPage,
-            edgePadding = 12.sdp,
-            divider = {},
-            containerColor = Color.Transparent,
-            indicator = { tabPositions ->
-                if (pagerState.currentPage < tabPositions.size) {
-                    TabRowDefaults.SecondaryIndicator(
-                        Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage])
-                    )
-                }
-            }
-        ) {
-            categories.forEachIndexed { index, category ->
-                Tab(
-                    selected = pagerState.currentPage == index,
-                    onClick = {
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(index)
+    NavigationSuiteScaffold(
+        modifier = Modifier.fillMaxSize()
+            .windowInsetsPadding(
+                WindowInsets(0, 0, 0, 0)
+                    .union(WindowInsets.statusBars)
+                    .union(WindowInsets.navigationBars)
+            ),
+        navigationSuiteItems = {
+            if (layoutType != NavigationSuiteType.NavigationBar) {
+                categories.forEach { category ->
+                    item(
+                        icon = { Icon(category.icon, contentDescription = category.title) },
+                        label = { TextComponent(text = category.title, size = TextSize.Small) },
+                        selected = selectedCategory == category,
+                        onClick = {
+                            selectedCategory = category
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(category.ordinal)
+                            }
                         }
-                    },
-                    text = {
-                        TextComponent(
-                            text = category.title,
-                            fontWeight = if (pagerState.currentPage == index) FontWeight.Bold else FontWeight.Normal,
-                            size = TextSize.Small
+                    )
+                }
+            }
+        },
+        layoutType = layoutType,
+        containerColor = MaterialTheme.colorScheme.background,
+        navigationSuiteColors = NavigationSuiteDefaults.colors(
+            navigationBarContainerColor = Color.Transparent,
+            navigationRailContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+        ),
+        state = navSuiteState,
+    ) {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            containerColor = Color.Transparent,
+            contentWindowInsets = WindowInsets(0, 0, 0, 0),
+            bottomBar = {
+                if (layoutType == NavigationSuiteType.NavigationBar) {
+                    val toolbarActions = remember(categories) {
+                        categories.map { category ->
+                            FloatingToolbarAction(
+                                id = category.name,
+                                label = category.title,
+                                icon = category.icon
+                            )
+                        }
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.sdp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        FloatingToolbarComponent(
+                            modifier = Modifier.padding(horizontal = 16.sdp),
+                            items = toolbarActions,
+                            variant = FloatingToolbarVariant.HORIZONTAL,
+                            showLabelBelowIcon = true,
+                            useVibrantColors = useExpressive,
+                            isScrollable = true,
+                            onItemClick = { action ->
+                                val index = categories.indexOfFirst { it.name == action.id }
+                                if (index != -1) {
+                                    coroutineScope.launch {
+                                        pagerState.animateScrollToPage(index)
+                                    }
+                                }
+                            }
                         )
                     }
-                )
+                }
             }
-        }
-
-        // Pager Content
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier.fillMaxSize(),
-            verticalAlignment = Alignment.Top
-        ) { page ->
+        ) { scaffoldPadding ->
+            val paddingToUse =
+                if (layoutType == NavigationSuiteType.NavigationBar) scaffoldPadding else innerPadding
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
+                    .padding(bottom = paddingToUse.calculateBottomPadding())
                     .pointerInput(Unit) {
                         detectTapGestures(onTap = {
                             focusManager.clearFocus()
                         })
                     }
-                    .padding(12.sdp),
-                verticalArrangement = Arrangement.spacedBy(15.sdp)
             ) {
-                when (categories[page]) {
-                    DashboardCategory.Brand -> BrandShowcase()
-                    DashboardCategory.Typography -> TypographyShowcase()
-                    DashboardCategory.Buttons -> ButtonsShowcase(
-                        useExpressive,
-                        onOpenSheet = { showBottomSheet = true })
+                // Sticky Header with Global Controls
+                CardComponent(
+                    modifier = Modifier.fillMaxWidth().padding(10.sdp),
+                    variant = CardVariant.ELEVATED
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.sdp),
+                        verticalArrangement = Arrangement.spacedBy(10.sdp)
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.sdp)
+                        ) {
+                            AppIcon(modifier = Modifier.size(36.sdp))
+                            Column(modifier = Modifier.weight(1f)) {
+                                TextComponent(
+                                    text = "Component Gallery",
+                                    type = TextType.Title,
+                                    size = TextSize.Large,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                                TextComponent(
+                                    text = "Adaptive Expressive Showcase",
+                                    type = TextType.Label,
+                                    size = TextSize.Small,
+                                )
+                            }
+                            ButtonText(
+                                text = "Login Screen",
+                                useExpressiveShapes = useExpressive,
+                                onClick = onNavigateLogin
+                            )
+                        }
 
-                    DashboardCategory.Inputs -> InputsShowcase(useExpressive)
-                    DashboardCategory.Cards -> CardsShowcase(useExpressive)
-                    DashboardCategory.Loading -> LoadingShowcase(
-                        useExpressive,
-                        onTriggerLoading = { showLoadingDialog = true })
-
-                    DashboardCategory.Navigation -> NavigationShowcase(useExpressive)
-                    DashboardCategory.Pager -> PagerShowcase(useExpressive)
-                    DashboardCategory.Lists -> ListsShowcase(useExpressive)
-                    DashboardCategory.Carousels -> CarouselsShowcase(useExpressive)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(10.sdp)
+                        ) {
+                            ButtonText(
+                                modifier = Modifier.weight(1f),
+                                text = if (useExpressive) "Expressive: ON" else "Expressive: OFF",
+                                isOutlined = true,
+                                useExpressiveShapes = useExpressive,
+                                onClick = { useExpressive = !useExpressive }
+                            )
+                            ButtonIconAndText(
+                                modifier = Modifier.weight(1f),
+                                text = "Global Loader",
+                                useExpressiveShapes = useExpressive,
+                                onClick = { showLoadingDialog = true }
+                            )
+                        }
+                    }
                 }
 
-                Spacer(modifier = Modifier.height(20.sdp))
+                // Sync selectedCategory when swiping
+                LaunchedEffect(pagerState.currentPage) {
+                    selectedCategory = categories[pagerState.currentPage]
+                }
+
+                // Pager Content
+                HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier.weight(1f),
+                    verticalAlignment = Alignment.Top,
+                    userScrollEnabled = true
+                ) { page ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                            .pointerInput(Unit) {
+                                detectTapGestures(onTap = {
+                                    focusManager.clearFocus()
+                                })
+                            }
+                            .padding(12.sdp),
+                        verticalArrangement = Arrangement.spacedBy(15.sdp)
+                    ) {
+                        when (categories[page]) {
+                            DashboardCategory.Brand -> BrandShowcase()
+                            DashboardCategory.Typography -> TypographyShowcase()
+                            DashboardCategory.Buttons -> ButtonsShowcase(
+                                useExpressive,
+                                onOpenSheet = { showBottomSheet = true })
+
+                            DashboardCategory.Inputs -> InputsShowcase(useExpressive)
+                            DashboardCategory.Cards -> CardsShowcase(useExpressive)
+                            DashboardCategory.Loading -> LoadingShowcase(
+                                useExpressive,
+                                onTriggerLoading = { showLoadingDialog = true })
+
+                            DashboardCategory.Navigation -> NavigationShowcase(useExpressive)
+                            DashboardCategory.Pager -> PagerShowcase(useExpressive)
+                            DashboardCategory.Lists -> ListsShowcase(useExpressive)
+                            DashboardCategory.Carousels -> CarouselsShowcase(useExpressive)
+                        }
+
+                        Spacer(modifier = Modifier.height(8.sdp))
+                    }
+                }
             }
         }
     }
@@ -327,22 +407,34 @@ private fun BrandShowcase() {
             Column(
                 modifier = Modifier.padding(16.sdp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(15.sdp)
+                verticalArrangement = Arrangement.spacedBy(20.sdp)
             ) {
                 LabelText("AppIconFilled")
-                AppIconFilled(modifier = Modifier.width(120.sdp).height(45.sdp))
+                AppIconFilled(modifier = Modifier.width(200.sdp).height(75.sdp))
+
+                HorizontalDivider(
+                    modifier = Modifier.padding(vertical = 10.sdp),
+                    color = MaterialTheme.colorScheme.outlineVariant
+                )
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.sdp)
+                    ) {
                         LabelText("AppBrandIcon")
-                        AppBrandIcon(modifier = Modifier.size(48.sdp))
+                        AppBrandIcon(modifier = Modifier.size(64.sdp))
                     }
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.sdp)
+                    ) {
                         LabelText("AppIcon")
-                        AppIcon(modifier = Modifier.size(48.sdp))
+                        AppIcon(modifier = Modifier.size(64.sdp))
                     }
                 }
             }
@@ -357,7 +449,7 @@ private fun TypographyShowcase() {
         CardComponent(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier.fillMaxWidth().padding(12.sdp),
-                verticalArrangement = Arrangement.spacedBy(12.sdp)
+                verticalArrangement = Arrangement.spacedBy(16.sdp)
             ) {
                 val types = listOf(
                     TextType.Display,
@@ -369,17 +461,28 @@ private fun TypographyShowcase() {
                 val sizes = listOf(TextSize.Large, TextSize.Medium, TextSize.Small)
 
                 types.forEach { type ->
-                    sizes.forEach { size ->
-                        Column {
-                            LabelText("${type.name} ${size.name}")
-                            TextComponent(
-                                text = "${type.name} ${size.name}",
-                                type = type,
-                                size = size
-                            )
+                    Column(verticalArrangement = Arrangement.spacedBy(4.sdp)) {
+                        TextComponent(
+                            text = type.name,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary,
+                            size = TextSize.Small
+                        )
+                        sizes.forEach { size ->
+                            Row(
+                                verticalAlignment = Alignment.Bottom,
+                                horizontalArrangement = Arrangement.spacedBy(8.sdp)
+                            ) {
+                                LabelText(size.name)
+                                TextComponent(
+                                    text = "${type.name} ${size.name}",
+                                    type = type,
+                                    size = size
+                                )
+                            }
                         }
                     }
-                    if (type != types.last()) Spacer(modifier = Modifier.height(4.sdp))
+                    if (type != types.last()) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                 }
             }
         }
@@ -390,60 +493,57 @@ private fun TypographyShowcase() {
 private fun ButtonsShowcase(useExpressive: Boolean, onOpenSheet: () -> Unit) {
     val fabActions = remember {
         listOf(
-            Pair("Add Item", Icons.Default.Add),
-            Pair("Settings", Icons.Default.Settings),
-            Pair("Favorites", Icons.Default.Favorite)
+            Pair("Create Task", Icons.Default.Add),
+            Pair("App Settings", Icons.Default.Settings),
+            Pair("Save Favorite", Icons.Default.Favorite)
         )
     }
 
     Column(verticalArrangement = Arrangement.spacedBy(12.sdp)) {
-        SectionTitle("Standard Buttons")
+        SectionTitle("Button Variants")
         CardComponent(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier.padding(12.sdp),
-                verticalArrangement = Arrangement.spacedBy(10.sdp)
+                verticalArrangement = Arrangement.spacedBy(12.sdp)
             ) {
-                LabelText("ButtonText (Primary)")
-                ButtonText(
-                    text = "Primary Action",
+                LabelText("ButtonText (Primary vs Outlined)")
+                Row(
                     modifier = Modifier.fillMaxWidth(),
-                    useExpressiveShapes = useExpressive,
-                    onClick = {})
+                    horizontalArrangement = Arrangement.spacedBy(8.sdp)
+                ) {
+                    ButtonText(
+                        text = "Primary Action",
+                        modifier = Modifier.weight(1f),
+                        useExpressiveShapes = useExpressive,
+                        onClick = {})
+                    ButtonText(
+                        text = "Secondary Action",
+                        modifier = Modifier.weight(1f),
+                        isOutlined = true,
+                        useExpressiveShapes = useExpressive,
+                        onClick = {})
+                }
 
-                LabelText("ButtonText (Outlined)")
-                ButtonText(
-                    text = "Secondary Action",
+                LabelText("ButtonIconAndText (Start vs End Icon)")
+                Row(
                     modifier = Modifier.fillMaxWidth(),
-                    isOutlined = true,
-                    useExpressiveShapes = useExpressive,
-                    onClick = {})
-
-                LabelText("ButtonIconAndText")
-                ButtonIconAndText(
-                    text = "Icon Start",
-                    modifier = Modifier.fillMaxWidth(),
-                    useExpressiveShapes = useExpressive,
-                    onClick = {})
-
-                LabelText("ButtonTextAndIcon")
-                ButtonTextAndIcon(
-                    text = "Icon End",
-                    modifier = Modifier.fillMaxWidth(),
-                    useExpressiveShapes = useExpressive,
-                    onClick = {})
-
-                LabelText("Open Bottom Sheet (Outlined)")
-                ButtonText(
-                    text = "Launch Sheet",
-                    modifier = Modifier.fillMaxWidth(),
-                    isOutlined = true,
-                    useExpressiveShapes = useExpressive,
-                    onClick = onOpenSheet
-                )
+                    horizontalArrangement = Arrangement.spacedBy(8.sdp)
+                ) {
+                    ButtonIconAndText(
+                        text = "Icon Start",
+                        modifier = Modifier.weight(1f),
+                        useExpressiveShapes = useExpressive,
+                        onClick = {})
+                    ButtonTextAndIcon(
+                        text = "Icon End",
+                        modifier = Modifier.weight(1f),
+                        useExpressiveShapes = useExpressive,
+                        onClick = {})
+                }
             }
         }
 
-        SectionTitle("Action & Navigation Icons")
+        SectionTitle("Navigation & Quick Actions")
         CardComponent(modifier = Modifier.fillMaxWidth()) {
             Row(
                 modifier = Modifier.padding(12.sdp).fillMaxWidth(),
@@ -451,35 +551,54 @@ private fun ButtonsShowcase(useExpressive: Boolean, onOpenSheet: () -> Unit) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    LabelText("Icon")
+                    LabelText("ButtonIcon")
                     ButtonIcon(useExpressiveShapes = useExpressive, onClick = {})
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    LabelText("Back")
+                    LabelText("ButtonBack")
                     ButtonBack(useExpressiveShapes = useExpressive, onClick = {})
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    LabelText("Close")
+                    LabelText("ButtonClose")
                     ButtonClose(useExpressiveShapes = useExpressive, onClick = {})
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    LabelText("Action")
+                    LabelText("ButtonAction")
                     ButtonAction(useExpressiveShapes = useExpressive, onClick = {})
                 }
             }
         }
 
-        SectionTitle("Floating Action Button")
-        LabelText("ExpandableFabComponent")
-        Box(modifier = Modifier.fillMaxWidth().height(180.sdp)) {
-            ExpandableFabComponent(
-                items = fabActions,
-                itemTitle = { it.first },
-                itemIcon = { it.second },
-                onItemClick = {},
-                useExpressive = useExpressive
-            )
+        SectionTitle("Expressive Expandable FAB")
+        CardComponent(
+            modifier = Modifier.fillMaxWidth().height(200.sdp),
+            variant = CardVariant.FILLED
+        ) {
+            Box(modifier = Modifier.fillMaxSize()) {
+                TextComponent(
+                    modifier = Modifier.padding(12.sdp),
+                    text = "ExpandableFabComponent Demo",
+                    size = TextSize.Small,
+                    fontWeight = FontWeight.SemiBold
+                )
+                ExpandableFabComponent(
+                    items = fabActions,
+                    itemTitle = { it.first },
+                    itemIcon = { it.second },
+                    onItemClick = {},
+                    useExpressive = useExpressive
+                )
+            }
         }
+
+        SectionTitle("Modal Components")
+        ButtonText(
+            text = "Launch ModalBottomSheetComponent",
+            modifier = Modifier.fillMaxWidth(),
+            isOutlined = true,
+            useExpressiveShapes = useExpressive,
+            onClick = onOpenSheet
+        )
     }
 }
 
@@ -493,11 +612,11 @@ private fun InputsShowcase(useExpressive: Boolean) {
     val roles = remember { listOf("Administrator", "Editor", "Viewer") }
 
     Column(verticalArrangement = Arrangement.spacedBy(12.sdp)) {
-        SectionTitle("Text Inputs")
+        SectionTitle("Text & Secure Inputs")
         CardComponent(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier.padding(12.sdp),
-                verticalArrangement = Arrangement.spacedBy(12.sdp)
+                verticalArrangement = Arrangement.spacedBy(16.sdp)
             ) {
                 LabelText("InputField")
                 InputField(
@@ -516,20 +635,21 @@ private fun InputsShowcase(useExpressive: Boolean) {
                     onValueChange = { password = it },
                     label = "Secure Password",
                     isError = password.isNotEmpty() && password.length < 6,
-                    errorText = "Password too short",
+                    errorText = "Password must be at least 6 characters",
                     leadingIcon = Icons.Default.Lock,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
         }
 
-        SectionTitle("Verification (OTP)")
+        SectionTitle("OTP Verification")
         CardComponent(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier.padding(12.sdp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.sdp)
             ) {
-                LabelText("OhTeePeeInput (6 Cells)")
+                LabelText("OhTeePeeInput (6 Interactive Cells)")
                 OhTeePeeInput(
                     value = otpValue,
                     onValueChange = { newValue, _ -> otpValue = newValue },
@@ -537,7 +657,7 @@ private fun InputsShowcase(useExpressive: Boolean) {
                         cellsCount = 6,
                         emptyCellConfig = OhTeePeeCellConfiguration.withDefaults(
                             shape = if (useExpressive) MaterialTheme.shapes.large else MaterialTheme.shapes.medium,
-                            borderColor = Color.Gray
+                            borderColor = MaterialTheme.colorScheme.outline
                         ),
                         activeCellConfig = OhTeePeeCellConfiguration.withDefaults(
                             shape = if (useExpressive) MaterialTheme.shapes.large else MaterialTheme.shapes.medium,
@@ -550,17 +670,17 @@ private fun InputsShowcase(useExpressive: Boolean) {
             }
         }
 
-        SectionTitle("Selection & Options")
+        SectionTitle("Selection Controls")
         CardComponent(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier.padding(12.sdp),
-                verticalArrangement = Arrangement.spacedBy(12.sdp)
+                verticalArrangement = Arrangement.spacedBy(16.sdp)
             ) {
                 LabelText("DropdownField")
                 DropdownField(
                     items = roles,
                     itemContent = { it },
-                    value = selectedRole ?: "Select Role",
+                    value = selectedRole ?: "Select User Role",
                     selectedItem = selectedRole,
                     onItemSelected = { selectedRole = it },
                     label = "User Role",
@@ -574,7 +694,7 @@ private fun InputsShowcase(useExpressive: Boolean) {
                     isChecked = checked,
                     onCheckedChange = { checked = it },
                     useExpressiveStyle = useExpressive,
-                    label = "Agree to the terms of service"
+                    label = "I agree to the terms of service and privacy policy"
                 )
             }
         }
@@ -584,41 +704,55 @@ private fun InputsShowcase(useExpressive: Boolean) {
 @Composable
 private fun CardsShowcase(useExpressive: Boolean) {
     Column(verticalArrangement = Arrangement.spacedBy(12.sdp)) {
-        SectionTitle("Material 3 Card Variants")
+        SectionTitle("Card Variant Showcase")
 
-        LabelText("CardVariant.ELEVATED")
-        CardComponent(
+        Row(
             modifier = Modifier.fillMaxWidth(),
-            variant = CardVariant.ELEVATED,
-            useExpressive = useExpressive
+            horizontalArrangement = Arrangement.spacedBy(12.sdp)
         ) {
-            Box(
-                modifier = Modifier.fillMaxWidth().height(80.sdp),
-                contentAlignment = Alignment.Center
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(8.sdp)
             ) {
-                TextComponent(
-                    text = "Elevated Surface",
-                    type = TextType.Title,
-                    size = TextSize.Medium
-                )
+                LabelText("CardVariant.ELEVATED")
+                CardComponent(
+                    modifier = Modifier.fillMaxWidth(),
+                    variant = CardVariant.ELEVATED,
+                    useExpressive = useExpressive
+                ) {
+                    Box(
+                        modifier = Modifier.fillMaxWidth().height(100.sdp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        TextComponent(
+                            text = "Elevated Surface",
+                            type = TextType.Title,
+                            size = TextSize.Medium
+                        )
+                    }
+                }
             }
-        }
-
-        LabelText("CardVariant.FILLED")
-        CardComponent(
-            modifier = Modifier.fillMaxWidth(),
-            variant = CardVariant.FILLED,
-            useExpressive = useExpressive
-        ) {
-            Box(
-                modifier = Modifier.fillMaxWidth().height(80.sdp),
-                contentAlignment = Alignment.Center
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(8.sdp)
             ) {
-                TextComponent(
-                    text = "Filled Surface",
-                    type = TextType.Title,
-                    size = TextSize.Medium
-                )
+                LabelText("CardVariant.FILLED")
+                CardComponent(
+                    modifier = Modifier.weight(1f),
+                    variant = CardVariant.FILLED,
+                    useExpressive = useExpressive
+                ) {
+                    Box(
+                        modifier = Modifier.fillMaxWidth().height(100.sdp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        TextComponent(
+                            text = "Filled Surface",
+                            type = TextType.Title,
+                            size = TextSize.Medium
+                        )
+                    }
+                }
             }
         }
 
@@ -640,37 +774,43 @@ private fun CardsShowcase(useExpressive: Boolean) {
             }
         }
 
-        SectionTitle("Creative Layouts")
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(10.sdp)
-        ) {
-            CardComponent(
-                modifier = Modifier.weight(1f),
-                variant = CardVariant.ELEVATED,
-                useExpressive = useExpressive
+        SectionTitle("Adaptive Card Layouts")
+        CardComponent(modifier = Modifier.fillMaxWidth(), useExpressive = useExpressive) {
+            Column(
+                modifier = Modifier.padding(16.sdp),
+                verticalArrangement = Arrangement.spacedBy(12.sdp)
             ) {
-                Column(modifier = Modifier.padding(12.sdp)) {
-                    TextComponent(text = "Column A", fontWeight = FontWeight.Bold)
-                    TextComponent(
-                        text = "Nested content inside an elevated card.",
-                        size = TextSize.Small,
-                        maxLines = 3
-                    )
-                }
-            }
-            CardComponent(
-                modifier = Modifier.weight(1f),
-                variant = CardVariant.OUTLINED,
-                useExpressive = useExpressive
-            ) {
-                Column(modifier = Modifier.padding(12.sdp)) {
-                    TextComponent(text = "Column B", fontWeight = FontWeight.Bold)
-                    TextComponent(
-                        text = "Bordered variation for distinct grouping.",
-                        size = TextSize.Small,
-                        maxLines = 3
-                    )
+                TextComponent(
+                    text = "Nested Content Section",
+                    fontWeight = FontWeight.Bold,
+                    size = TextSize.Medium
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.sdp)
+                ) {
+                    CardComponent(
+                        modifier = Modifier.weight(1f),
+                        variant = CardVariant.FILLED,
+                        useExpressive = useExpressive
+                    ) {
+                        TextComponent(
+                            modifier = Modifier.padding(12.sdp),
+                            text = "Child A",
+                            size = TextSize.Small
+                        )
+                    }
+                    CardComponent(
+                        modifier = Modifier.weight(1f),
+                        variant = CardVariant.OUTLINED,
+                        useExpressive = useExpressive
+                    ) {
+                        TextComponent(
+                            modifier = Modifier.padding(12.sdp),
+                            text = "Child B",
+                            size = TextSize.Small
+                        )
+                    }
                 }
             }
         }
@@ -691,39 +831,49 @@ private fun LoadingShowcase(useExpressive: Boolean, onTriggerLoading: () -> Unit
     )
 
     Column(verticalArrangement = Arrangement.spacedBy(12.sdp)) {
-        SectionTitle("Progress Indicators")
+        SectionTitle("Wavy Progress Indicators")
         CardComponent(modifier = Modifier.fillMaxWidth()) {
             Column(
-                modifier = Modifier.padding(12.sdp),
-                verticalArrangement = Arrangement.spacedBy(15.sdp)
+                modifier = Modifier.padding(16.sdp),
+                verticalArrangement = Arrangement.spacedBy(20.sdp)
             ) {
-                LabelText("Linear Progress (Wavy/Determinate)")
-                LoadingIndicator(
-                    isCircular = false,
-                    progress = progress,
-                    useExpressive = useExpressive
-                )
+                Column(verticalArrangement = Arrangement.spacedBy(8.sdp)) {
+                    LabelText("ExpressiveLinearProgressIndicator (Determinate)")
+                    LoadingIndicator(
+                        isCircular = false,
+                        progress = progress,
+                        useExpressive = useExpressive
+                    )
+                }
 
-                LabelText("Linear Progress (Indeterminate)")
-                LoadingIndicator(isCircular = false, useExpressive = useExpressive)
+                Column(verticalArrangement = Arrangement.spacedBy(8.sdp)) {
+                    LabelText("ExpressiveLinearProgressIndicator (Indeterminate)")
+                    LoadingIndicator(isCircular = false, useExpressive = useExpressive)
+                }
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(20.sdp)
+                    horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        LabelText("Circular (Determinate)")
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.sdp)
+                    ) {
+                        LabelText("Circular Determinate")
                         LoadingIndicator(
-                            modifier = Modifier.size(48.sdp),
+                            modifier = Modifier.size(56.sdp),
                             isCircular = true,
                             progress = progress,
                             useExpressive = useExpressive
                         )
                     }
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        LabelText("Indeterminate")
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.sdp)
+                    ) {
+                        LabelText("Circular Indeterminate")
                         LoadingIndicator(
-                            modifier = Modifier.size(48.sdp),
+                            modifier = Modifier.size(56.sdp),
                             isCircular = true,
                             useExpressive = useExpressive
                         )
@@ -732,9 +882,9 @@ private fun LoadingShowcase(useExpressive: Boolean, onTriggerLoading: () -> Unit
             }
         }
 
-        SectionTitle("Dialog Overlays")
+        SectionTitle("Global Overlays")
         ButtonText(
-            text = "Trigger LoadingDialog",
+            text = "Trigger Global LoadingDialog",
             modifier = Modifier.fillMaxWidth(),
             isOutlined = true,
             useExpressiveShapes = useExpressive,
@@ -754,79 +904,110 @@ private fun NavigationShowcase(useExpressive: Boolean) {
     }
 
     Column(verticalArrangement = Arrangement.spacedBy(15.sdp)) {
-        SectionTitle("Standard App Bars")
+        SectionTitle("App & Navigation Bars")
         CardComponent(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier.padding(12.sdp),
-                verticalArrangement = Arrangement.spacedBy(10.sdp)
+                verticalArrangement = Arrangement.spacedBy(16.sdp)
             ) {
-                LabelText("TopAppBarComponent")
-                TopAppBarComponent(
-                    title = "Page Title",
-                    subtitle = if (useExpressive) "Expressive subtitle" else "",
-                    canNavigateBack = true,
-                    useExpressive = useExpressive,
-                    onBackNavigate = {}
-                )
+                Column(verticalArrangement = Arrangement.spacedBy(8.sdp)) {
+                    LabelText("TopAppBarComponent")
+                    TopAppBarComponent(
+                        title = "Navigation Title",
+                        subtitle = if (useExpressive) "Expressive subtitle enabled" else "",
+                        canNavigateBack = true,
+                        useExpressive = useExpressive,
+                        onBackNavigate = {}
+                    )
+                }
 
-                LabelText("BottomNavigationBarComponent")
-                BottomNavigationBarComponent(
-                    selectedRoute = "home",
-                    onClick = {}
-                )
+                Column(verticalArrangement = Arrangement.spacedBy(8.sdp)) {
+                    LabelText("BottomNavigationBarComponent")
+                    // Removed actual call to BottomNavigationBarComponent to fix compilation 
+                    // since we moved to FloatingToolbar for the main navigation.
+                    // We can still showcase it if needed by restoring the component.
+                    CardComponent(modifier = Modifier.fillMaxWidth().height(50.sdp)) {
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            TextComponent(
+                                text = "BottomNavigationBarComponent Showcase Placeholder",
+                                size = TextSize.Small
+                            )
+                        }
+                    }
+                }
             }
         }
 
-        SectionTitle("Floating Toolbars")
+        SectionTitle("Adaptive Floating Toolbars")
 
-        LabelText("Variant: HORIZONTAL")
-        Box(
-            modifier = Modifier.fillMaxWidth().height(60.sdp),
-            contentAlignment = Alignment.Center
-        ) {
-            FloatingToolbarComponent(
-                items = toolbarActions,
-                variant = FloatingToolbarVariant.HORIZONTAL,
-                useVibrantColors = useExpressive
-            )
-        }
+        CardComponent(modifier = Modifier.fillMaxWidth().padding(vertical = 4.sdp)) {
+            Column(
+                modifier = Modifier.padding(12.sdp),
+                verticalArrangement = Arrangement.spacedBy(16.sdp)
+            ) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.sdp)) {
+                    LabelText("FloatingToolbarVariant.HORIZONTAL")
+                    Box(
+                        modifier = Modifier.fillMaxWidth().height(60.sdp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        FloatingToolbarComponent(
+                            items = toolbarActions,
+                            variant = FloatingToolbarVariant.HORIZONTAL,
+                            useVibrantColors = useExpressive
+                        )
+                    }
+                }
 
-        LabelText("Variant: HORIZONTAL_WITH_FAB")
-        Box(
-            modifier = Modifier.fillMaxWidth().height(60.sdp),
-            contentAlignment = Alignment.Center
-        ) {
-            FloatingToolbarComponent(
-                items = toolbarActions,
-                variant = FloatingToolbarVariant.HORIZONTAL_WITH_FAB,
-                fabIcon = Icons.Default.Add,
-                useVibrantColors = useExpressive
-            )
-        }
+                Column(verticalArrangement = Arrangement.spacedBy(8.sdp)) {
+                    LabelText("FloatingToolbarVariant.HORIZONTAL_WITH_FAB")
+                    Box(
+                        modifier = Modifier.fillMaxWidth().height(60.sdp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        FloatingToolbarComponent(
+                            items = toolbarActions,
+                            variant = FloatingToolbarVariant.HORIZONTAL_WITH_FAB,
+                            fabIcon = Icons.Default.Add,
+                            useVibrantColors = useExpressive
+                        )
+                    }
+                }
 
-        LabelText("Variant: VERTICAL")
-        Box(
-            modifier = Modifier.fillMaxWidth().height(150.sdp),
-            contentAlignment = Alignment.CenterEnd
-        ) {
-            FloatingToolbarComponent(
-                items = toolbarActions,
-                variant = FloatingToolbarVariant.VERTICAL,
-                useVibrantColors = useExpressive
-            )
-        }
-
-        LabelText("Variant: VERTICAL_WITH_FAB")
-        Box(
-            modifier = Modifier.fillMaxWidth().height(180.sdp),
-            contentAlignment = Alignment.CenterEnd
-        ) {
-            FloatingToolbarComponent(
-                items = toolbarActions,
-                variant = FloatingToolbarVariant.VERTICAL_WITH_FAB,
-                fabIcon = Icons.Default.Add,
-                useVibrantColors = useExpressive
-            )
+                Row(
+                    modifier = Modifier.fillMaxWidth().height(180.sdp),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(8.sdp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        LabelText("VERTICAL")
+                        FloatingToolbarComponent(
+                            items = toolbarActions,
+                            variant = FloatingToolbarVariant.VERTICAL,
+                            useVibrantColors = useExpressive
+                        )
+                    }
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(8.sdp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        LabelText("VERTICAL_WITH_FAB")
+                        FloatingToolbarComponent(
+                            items = toolbarActions,
+                            variant = FloatingToolbarVariant.VERTICAL_WITH_FAB,
+                            fabIcon = Icons.Default.Add,
+                            useVibrantColors = useExpressive
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -834,13 +1015,13 @@ private fun NavigationShowcase(useExpressive: Boolean) {
 @Composable
 private fun PagerShowcase(useExpressive: Boolean) {
     val items =
-        remember { List(4) { index -> "Pager Content for Tab ${index + 1}: Detailed description of the feature or component shown in this specific horizontal view." } }
-    val tabs = remember { listOf("Overview", "Features", "Analytics", "Settings") }
+        remember { List(4) { index -> "Interactive Pager Content for Step ${index + 1}: This demonstrates how HorizontalPagersWithTabs provides a realistic navigation flow within a screen." } }
+    val tabs = remember { listOf("Step One", "Step Two", "Step Three", "Step Four") }
 
     Column(verticalArrangement = Arrangement.spacedBy(15.sdp)) {
-        SectionTitle("Horizontal Pager Showcase")
+        SectionTitle("Interactive Pagers")
 
-        LabelText("HorizontalPagersWithTabs (Interactive)")
+        LabelText("HorizontalPagersWithTabs (Realistic Navigation)")
         CardComponent(
             modifier = Modifier.fillMaxWidth(),
             variant = CardVariant.OUTLINED,
@@ -849,29 +1030,32 @@ private fun PagerShowcase(useExpressive: Boolean) {
             HorizontalPagersWithTabs(
                 tabs = tabs,
                 pageItems = items,
-                modifier = Modifier.fillMaxWidth().height(220.sdp),
+                modifier = Modifier.fillMaxWidth().height(250.sdp),
                 tabIndicator = { selectedIndex -> TabIndicator(selectedIndex) },
                 pageContent = { _, _, item ->
                     Column(
-                        modifier = Modifier.fillMaxSize().padding(15.sdp),
+                        modifier = Modifier.fillMaxSize().padding(16.sdp),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         CardComponent(
                             modifier = Modifier.fillMaxWidth(),
-                            variant = CardVariant.FILLED,
+                            variant = CardVariant.ELEVATED,
                             useExpressive = useExpressive
                         ) {
-                            Column(modifier = Modifier.padding(15.sdp)) {
+                            Column(
+                                modifier = Modifier.padding(20.sdp),
+                                verticalArrangement = Arrangement.spacedBy(12.sdp)
+                            ) {
                                 TextComponent(
                                     text = item,
                                     textAlign = TextAlign.Center,
-                                    maxLines = 5
+                                    maxLines = 5,
+                                    size = TextSize.Medium
                                 )
-                                Spacer(modifier = Modifier.height(10.sdp))
                                 ButtonText(
                                     modifier = Modifier.align(Alignment.CenterHorizontally),
-                                    text = "Action",
+                                    text = "Continue",
                                     useExpressiveShapes = useExpressive,
                                     onClick = {}
                                 )
@@ -886,12 +1070,12 @@ private fun PagerShowcase(useExpressive: Boolean) {
 
 @Composable
 private fun ListsShowcase(useExpressive: Boolean) {
-    val items = remember { List(12) { "List/Grid Item #$it" } }
+    val items = remember { List(12) { "Gallery Item Reference #$it" } }
 
     Column(verticalArrangement = Arrangement.spacedBy(15.sdp)) {
-        SectionTitle("Lists & Grids")
+        SectionTitle("Lists & Adaptive Grids")
 
-        LabelText("BaseLazy (Standard Vertical List)")
+        LabelText("BaseLazy (Vertical List Variant)")
         CardComponent(
             modifier = Modifier.fillMaxWidth(),
             variant = CardVariant.OUTLINED,
@@ -911,13 +1095,17 @@ private fun ListsShowcase(useExpressive: Boolean) {
                         variant = if (index % 2 == 0) CardVariant.ELEVATED else CardVariant.FILLED,
                         useExpressive = useExpressive
                     ) {
-                        TextComponent(text = item, modifier = Modifier.padding(12.sdp))
+                        TextComponent(
+                            text = item,
+                            modifier = Modifier.padding(12.sdp),
+                            size = TextSize.Small
+                        )
                     }
                 }
             )
         }
 
-        LabelText("BaseLazy (2-Column Adaptive Grid)")
+        LabelText("BaseLazy (2-Column Grid Variant)")
         CardComponent(
             modifier = Modifier.fillMaxWidth(),
             variant = CardVariant.OUTLINED,
@@ -933,16 +1121,16 @@ private fun ListsShowcase(useExpressive: Boolean) {
                 onScrollStateChanged = {},
                 itemContent = { _, item ->
                     CardComponent(
-                        modifier = Modifier.padding(5.sdp).fillMaxWidth(),
+                        modifier = Modifier.padding(6.sdp).fillMaxWidth(),
                         variant = CardVariant.ELEVATED,
                         useExpressive = useExpressive
                     ) {
                         Column(
-                            modifier = Modifier.padding(10.sdp),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            modifier = Modifier.padding(12.sdp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(8.sdp)
                         ) {
-                            AppIcon(modifier = Modifier.size(24.sdp))
-                            Spacer(modifier = Modifier.height(5.sdp))
+                            AppIcon(modifier = Modifier.size(32.sdp))
                             TextComponent(
                                 text = item,
                                 size = TextSize.Small,
@@ -960,43 +1148,43 @@ private fun ListsShowcase(useExpressive: Boolean) {
 private fun CarouselsShowcase(useExpressive: Boolean) {
     val textItems = remember {
         listOf(
-            "First Dynamic Slide",
-            "Second Elegant Page",
-            "Third Modern View",
-            "Fourth Smooth Motion"
+            "Dynamic Slide One",
+            "Elegant Page Two",
+            "Modern View Three",
+            "Smooth Motion Four"
         )
     }
     val imageUrls = remember {
         listOf(
-            "https://picsum.photos/id/237/400/300",
-            "https://picsum.photos/id/238/400/300",
-            "https://picsum.photos/id/239/400/300",
-            "https://picsum.photos/id/240/400/300",
+            "https://picsum.photos/id/10/400/300",
+            "https://picsum.photos/id/20/400/300",
+            "https://picsum.photos/id/30/400/300",
+            "https://picsum.photos/id/40/400/300",
         )
     }
 
     Column(verticalArrangement = Arrangement.spacedBy(15.sdp)) {
-        SectionTitle("Carousel Styles")
+        SectionTitle("Carousel Display Styles")
 
-        LabelText("MULTI_BROWSE")
+        LabelText("ExpressiveCarouselVariant.MULTI_BROWSE")
         ExpressiveTextCarousel(
             items = textItems,
             variant = ExpressiveCarouselVariant.MULTI_BROWSE,
-            modifier = Modifier.fillMaxWidth().height(120.sdp)
+            modifier = Modifier.fillMaxWidth().height(130.sdp)
         )
 
-        LabelText("CENTERED_HERO")
+        LabelText("ExpressiveCarouselVariant.CENTERED_HERO")
         ExpressiveImageCarousel(
             imageUrls = imageUrls,
             variant = ExpressiveCarouselVariant.CENTERED_HERO,
-            modifier = Modifier.fillMaxWidth().height(160.sdp)
+            modifier = Modifier.fillMaxWidth().height(180.sdp)
         )
 
-        LabelText("UNCONTAINED")
+        LabelText("ExpressiveCarouselVariant.UNCONTAINED")
         ExpressiveTextCarousel(
             items = textItems,
             variant = ExpressiveCarouselVariant.UNCONTAINED,
-            modifier = Modifier.fillMaxWidth().height(120.sdp)
+            modifier = Modifier.fillMaxWidth().height(130.sdp)
         )
     }
 }
@@ -1008,7 +1196,7 @@ private fun SectionTitle(title: String) {
         type = TextType.Headline,
         size = TextSize.Small,
         fontWeight = FontWeight.Bold,
-        modifier = Modifier.padding(top = 10.sdp, bottom = 2.sdp)
+        modifier = Modifier.padding(top = 10.sdp, bottom = 4.sdp)
     )
 }
 

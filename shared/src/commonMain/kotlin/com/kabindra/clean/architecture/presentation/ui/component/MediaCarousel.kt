@@ -41,7 +41,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.kabindra.clean.architecture.presentation.ui.theme.carouselSelected
 import com.kabindra.clean.architecture.presentation.ui.theme.carouselUnselected
@@ -98,9 +97,9 @@ fun TabIndicatorScope.TabIndicator(
 fun <T> HorizontalPagers(
     modifier: Modifier = Modifier.fillMaxWidth(),
     aspectRatio: Float = 16f / 9f,
-    padding: Dp = 0.dp,
+    padding: Dp = 0.sdp,
     contentPadding: PaddingValues = PaddingValues(12.sdp),
-    pageSpacing: Dp = 0.dp,
+    pageSpacing: Dp = 0.sdp,
     useGraphicsLayer: Boolean = false,
     isAutoScroll: Boolean = false,
     showIndicator: Boolean = true,
@@ -197,9 +196,9 @@ fun <T> HorizontalPagers(
 @Composable
 fun <T> HorizontalPagersWithTabs(
     modifier: Modifier = Modifier.fillMaxWidth(),
-    padding: Dp = 0.dp,
+    padding: Dp = 0.sdp,
     contentPadding: PaddingValues = PaddingValues(12.sdp),
-    pageSpacing: Dp = 0.dp,
+    pageSpacing: Dp = 0.sdp,
     useGraphicsLayer: Boolean = false,
     tabs: List<String>,
     tabColor: Color = transparent,
@@ -219,7 +218,7 @@ fun <T> HorizontalPagersWithTabs(
             modifier = Modifier.padding(bottom = 6.sdp),
             containerColor = tabColor,
             selectedTabIndex = pagerState.currentPage,
-            edgePadding = 0.dp,
+            edgePadding = 0.sdp,
             indicator = {
                 tabIndicator(pagerState.currentPage)
             },
