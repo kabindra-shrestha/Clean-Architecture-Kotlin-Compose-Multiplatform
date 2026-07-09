@@ -107,6 +107,8 @@ kotlin {
 
             implementation(libs.haze)
             implementation(libs.haze.blur)
+
+            implementation(libs.compose.shimmer)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

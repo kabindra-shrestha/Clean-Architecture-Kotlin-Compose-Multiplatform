@@ -94,6 +94,7 @@ import com.kabindra.clean.architecture.presentation.ui.component.LoadingDialog
 import com.kabindra.clean.architecture.presentation.ui.component.LoadingIndicator
 import com.kabindra.clean.architecture.presentation.ui.component.ModalBottomSheetComponent
 import com.kabindra.clean.architecture.presentation.ui.component.PasswordField
+import com.kabindra.clean.architecture.presentation.ui.component.ShimmerItem
 import com.kabindra.clean.architecture.presentation.ui.component.TabIndicator
 import com.kabindra.clean.architecture.presentation.ui.component.TextComponent
 import com.kabindra.clean.architecture.presentation.ui.component.TextSize
@@ -102,11 +103,13 @@ import com.kabindra.clean.architecture.presentation.ui.component.TopAppBarCompon
 import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.OhTeePeeInput
 import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.configuration.OhTeePeeCellConfiguration
 import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.configuration.OhTeePeeConfigurations
+import com.kabindra.clean.architecture.presentation.viewmodel.remote.DashboardViewModel
 import com.kabindra.clean.architecture.utils.Connectivity
 import com.kabindra.clean.architecture.utils.error.GlobalErrorDialog
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import network.chaintech.sdpcomposemultiplatform.sdp
+import org.koin.compose.viewmodel.koinViewModel
 
 private enum class DashboardCategory(val title: String, val icon: ImageVector) {
     Brand("Brand", Icons.Default.Home),
@@ -123,12 +126,14 @@ private enum class DashboardCategory(val title: String, val icon: ImageVector) {
 
 @Composable
 fun DashboardScreen(
+    dashboardViewModel: DashboardViewModel = koinViewModel(),
     innerPadding: PaddingValues,
     onNavigateLogin: () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
     val connectivity = remember { Connectivity() }
     val isConnected by connectivity.isConnectedState.collectAsState()
+    val dashboardState by dashboardViewModel.dashboardState.collectAsState()
 
     var useExpressive by rememberSaveable { mutableStateOf(true) }
     var showLoadingDialog by rememberSaveable { mutableStateOf(false) }
@@ -366,44 +371,48 @@ fun DashboardScreen(
                 }
 
                 // Pager Content
-                HorizontalPager(
-                    state = pagerState,
-                    modifier = Modifier.weight(1f),
-                    verticalAlignment = Alignment.Top,
-                    userScrollEnabled = true
-                ) { page ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState())
-                            .pointerInput(Unit) {
-                                detectTapGestures(onTap = {
-                                    focusManager.clearFocus()
-                                })
+                if (dashboardState.isLoading) {
+                    DashboardShimmer()
+                } else {
+                    HorizontalPager(
+                        state = pagerState,
+                        modifier = Modifier.weight(1f),
+                        verticalAlignment = Alignment.Top,
+                        userScrollEnabled = true
+                    ) { page ->
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState())
+                                .pointerInput(Unit) {
+                                    detectTapGestures(onTap = {
+                                        focusManager.clearFocus()
+                                    })
+                                }
+                                .padding(12.sdp),
+                            verticalArrangement = Arrangement.spacedBy(15.sdp)
+                        ) {
+                            when (categories[page]) {
+                                DashboardCategory.Brand -> BrandShowcase()
+                                DashboardCategory.Typography -> TypographyShowcase()
+                                DashboardCategory.Buttons -> ButtonsShowcase(
+                                    useExpressive,
+                                    onOpenSheet = { showBottomSheet = true })
+
+                                DashboardCategory.Inputs -> InputsShowcase(useExpressive)
+                                DashboardCategory.Cards -> CardsShowcase(useExpressive)
+                                DashboardCategory.Loading -> LoadingShowcase(
+                                    useExpressive,
+                                    onTriggerLoading = { showLoadingDialog = true })
+
+                                DashboardCategory.Navigation -> NavigationShowcase(useExpressive)
+                                DashboardCategory.Pager -> PagerShowcase(useExpressive)
+                                DashboardCategory.Lists -> ListsShowcase(useExpressive)
+                                DashboardCategory.Carousels -> CarouselsShowcase(useExpressive)
                             }
-                            .padding(12.sdp),
-                        verticalArrangement = Arrangement.spacedBy(15.sdp)
-                    ) {
-                        when (categories[page]) {
-                            DashboardCategory.Brand -> BrandShowcase()
-                            DashboardCategory.Typography -> TypographyShowcase()
-                            DashboardCategory.Buttons -> ButtonsShowcase(
-                                useExpressive,
-                                onOpenSheet = { showBottomSheet = true })
 
-                            DashboardCategory.Inputs -> InputsShowcase(useExpressive)
-                            DashboardCategory.Cards -> CardsShowcase(useExpressive)
-                            DashboardCategory.Loading -> LoadingShowcase(
-                                useExpressive,
-                                onTriggerLoading = { showLoadingDialog = true })
-
-                            DashboardCategory.Navigation -> NavigationShowcase(useExpressive)
-                            DashboardCategory.Pager -> PagerShowcase(useExpressive)
-                            DashboardCategory.Lists -> ListsShowcase(useExpressive)
-                            DashboardCategory.Carousels -> CarouselsShowcase(useExpressive)
+                            Spacer(modifier = Modifier.height(8.sdp))
                         }
-
-                        Spacer(modifier = Modifier.height(8.sdp))
                     }
                 }
             }
@@ -1198,6 +1207,28 @@ private fun CarouselsShowcase(useExpressive: Boolean) {
             variant = ExpressiveCarouselVariant.UNCONTAINED,
             modifier = Modifier.fillMaxWidth().height(130.sdp)
         )
+    }
+}
+
+@Composable
+private fun DashboardShimmer() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(12.sdp),
+        verticalArrangement = Arrangement.spacedBy(15.sdp)
+    ) {
+        ShimmerItem(height = 150.sdp)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(10.sdp)
+        ) {
+            ShimmerItem(modifier = Modifier.weight(1f), height = 100.sdp)
+            ShimmerItem(modifier = Modifier.weight(1f), height = 100.sdp)
+        }
+        ShimmerItem(height = 80.sdp)
+        ShimmerItem(height = 200.sdp)
+        ShimmerItem(height = 120.sdp)
     }
 }
 

@@ -41,6 +41,7 @@ inspektor = "0.4.1"
 compottie = "2.2.4"
 sdp_ssp_version = "1.0.7"
 haze = "2.0.0-alpha03"
+composeShimmer = "1.5.0-beta02"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -116,6 +117,7 @@ compottie-resources = { module = "io.github.alexzhirkevich:compottie-resources",
 sdp-ssp = { module = "network.chaintech:sdp-ssp-compose-multiplatform", version.ref = "sdp_ssp_version" }
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 haze-blur = { module = "dev.chrisbanes.haze:haze-blur", version.ref = "haze" }
+compose-shimmer = { module = "com.valentinilk.shimmer:compose-shimmer", version.ref = "composeShimmer" }
 
 [bundles]
 koin = ["koin-core", "koin-compose", "koin-compose-viewmodel"]

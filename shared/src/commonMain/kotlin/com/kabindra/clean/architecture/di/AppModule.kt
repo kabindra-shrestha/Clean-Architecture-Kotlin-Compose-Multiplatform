@@ -19,6 +19,7 @@ import com.kabindra.clean.architecture.domain.usecase.remote.LogoutUseCase
 import com.kabindra.clean.architecture.domain.usecase.remote.RefreshTokenUseCase
 import com.kabindra.clean.architecture.domain.usecase.room.AuthenticationRoomUseCase
 import com.kabindra.clean.architecture.domain.usecase.room.UserRoomUseCase
+import com.kabindra.clean.architecture.presentation.viewmodel.remote.DashboardViewModel
 import com.kabindra.clean.architecture.presentation.viewmodel.remote.LoginViewModel
 import com.kabindra.clean.architecture.presentation.viewmodel.remote.LogoutViewModel
 import com.kabindra.clean.architecture.presentation.viewmodel.remote.RefreshTokenViewModel
@@ -79,6 +80,7 @@ val provideViewModelModule = module {
     viewModelOf(::LogoutViewModel)
     viewModelOf(::RefreshTokenViewModel)
     viewModelOf(::SplashViewModel)
+    viewModelOf(::DashboardViewModel)
 
     viewModelOf(::AuthenticationRoomViewModel)
     viewModelOf(::UserRoomViewModel)
