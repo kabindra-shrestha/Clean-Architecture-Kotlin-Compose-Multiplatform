@@ -41,6 +41,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuite
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
@@ -203,6 +204,12 @@ fun DashboardScreen(
         }
     }
 
+    val navRailScrollState = rememberScrollState()
+    val navSuiteColors = NavigationSuiteDefaults.colors(
+        navigationBarContainerColor = Color.Transparent,
+        navigationRailContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+    )
+
     NavigationSuiteScaffold(
         modifier = Modifier.fillMaxSize()
             .windowInsetsPadding(
@@ -210,29 +217,36 @@ fun DashboardScreen(
                     .union(WindowInsets.statusBars)
                     .union(WindowInsets.navigationBars)
             ),
-        navigationSuiteItems = {
-            if (layoutType != NavigationSuiteType.NavigationBar) {
-                categories.forEach { category ->
-                    item(
-                        icon = { Icon(category.icon, contentDescription = category.title) },
-                        label = { TextComponent(text = category.title, size = TextSize.Small) },
-                        selected = selectedCategory == category,
-                        onClick = {
-                            selectedCategory = category
-                            coroutineScope.launch {
-                                pagerState.animateScrollToPage(category.ordinal)
+        navigationItems = {
+            NavigationSuite(
+                layoutType = layoutType,
+                colors = navSuiteColors,
+                modifier = if (layoutType == NavigationSuiteType.NavigationRail) {
+                    Modifier.verticalScroll(navRailScrollState)
+                } else {
+                    Modifier
+                }
+            ) {
+                if (layoutType != NavigationSuiteType.NavigationBar) {
+                    categories.forEach { category ->
+                        item(
+                            icon = { Icon(category.icon, contentDescription = category.title) },
+                            label = { TextComponent(text = category.title, size = TextSize.Small) },
+                            selected = selectedCategory == category,
+                            onClick = {
+                                selectedCategory = category
+                                coroutineScope.launch {
+                                    pagerState.animateScrollToPage(category.ordinal)
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         },
-        layoutType = layoutType,
+        navigationSuiteType = layoutType,
         containerColor = MaterialTheme.colorScheme.background,
-        navigationSuiteColors = NavigationSuiteDefaults.colors(
-            navigationBarContainerColor = Color.Transparent,
-            navigationRailContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-        ),
+        navigationSuiteColors = navSuiteColors,
         state = navSuiteState,
     ) {
         Scaffold(

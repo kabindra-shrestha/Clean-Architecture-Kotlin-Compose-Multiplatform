@@ -1,0 +1,60 @@
+### API Testing File
+# This file can be used with the "HTTP Client" plugin in Android Studio / IntelliJ.
+# It is pre-configured with the custom headers used in the project's network layer.
+
+@baseUrl = http://localhost:8080
+@accessToken = YOUR_ACCESS_TOKEN
+@refreshToken = YOUR_REFRESH_TOKEN
+@devicePlatform = android
+@appVersion = 1.0.0
+@appVersionCode = 1
+@deviceId = your_unique_device_id
+
+### Check User (Login Flow Start)
+POST {{baseUrl}}/api/check-user
+Content-Type: application/json
+User-Device: {{deviceId}}hrm
+User-Device-Platform: {{devicePlatform}}
+User-Device-App-Version: {{appVersion}}
+User-Device-App-Version-Code: {{appVersionCode}}
+
+{
+  "email": "user@example.com"
+}
+
+### Verify OTP (Complete Login)
+POST {{baseUrl}}/api/verify-otp
+Content-Type: application/json
+User-Device: {{deviceId}}hrm
+User-Device-Platform: {{devicePlatform}}
+User-Device-App-Version: {{appVersion}}
+User-Device-App-Version-Code: {{appVersionCode}}
+
+{
+  "email": "user@example.com",
+  "otp": "123456"
+}
+
+### Refresh Token
+# Used by Ktor's Auth bearer plugin to refresh expired access tokens.
+POST {{baseUrl}}/api/refresh
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer {{accessToken}}
+User-Device: {{deviceId}}hrm
+User-Device-Platform: {{devicePlatform}}
+User-Device-App-Version: {{appVersion}}
+
+refresh_token={{refreshToken}}
+
+### Logout
+POST {{baseUrl}}/api/logout
+Authorization: Bearer {{accessToken}}
+User-Device: {{deviceId}}hrm
+User-Device-Platform: {{devicePlatform}}
+
+### Refresh User Details
+GET {{baseUrl}}/api/refresh-user-details
+Authorization: Bearer {{accessToken}}
+User-Device: {{deviceId}}hrm
+User-Device-Platform: {{devicePlatform}}
+User-Device-App-Version: {{appVersion}}
