@@ -1,4 +1,4 @@
-package com.kabindra.clean.architecture.presentation.ui.screen.splash
+package com.kabindra.clean.architecture.presentation.ui.screen.dashboard
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -103,7 +103,6 @@ import com.kabindra.clean.architecture.presentation.ui.component.TopAppBarCompon
 import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.OhTeePeeInput
 import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.configuration.OhTeePeeCellConfiguration
 import com.kabindra.clean.architecture.presentation.ui.component.ohteepee.configuration.OhTeePeeConfigurations
-import com.kabindra.clean.architecture.presentation.viewmodel.remote.DashboardViewModel
 import com.kabindra.clean.architecture.utils.Connectivity
 import com.kabindra.clean.architecture.utils.error.GlobalErrorDialog
 import kotlinx.coroutines.delay

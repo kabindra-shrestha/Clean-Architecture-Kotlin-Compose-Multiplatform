@@ -1,4 +1,4 @@
-package com.kabindra.clean.architecture.presentation.ui.screen.splash
+package com.kabindra.clean.architecture.presentation.ui.screen.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,7 +22,7 @@ import com.kabindra.clean.architecture.utils.error.GlobalErrorDialog
 import network.chaintech.sdpcomposemultiplatform.sdp
 
 @Composable
-fun LoginVerifyOTPScreen(
+fun LoginScreen(
     innerPadding: PaddingValues,
     onNavigateLogin: () -> Unit,
 ) {
@@ -63,7 +63,7 @@ fun LoginVerifyOTPScreen(
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
                 .offset(y = (-45).sdp),
-            text = "Login Verify OTP Screen",
+            text = "Login Screen",
             textAlign = TextAlign.Center
         )
     }

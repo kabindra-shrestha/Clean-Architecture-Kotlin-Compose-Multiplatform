@@ -1,4 +1,4 @@
-package com.kabindra.clean.architecture.presentation.viewmodel.remote
+package com.kabindra.clean.architecture.presentation.ui.screen.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,11 +6,16 @@ import com.kabindra.clean.architecture.data.request.LoginRefreshUserDetailsDataR
 import com.kabindra.clean.architecture.domain.usecase.remote.LoginUseCase
 import com.kabindra.clean.architecture.domain.usecase.room.AuthenticationRoomUseCase
 import com.kabindra.clean.architecture.domain.usecase.room.UserRoomUseCase
+import com.kabindra.clean.architecture.utils.constants.AlertType
+import com.kabindra.clean.architecture.utils.constants.MessageType
 import com.kabindra.clean.architecture.utils.constants.ResponseType
 import com.kabindra.clean.architecture.utils.ktor.Result
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -22,6 +27,7 @@ class SplashViewModel(
     private val _splashState = MutableStateFlow(SplashState())
 
     val splashState = _splashState
+        .asStateFlow()
         .onStart { }
         .stateIn(
             viewModelScope,
@@ -29,18 +35,34 @@ class SplashViewModel(
             SplashState()
         )
 
-    fun onEvent(event: SplashEvent) {
-        when (event) {
-            is SplashEvent.GetLoginRefreshUserDetails -> {
-                getLoginRefreshUserDetails(event.loginRefreshUserDetailsDataRequest)
+    private val _splashEvent = Channel<SplashEvent>()
+    val splashEvent = _splashEvent.receiveAsFlow()
+
+    fun onAction(action: SplashAction) {
+        when (action) {
+            is SplashAction.GetLoginRefreshUserDetails -> {
+                println("SplashAction GetLoginRefreshUserDetails")
+                getLoginRefreshUserDetails(action.loginRefreshUserDetailsDataRequest)
             }
 
-            is SplashEvent.GetIsLogged -> {
+            is SplashAction.GetIsLogged -> {
+                println("SplashAction GetIsLogged")
                 getIsLogged()
             }
 
-            is SplashEvent.GetUser -> {
+            is SplashAction.GetUser -> {
+                println("SplashAction GetUser")
                 getUser()
+            }
+
+            is SplashAction.OnNavigateLogin -> {
+                println("SplashAction OnNavigateLogin")
+                _splashEvent.trySend(SplashEvent.OnNavigateLogin)
+            }
+
+            is SplashAction.OnNavigateDashboard -> {
+                println("SplashAction OnNavigateDashboard")
+                _splashEvent.trySend(SplashEvent.OnNavigateDashboard)
             }
         }
     }
@@ -62,23 +84,37 @@ class SplashViewModel(
                             _splashState.value =
                                 _splashState.value.copy(
                                     isLoading = false,
-                                    isSuccess = true,
-                                    successType = ResponseType.None,
-                                    successMessage = "",
                                     loginRefreshUserDetails = result.data
                                 )
+
+                            _splashEvent.send(
+                                SplashEvent.ShowMessage(
+                                    messageType = MessageType.Success,
+                                    responseType = ResponseType.None,
+                                    alertType = AlertType.None,
+                                    message = result.data.message
+                                )
+                            )
                         }
 
                         is Result.Error -> {
                             _splashState.value =
                                 _splashState.value.copy(
                                     isLoading = false,
-                                    isError = true,
-                                    errorType = ResponseType.None,
-                                    errorStatusCode = result.error.statusCode,
-                                    errorTitle = "",
-                                    errorMessage = result.error.message
+                                    isLogged = null,
+                                    user = null
                                 )
+
+                            _splashEvent.send(
+                                SplashEvent.ShowMessage(
+                                    messageType = MessageType.Error,
+                                    responseType = ResponseType.None,
+                                    alertType = AlertType.Dialog,
+                                    title = result.error.title ?: "",
+                                    message = result.error.message,
+                                    statusCode = result.error.statusCode
+                                )
+                            )
                         }
                     }
                 }
@@ -101,23 +137,35 @@ class SplashViewModel(
                         _splashState.value =
                             _splashState.value.copy(
                                 isLoading = false,
-                                isSuccess = true,
-                                successType = ResponseType.None,
-                                successMessage = "",
                                 isLogged = result.data
                             )
+
+                        _splashEvent.send(
+                            SplashEvent.ShowMessage(
+                                messageType = MessageType.Success,
+                                responseType = ResponseType.None,
+                                alertType = AlertType.None,
+                                message = ""
+                            )
+                        )
                     }
 
                     is Result.Error -> {
                         _splashState.value =
                             _splashState.value.copy(
                                 isLoading = false,
-                                isError = true,
-                                errorType = ResponseType.None,
-                                errorStatusCode = result.error.statusCode,
-                                errorTitle = "",
-                                errorMessage = result.error.message
                             )
+
+                        _splashEvent.send(
+                            SplashEvent.ShowMessage(
+                                messageType = MessageType.Error,
+                                responseType = ResponseType.None,
+                                alertType = AlertType.Dialog,
+                                title = result.error.title ?: "",
+                                message = result.error.message,
+                                statusCode = result.error.statusCode
+                            )
+                        )
                     }
                 }
             }
@@ -140,23 +188,35 @@ class SplashViewModel(
                         _splashState.value =
                             _splashState.value.copy(
                                 isLoading = false,
-                                isSuccess = true,
-                                successType = ResponseType.None,
-                                successMessage = "",
                                 user = result.data
                             )
+
+                        _splashEvent.send(
+                            SplashEvent.ShowMessage(
+                                messageType = MessageType.Success,
+                                responseType = ResponseType.None,
+                                alertType = AlertType.None,
+                                message = ""
+                            )
+                        )
                     }
 
                     is Result.Error -> {
                         _splashState.value =
                             _splashState.value.copy(
                                 isLoading = false,
-                                isError = true,
-                                errorType = ResponseType.None,
-                                errorStatusCode = result.error.statusCode,
-                                errorTitle = "",
-                                errorMessage = result.error.message
                             )
+
+                        _splashEvent.send(
+                            SplashEvent.ShowMessage(
+                                messageType = MessageType.Error,
+                                responseType = ResponseType.None,
+                                alertType = AlertType.Dialog,
+                                title = result.error.title ?: "",
+                                message = result.error.message,
+                                statusCode = result.error.statusCode
+                            )
+                        )
                     }
                 }
             }

@@ -1,11 +1,12 @@
 package com.kabindra.clean.architecture.utils
 
-import kotlin.experimental.ExperimentalNativeApi
-import kotlin.native.Platform
+import com.kabindra.clean.architecture.shared.BuildKonfig
 
 class IOSConfig : Config {
-    @OptIn(ExperimentalNativeApi::class)
-    override val isDebug: Boolean = Platform.isDebugBinary
+    override val isDebug: Boolean = BuildKonfig.IS_DEBUG
+    override val env: String = BuildKonfig.ENV
+    override val flavor: String = BuildKonfig.FLAVOR
+    override val baseUrl: String = BuildKonfig.BASE_URL
 }
 
 actual fun getConfig(): Config = IOSConfig()

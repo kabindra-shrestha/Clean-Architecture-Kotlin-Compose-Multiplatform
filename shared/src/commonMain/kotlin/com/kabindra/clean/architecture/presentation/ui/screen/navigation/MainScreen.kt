@@ -17,10 +17,10 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
-import com.kabindra.clean.architecture.presentation.ui.screen.splash.DashboardScreen
-import com.kabindra.clean.architecture.presentation.ui.screen.splash.LoginScreen
-import com.kabindra.clean.architecture.presentation.ui.screen.splash.LoginVerifyOTPScreen
-import com.kabindra.clean.architecture.presentation.ui.screen.splash.RegisterScreen
+import com.kabindra.clean.architecture.presentation.ui.screen.dashboard.DashboardScreen
+import com.kabindra.clean.architecture.presentation.ui.screen.screens.LoginScreen
+import com.kabindra.clean.architecture.presentation.ui.screen.screens.LoginVerifyOTPScreen
+import com.kabindra.clean.architecture.presentation.ui.screen.screens.RegisterScreen
 import com.kabindra.clean.architecture.presentation.ui.screen.splash.SplashScreen
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic

@@ -1,4 +1,4 @@
-package com.kabindra.clean.architecture.presentation.viewmodel.remote
+package com.kabindra.clean.architecture.presentation.ui.screen.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

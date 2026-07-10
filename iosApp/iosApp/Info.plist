@@ -50,5 +50,39 @@
             <string>UIInterfaceOrientationLandscapeLeft</string>
             <string>UIInterfaceOrientationLandscapeRight</string>
         </array>
+        <key>UIBackgroundModes</key>
+        <array>
+            <string>fetch</string>
+            <string>remote-notification</string>
+        </array>
+        <key>NSCameraUsageDescription</key>
+        <string>Compose Multiplatform Clean Architecture uses the camera to allow employees to
+            capture attendance selfies and upload
+            profile photos or documents for HR verification.
+        </string>
+        <key>NSContactsUsageDescription</key>
+        <string>Compose Multiplatform Clean Architecture accesses your contacts only when you choose
+            to select colleagues or managers
+            for sharing HR requests or approvals.
+        </string>
+        <key>NSPhotoLibraryUsageDescription</key>
+        <string>Compose Multiplatform Clean Architecture allows you to select existing photos or
+            documents from your photo library to
+            upload for profile setup and HR-related submissions.
+        </string>
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string>Compose Multiplatform Clean Architecture uses your location during attendance
+            check-in to record the location of the
+            workplace.
+        </string>
+        <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+        <string>Compose Multiplatform Clean Architecture uses location access to support attendance
+            tracking and verify check-in
+            locations even when the app is not active.
+        </string>
+        <key>NSFaceIDUsageDescription</key>
+        <string>Compose Multiplatform Clean Architecture uses Face ID to securely authenticate and
+            log you into your account.
+        </string>
     </dict>
 </plist>
