@@ -46,6 +46,9 @@ If you face any issues, please report them on [YouTrack](https://youtrack.jetbra
 This repo includes a ready-to-use AI assistant prompt and setup guides to help contributors work on Room (KSP) and Firebase configuration.
 
 - Assistant prompt: `./.ai/compose-multiplatform-assistant-prompt.md` — copy this when you want to get consistent help from an AI assistant.
+- [Architecture Guide](./docs/ARCHITECTURE.md) — clean architecture, MVI, and core libraries.
+- [Setup & Branding Guide](./docs/SETUP_GUIDE.md) — instructions for custom package names, icons, and environments.
+- [Roadmap & Scalability](./docs/ROADMAP.md) — recommendations for future growth.
 - Room setup & troubleshooting: `./docs/ROOM_SETUP.md`
 - Firebase setup & troubleshooting: `./docs/FIREBASE_SETUP.md`
 
