@@ -19,12 +19,9 @@ import com.kabindra.clean.architecture.domain.usecase.remote.LogoutUseCase
 import com.kabindra.clean.architecture.domain.usecase.remote.RefreshTokenUseCase
 import com.kabindra.clean.architecture.domain.usecase.room.AuthenticationRoomUseCase
 import com.kabindra.clean.architecture.domain.usecase.room.UserRoomUseCase
-import com.kabindra.clean.architecture.presentation.viewmodel.remote.LoginViewModel
-import com.kabindra.clean.architecture.presentation.viewmodel.remote.LogoutViewModel
-import com.kabindra.clean.architecture.presentation.viewmodel.remote.RefreshTokenViewModel
-import com.kabindra.clean.architecture.presentation.viewmodel.remote.SplashViewModel
+import com.kabindra.clean.architecture.presentation.ui.screen.dashboard.DashboardViewModel
+import com.kabindra.clean.architecture.presentation.ui.screen.splash.SplashViewModel
 import com.kabindra.clean.architecture.presentation.viewmodel.room.AuthenticationRoomViewModel
-import com.kabindra.clean.architecture.presentation.viewmodel.room.UserRoomViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.auth.authProvider
 import io.ktor.client.plugins.auth.providers.BearerAuthProvider
@@ -75,13 +72,10 @@ val provideUseCaseModule = module {
 }
 
 val provideViewModelModule = module {
-    viewModelOf(::LoginViewModel)
-    viewModelOf(::LogoutViewModel)
-    viewModelOf(::RefreshTokenViewModel)
     viewModelOf(::SplashViewModel)
+    viewModelOf(::DashboardViewModel)
 
     viewModelOf(::AuthenticationRoomViewModel)
-    viewModelOf(::UserRoomViewModel)
 }
 
 expect val platformModule: Module

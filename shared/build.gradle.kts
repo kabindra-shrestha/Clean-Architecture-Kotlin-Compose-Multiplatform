@@ -9,6 +9,27 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+    alias(libs.plugins.buildKonfig)
+}
+
+buildkonfig {
+    packageName = "com.kabindra.clean.architecture.shared"
+    
+    // Default / Production
+    defaultConfigs {
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.BOOLEAN, "IS_DEBUG", "false")
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "ENV", "prod")
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "FLAVOR", "standard")
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "BASE_URL", "https://api.example.com")
+    }
+
+    // Development Flavor
+    defaultConfigs("dev") {
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.BOOLEAN, "IS_DEBUG", "true")
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "ENV", "dev")
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "FLAVOR", "standard")
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "BASE_URL", "https://api.dev.example.com")
+    }
 }
 
 kotlin {
@@ -19,6 +40,8 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "Shared"
             isStatic = true
+
+            linkerOpts.add("-lsqlite3")
         }
     }
 
@@ -33,7 +56,7 @@ kotlin {
         binaries.executable()
     }
 
-    androidLibrary {
+    android {
         namespace = "com.kabindra.clean.architecture.shared"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -105,6 +128,8 @@ kotlin {
 
             implementation(libs.haze)
             implementation(libs.haze.blur)
+
+            implementation(libs.compose.shimmer)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

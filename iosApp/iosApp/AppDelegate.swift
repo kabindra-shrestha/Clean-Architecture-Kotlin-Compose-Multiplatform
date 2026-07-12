@@ -15,6 +15,7 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let gcmMessageIDKey = "gcm.message_id"
+    let inspektorNotificationIdentifier = "com.gyanoba.inspektor.notification"
 
     func application(
         _ application: UIApplication,
@@ -111,7 +112,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Firebase APNs token retrieved: \(deviceToken)")
 
         // With swizzling disabled you must set the APNs token here.
-        // Messaging.messaging().apnsToken = deviceToken
+        // This is CRITICAL: Without setting the APNs token, Firebase will decline the FCM token request
+        Messaging.messaging().apnsToken = deviceToken
+        print("Firebase APNs token set successfully for FCM registration")
     }
 }
 
@@ -149,6 +152,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         didReceive response: UNNotificationResponse
     ) async {
         let userInfo = response.notification.request.content.userInfo
+        let notificationIdentifier = response.notification.request.identifier
 
         // [START_EXCLUDE]
         // Print message ID.
@@ -162,6 +166,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
         // Print full message.
         print(userInfo)
+        print("notificationIdentifier: \(notificationIdentifier)")
+
+        if notificationIdentifier == inspektorNotificationIdentifier {
+            DispatchQueue.main.async {
+                InspektorBridgeKt.openInspektorLogsFromNotificationTap()
+            }
+            return
+        }
 
         handleRedirection(userInfo)
     }
@@ -169,19 +181,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func handleRedirection(_ userInfo: [AnyHashable: Any]) {
         let notificationPayload: NotificationPayload? = ((userInfo as NSDictionary) as? [String: Any])?.object()
 
-        if notificationPayload != nil {
-            if let type = notificationPayload?.type, !type.isEmpty,
-                let ticketId = notificationPayload?.ticketId,
-                let workflow = notificationPayload?.workflow,
-                let date = notificationPayload?.date
-            {
-                FirebaseInitializerKt.handleNavigationRedirection(
-                    type: type,
-                    ticket_id: ticketId,
-                    workflow: workflow,
-                    date: date
-                )
-            }
+        if let type = notificationPayload?.type, !type.isEmpty {
+            let ticketId = notificationPayload?.ticketId ?? ""
+            let workflow = notificationPayload?.workflow ?? ""
+            let date = notificationPayload?.date ?? ""
+
+            FirebaseInitializerKt.handleNavigationRedirection(
+                type: type,
+                ticket_id: ticketId,
+                workflow: workflow,
+                date: date
+            )
         }
     }
 }

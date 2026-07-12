@@ -64,7 +64,7 @@ internal class ConnectivityImpl(
 
     override val isConnectedState: StateFlow<Boolean> =
         state.asStateFlow()
-            .map(scope) { /*it != NetworkConnection.NONE*/ true }
+            .map(scope) { it != NetworkConnection.NONE }
 
     override val currentNetworkConnectionState: StateFlow<NetworkConnection> = state.asStateFlow()
 

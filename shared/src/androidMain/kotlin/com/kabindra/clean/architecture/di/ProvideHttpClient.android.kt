@@ -15,7 +15,7 @@ import com.kabindra.clean.architecture.utils.constants.Header.Companion.HEADER_U
 import com.kabindra.clean.architecture.utils.constants.Header.Companion.HEADER_USER_DEVICE_VERSION
 import com.kabindra.clean.architecture.utils.enums.Status
 import com.kabindra.clean.architecture.utils.enums.getStatus
-import com.kabindra.clean.architecture.utils.getConfig
+import com.kabindra.clean.architecture.shared.BuildKonfig
 import com.kabindra.clean.architecture.utils.getPlatform
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -76,7 +76,7 @@ actual fun provideHttpClient(
 
         install(DefaultRequest) {
             runBlocking {
-                val baseUrl = "baseUrl"
+                val baseUrl = BuildKonfig.BASE_URL
                 url(baseUrl)
                 contentType(ContentType.Application.Json)
 
@@ -170,7 +170,7 @@ actual fun provideHttpClient(
             }
         }
 
-        if (getConfig().isDebug) {
+        if (BuildKonfig.IS_DEBUG) {
             install(Inspektor)
         }
     }

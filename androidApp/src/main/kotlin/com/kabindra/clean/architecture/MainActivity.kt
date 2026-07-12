@@ -13,9 +13,8 @@ import com.kabindra.inappupdate.initializeUpdateManager
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         installSplashScreen()
+        super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
 
