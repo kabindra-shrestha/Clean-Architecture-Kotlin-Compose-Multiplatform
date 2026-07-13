@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">prod.com.np</domain>
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+        <pin-set>
+            <pin digest="SHA-256">HV4891zq0Vr4j5FBKeGMo3M/6TbuVnxzzTaFT9kR8ls=</pin>
+            <pin digest="SHA-256">HV4891zq0Vr4j5FBKeGMo3M/6TbuVnxzzTaFT9kR8ls=</pin>
+        </pin-set>
+    </domain-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">dev.com.np</domain>
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+        <pin-set>
+            <pin digest="SHA-256">HV4891zq0Vr4j5FBKeGMo3M/6TbuVnxzzTaFT9kR8ls=</pin>
+            <pin digest="SHA-256">HV4891zq0Vr4j5FBKeGMo3M/6TbuVnxzzTaFT9kR8ls=</pin>
+        </pin-set>
+    </domain-config>
+</network-security-config>
